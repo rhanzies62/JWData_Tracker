@@ -8,5 +8,6 @@ namespace JWDataTracker.Infrastructure
         public long MidWeekScheduleId { get; set; }
         public string ScheduledDate { get; set; }
         public long? CreatedBy { get; set; }
+        public long Attendance { get; set; }
     }
 }

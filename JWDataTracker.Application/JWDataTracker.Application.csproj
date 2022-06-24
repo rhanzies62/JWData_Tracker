@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\JWDataTracker.Infrastructure\JWDataTracker.Infrastructure.csproj" />
+  </ItemGroup>
+
 </Project>

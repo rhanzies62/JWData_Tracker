@@ -19,6 +19,8 @@ namespace JWDataTracker.Infrastructure
         public long IsElder { get; set; }
         public long IsMs { get; set; }
         public long IsRp { get; set; }
+        public long IsUnBaptized { get; set; }
+        public long GroupNumber { get; set; }
 
         public virtual Congregation Congregation { get; set; }
         public virtual ICollection<MidWeekScheduleItem> MidWeekScheduleItemPartnerPublishers { get; set; }

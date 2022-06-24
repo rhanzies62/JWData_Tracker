@@ -22,6 +22,7 @@ namespace JWDataTracker.Infrastructure.Repository
         public virtual DbSet<MidWeekSchedule> MidWeekSchedules { get; set; }
         public virtual DbSet<MidWeekScheduleItem> MidWeekScheduleItems { get; set; }
         public virtual DbSet<Publisher> Publishers { get; set; }
+        public virtual DbSet<ServiceReport> ServiceReports { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -45,15 +46,17 @@ namespace JWDataTracker.Infrastructure.Repository
 
             modelBuilder.Entity<CongregationUser>(entity =>
             {
-                entity.HasKey(e => e.CongergationUserId);
-
                 entity.ToTable("CongregationUser");
 
-                entity.Property(e => e.FirstName).IsRequired();
+                entity.Property(e => e.CreatedDate).IsRequired();
 
-                entity.Property(e => e.PasswordHash).IsRequired();
+                entity.Property(e => e.Email)
+                    .IsRequired()
+                    .HasDefaultValueSql("\"\"");
 
-                entity.Property(e => e.PasswordSalt).IsRequired();
+                entity.Property(e => e.Password).IsRequired();
+
+                entity.Property(e => e.Salt).IsRequired();
 
                 entity.Property(e => e.Username).IsRequired();
             });
@@ -99,6 +102,13 @@ namespace JWDataTracker.Infrastructure.Repository
                 entity.HasOne(d => d.Congregation)
                     .WithMany(p => p.Publishers)
                     .HasForeignKey(d => d.CongregationId);
+            });
+
+            modelBuilder.Entity<ServiceReport>(entity =>
+            {
+                entity.ToTable("ServiceReport");
+
+                entity.Property(e => e.Date).IsRequired();
             });
 
             OnModelCreatingPartial(modelBuilder);

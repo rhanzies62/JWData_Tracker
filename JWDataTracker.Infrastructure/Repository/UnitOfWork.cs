@@ -6,7 +6,17 @@ using System.Threading.Tasks;
 
 namespace JWDataTracker.Infrastructure.Repository
 {
-    public class UnitOfWork : IDisposable
+    public interface IUnitOfWork
+    {
+        GenericRepository<Congregation> CongregationRepository { get; }
+        GenericRepository<CongregationUser> CongregationUserRepository { get; }
+        GenericRepository<MidWeekSchedule> MidWeekScheduleRepository { get; }
+        GenericRepository<MidWeekScheduleItem> MidWeekScheduleItemRepository { get; }
+        GenericRepository<Publisher> PublisherRepository { get; }
+        GenericRepository<ServiceReport> ServiceReportRepository { get; }
+        void Save();
+    }
+    public class UnitOfWork : IDisposable, IUnitOfWork
     {
         private DataTrackerContext context = new DataTrackerContext();
         private GenericRepository<Congregation> congregationRepository;
@@ -14,6 +24,7 @@ namespace JWDataTracker.Infrastructure.Repository
         private GenericRepository<MidWeekSchedule> midWeekScheduleRepository;
         private GenericRepository<MidWeekScheduleItem> midWeekScheduleItemRepository;
         private GenericRepository<Publisher> publisherRepository;
+        private GenericRepository<ServiceReport> serviceReportRepository;
 
         public GenericRepository<Congregation> CongregationRepository
         {
@@ -75,14 +86,24 @@ namespace JWDataTracker.Infrastructure.Repository
                 return publisherRepository;
             }
         }
+        public GenericRepository<ServiceReport> ServiceReportRepository
+        {
+            get
+            {
+
+                if (this.serviceReportRepository == null)
+                {
+                    this.serviceReportRepository = new GenericRepository<ServiceReport>(context);
+                }
+                return serviceReportRepository;
+            }
+        }
 
         public void Save()
         {
             context.SaveChanges();
         }
-
         private bool disposed = false;
-
         protected virtual void Dispose(bool disposing)
         {
             if (!this.disposed)
@@ -94,7 +115,6 @@ namespace JWDataTracker.Infrastructure.Repository
             }
             this.disposed = true;
         }
-
         public void Dispose()
         {
             Dispose(true);
