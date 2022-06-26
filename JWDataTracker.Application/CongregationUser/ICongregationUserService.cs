@@ -13,6 +13,6 @@ namespace JWDataTracker.Application.CongregationUser
         Response Edit(CongregationUserDto model);
         IEnumerable<CongregationUserDto> List();
         Response Delete(int congregationId);
-        CongregationDto GetById(int congregationId);
+        CongregationUserDto GetById(int congregationId);
     }
 }
