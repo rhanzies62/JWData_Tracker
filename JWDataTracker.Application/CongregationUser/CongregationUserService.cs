@@ -58,7 +58,7 @@ namespace JWDataTracker.Application.CongregationUser
             }
             return response;
         }
-        public CongregationDto GetById(int congregationId)
+        public CongregationUserDto GetById(int congregationId)
         {
             return null;
         }
