@@ -10,4 +10,7 @@
     <ProjectReference Include="..\JWDataTracker.Infrastructure\JWDataTracker.Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="CongregationUser\" />
+  </ItemGroup>
 </Project>
