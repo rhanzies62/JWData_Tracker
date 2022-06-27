@@ -11,7 +11,7 @@ namespace JWDataTracker.Application.CongregationUser
 {
     public class CongregationUserService : BaseService, ICongregationUserService
     {
-        public CongregationUserService()
+        public CongregationUserService(IUnitOfWork unitOfWork) : base(unitOfWork) 
         {
         }
 
