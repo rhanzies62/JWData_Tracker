@@ -14,5 +14,6 @@ namespace JWDataTracker.Infrastructure
         public string CreatedDate { get; set; }
         public long IsPasswordReset { get; set; }
         public string Email { get; set; }
+        public long? CongregationId { get; set; }
     }
 }

@@ -23,6 +23,7 @@ namespace JWDataTracker.Infrastructure.Repository
         public virtual DbSet<MidWeekScheduleItem> MidWeekScheduleItems { get; set; }
         public virtual DbSet<Publisher> Publishers { get; set; }
         public virtual DbSet<ServiceReport> ServiceReports { get; set; }
+        public virtual DbSet<WeekendMeetingSchedule> WeekendMeetingSchedules { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -47,6 +48,8 @@ namespace JWDataTracker.Infrastructure.Repository
             modelBuilder.Entity<CongregationUser>(entity =>
             {
                 entity.ToTable("CongregationUser");
+
+                entity.Property(e => e.CongregationId).HasDefaultValueSql("0");
 
                 entity.Property(e => e.CreatedDate).IsRequired();
 
@@ -109,6 +112,19 @@ namespace JWDataTracker.Infrastructure.Repository
                 entity.ToTable("ServiceReport");
 
                 entity.Property(e => e.Date).IsRequired();
+            });
+
+            modelBuilder.Entity<WeekendMeetingSchedule>(entity =>
+            {
+                entity.ToTable("WeekendMeetingSchedule");
+
+                entity.Property(e => e.Date).IsRequired();
+
+                entity.Property(e => e.Speaker).IsRequired();
+
+                entity.Property(e => e.SpeakerCongregation).IsRequired();
+
+                entity.Property(e => e.Topic).IsRequired();
             });
 
             OnModelCreatingPartial(modelBuilder);

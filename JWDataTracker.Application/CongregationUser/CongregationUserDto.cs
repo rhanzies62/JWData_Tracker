@@ -16,5 +16,9 @@ namespace JWDataTracker.Application.CongregationUser
         public string CreatedDate { get; set; }
         public long IsPasswordReset { get; set; }
         public string Email { get; set; }
+        public long? CongregationId { get; set; }
+
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
     }
 }
