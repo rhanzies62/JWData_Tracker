@@ -8,25 +8,25 @@ namespace JWDataTracker.Infrastructure.Repository
 {
     public interface IUnitOfWork
     {
-        GenericRepository<Congregation> CongregationRepository { get; }
-        GenericRepository<CongregationUser> CongregationUserRepository { get; }
-        GenericRepository<MidWeekSchedule> MidWeekScheduleRepository { get; }
-        GenericRepository<MidWeekScheduleItem> MidWeekScheduleItemRepository { get; }
-        GenericRepository<Publisher> PublisherRepository { get; }
-        GenericRepository<ServiceReport> ServiceReportRepository { get; }
+        IGenericRepository<Congregation> CongregationRepository { get; }
+        IGenericRepository<CongregationUser> CongregationUserRepository { get; }
+        IGenericRepository<MidWeekSchedule> MidWeekScheduleRepository { get; }
+        IGenericRepository<MidWeekScheduleItem> MidWeekScheduleItemRepository { get; }
+        IGenericRepository<Publisher> PublisherRepository { get; }
+        IGenericRepository<ServiceReport> ServiceReportRepository { get; }
         void Save();
     }
     public class UnitOfWork : IDisposable, IUnitOfWork
     {
         private DataTrackerContext context = new DataTrackerContext();
-        private GenericRepository<Congregation> congregationRepository;
-        private GenericRepository<CongregationUser> conregationUserRepository;
-        private GenericRepository<MidWeekSchedule> midWeekScheduleRepository;
-        private GenericRepository<MidWeekScheduleItem> midWeekScheduleItemRepository;
-        private GenericRepository<Publisher> publisherRepository;
-        private GenericRepository<ServiceReport> serviceReportRepository;
+        private IGenericRepository<Congregation> congregationRepository;
+        private IGenericRepository<CongregationUser> conregationUserRepository;
+        private IGenericRepository<MidWeekSchedule> midWeekScheduleRepository;
+        private IGenericRepository<MidWeekScheduleItem> midWeekScheduleItemRepository;
+        private IGenericRepository<Publisher> publisherRepository;
+        private IGenericRepository<ServiceReport> serviceReportRepository;
 
-        public GenericRepository<Congregation> CongregationRepository
+        public IGenericRepository<Congregation> CongregationRepository
         {
             get
             {
@@ -38,7 +38,7 @@ namespace JWDataTracker.Infrastructure.Repository
                 return congregationRepository;
             }
         }
-        public GenericRepository<CongregationUser> CongregationUserRepository
+        public IGenericRepository<CongregationUser> CongregationUserRepository
         {
             get
             {
@@ -50,7 +50,7 @@ namespace JWDataTracker.Infrastructure.Repository
                 return conregationUserRepository;
             }
         }
-        public GenericRepository<MidWeekSchedule> MidWeekScheduleRepository
+        public IGenericRepository<MidWeekSchedule> MidWeekScheduleRepository
         {
             get
             {
@@ -62,7 +62,7 @@ namespace JWDataTracker.Infrastructure.Repository
                 return midWeekScheduleRepository;
             }
         }
-        public GenericRepository<MidWeekScheduleItem> MidWeekScheduleItemRepository
+        public IGenericRepository<MidWeekScheduleItem> MidWeekScheduleItemRepository
         {
             get
             {
@@ -74,7 +74,7 @@ namespace JWDataTracker.Infrastructure.Repository
                 return midWeekScheduleItemRepository;
             }
         }
-        public GenericRepository<Publisher> PublisherRepository
+        public IGenericRepository<Publisher> PublisherRepository
         {
             get
             {
@@ -86,7 +86,7 @@ namespace JWDataTracker.Infrastructure.Repository
                 return publisherRepository;
             }
         }
-        public GenericRepository<ServiceReport> ServiceReportRepository
+        public IGenericRepository<ServiceReport> ServiceReportRepository
         {
             get
             {

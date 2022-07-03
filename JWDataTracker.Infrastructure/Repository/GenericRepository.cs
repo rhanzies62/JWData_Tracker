@@ -8,7 +8,20 @@ using System.Threading.Tasks;
 
 namespace JWDataTracker.Infrastructure.Repository
 {
-    public class GenericRepository<TEntity> where TEntity : class
+    public interface IGenericRepository<TEntity> where TEntity : class
+    {
+        IEnumerable<TEntity> Get(
+            Expression<Func<TEntity, bool>> filter = null,
+            Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
+            string includeProperties = "");
+        TEntity GetByID(object id);
+        void Insert(TEntity entity);
+        void Delete(object id);
+        void Delete(TEntity entityToDelete);
+        void Update(TEntity entityToUpdate);
+    }
+
+    public class GenericRepository<TEntity> : IGenericRepository<TEntity>  where TEntity : class
     {
         internal DataTrackerContext context;
         internal DbSet<TEntity> dbSet;
