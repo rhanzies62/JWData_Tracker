@@ -111,5 +111,38 @@ namespace JWDataTracker.Application.CongregationUser
                         Username = i.Username,
                     }).FirstOrDefault();
         }
+        public Response GetUserByUsernameAndPassword(CongregationUserDto model)
+        {
+            var response = new Response(true, String.Empty);
+            try
+            {
+                var user = (from cu in unitOfWork.CongregationUserRepository.Get()
+                            join p in unitOfWork.PublisherRepository.Get() on cu.PublisherId equals p.PublisherId
+                            where cu.Username == model.Username && cu.Password == model.Password
+                            select new CongregationUserDto
+                            {
+                                FirstName = p.FirstName,
+                                Email = cu.Email,
+                                CongregationId = cu.CongregationId,
+                                CongregationUserId = cu.CongregationUserId,
+                                CreatedDate = cu.CreatedDate,
+                                IsPasswordReset = cu.IsPasswordReset,
+                                LastName = p.LastName,
+                                PublisherId = p.PublisherId,
+                                RoleId = cu.RoleId,
+                                Username = cu.Username
+                            }).FirstOrDefault();
+
+                if (user == null)
+                    return new Response(false, "User not found");
+
+                response.Data = user;
+            }
+            catch (Exception e)
+            {
+                response = new Response(false, "Error Occured");
+            }
+            return response;
+        }
     }
 }

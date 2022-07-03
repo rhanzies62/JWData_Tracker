@@ -14,5 +14,7 @@ namespace JWDataTracker.Application.CongregationUser
         IEnumerable<CongregationUserDto> List();
         Response Delete(int congregationId);
         CongregationUserDto GetById(int congregationId);
+
+        Response GetUserByUsernameAndPassword(CongregationUserDto model);
     }
 }

@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.6" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\JWDataTracker.Application\JWDataTracker.Application.csproj" />
+    <ProjectReference Include="..\JWDataTracker.Domain\JWDataTracker.Domain.csproj" />
+    <ProjectReference Include="..\JWDataTracker.Helper\JWDataTracker.Helper.csproj" />
+    <ProjectReference Include="..\JWDataTracker.Infrastructure\JWDataTracker.Infrastructure.csproj" />
+  </ItemGroup>
+
+</Project>
