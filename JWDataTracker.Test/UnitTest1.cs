@@ -15,7 +15,7 @@ namespace JWDataTracker.Test
         }
 
         [Test]
-        public void Test1()
+        public void Login_Success()
         {
             unitOfWork.Setup(m => m.PublisherRepository).Returns(new GenericRepository<entity.Publisher>(new DataTrackerContext()));
             unitOfWork.Setup(m => m.CongregationUserRepository).Returns(new GenericRepository<entity.CongregationUser>(new DataTrackerContext()));
