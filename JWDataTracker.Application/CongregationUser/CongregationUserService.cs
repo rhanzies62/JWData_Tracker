@@ -19,11 +19,14 @@ namespace JWDataTracker.Application.CongregationUser
             var response = new Response(true, string.Empty);
             try
             {
-                if (unitOfWork.CongregationRepository.GetByID(model.CongregationUserId) == null)
+                if (unitOfWork.CongregationRepository.GetByID(model.CongregationId) == null)
                     return response = new Response(false, "Congregation is not existing");
 
                 if (unitOfWork.CongregationUserRepository.Get(i => i.Username == model.Username).Any())
                     return response = new Response(false, "Username already exists");
+
+                if (!unitOfWork.PublisherRepository.Get(i => i.PublisherId == model.PublisherId).Any())
+                    return response = new Response(false, "Publisher is not existing");
 
                 var entity = new entity.CongregationUser()
                 {
