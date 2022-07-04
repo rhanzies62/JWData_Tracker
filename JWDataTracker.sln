@@ -11,7 +11,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JWDataTracker.Application",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JWDataTracker.Helper", "JWDataTracker.Helper\JWDataTracker.Helper.csproj", "{3852D847-90C6-4DE1-A7C4-3CE8F3784BE1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JWDataTracker.Api", "JWDataTracker.Api\JWDataTracker.Api.csproj", "{84271430-970C-473C-9A68-5D3097DFDD55}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JWDataTracker.Api", "JWDataTracker.Api\JWDataTracker.Api.csproj", "{84271430-970C-473C-9A68-5D3097DFDD55}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JWDataTracker.Test", "JWDataTracker.Test\JWDataTracker.Test.csproj", "{AD9E57C1-04E0-4D0B-9015-F49DF5CF2ADC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{84271430-970C-473C-9A68-5D3097DFDD55}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{84271430-970C-473C-9A68-5D3097DFDD55}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{84271430-970C-473C-9A68-5D3097DFDD55}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AD9E57C1-04E0-4D0B-9015-F49DF5CF2ADC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AD9E57C1-04E0-4D0B-9015-F49DF5CF2ADC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AD9E57C1-04E0-4D0B-9015-F49DF5CF2ADC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AD9E57C1-04E0-4D0B-9015-F49DF5CF2ADC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
