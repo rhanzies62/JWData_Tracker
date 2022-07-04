@@ -148,5 +148,38 @@ namespace JWDataTracker.Test
 
             Assert.IsFalse(result.IsSuccess);
         }
+
+        [Test]
+        public void UpdateExisting_User_Success()
+        {
+            congregationUserRepoMoq.Setup(m => m.GetByID(It.IsAny<long>())).Returns(new entity.CongregationUser());
+            unitOfWorkMoq.Setup(m => m.CongregationUserRepository).Returns(congregationUserRepoMoq.Object);
+            congregationUserServiceMoq = new CongregationUserService(unitOfWorkMoq.Object);
+
+            var result = congregationUserServiceMoq.Edit(new CongregationUserDto { 
+                 CongregationUserId = 1,
+                 Username = "rdelacruz",
+                 Email = "rdelacruz@gmail.com"
+            });
+
+            Assert.IsTrue(result.IsSuccess);
+        }
+
+        [Test]
+        public void UpdateExisting_User_Failed_User_Not_Existing()
+        {
+            unitOfWorkMoq.Setup(m => m.CongregationUserRepository).Returns(congregationUserRepo);
+            congregationUserServiceMoq = new CongregationUserService(unitOfWorkMoq.Object);
+
+            var result = congregationUserServiceMoq.Edit(new CongregationUserDto
+            {
+                CongregationUserId = 999,
+                Username = "rdelacruz",
+                Email = "rdelacruz@gmail.com"
+            });
+
+            Assert.IsFalse(result.IsSuccess);
+        }
+
     }
 }

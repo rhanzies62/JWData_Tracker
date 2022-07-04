@@ -65,6 +65,7 @@ namespace JWDataTracker.Application.CongregationUser
                 entity.Username = model.Username;
                 entity.CongregationId = model.CongregationId;
                 entity.Email = model.Email;
+                unitOfWork.Save();
             }
             catch (Exception e)
             {
