@@ -181,5 +181,64 @@ namespace JWDataTracker.Test
             Assert.IsFalse(result.IsSuccess);
         }
 
+        [Test]
+        public void CreateNew_User_PassingNull()
+        {
+            unitOfWorkMoq.Setup(m => m.CongregationUserRepository).Returns(congregationUserRepoMoq.Object);
+            unitOfWorkMoq.Setup(m => m.PublisherRepository).Returns(publisherRepo);
+            unitOfWorkMoq.Setup(m => m.CongregationRepository).Returns(congregationRepo);
+            congregationUserServiceMoq = new CongregationUserService(unitOfWorkMoq.Object);
+
+            var result = congregationUserServiceMoq.Add(null);
+
+            Assert.IsFalse(result.IsSuccess);
+        }
+
+        [Test]
+        public void CreateNew_User_NoUsernam()
+        {
+            unitOfWorkMoq.Setup(m => m.CongregationUserRepository).Returns(congregationUserRepoMoq.Object);
+            unitOfWorkMoq.Setup(m => m.PublisherRepository).Returns(publisherRepo);
+            unitOfWorkMoq.Setup(m => m.CongregationRepository).Returns(congregationRepo);
+            congregationUserServiceMoq = new CongregationUserService(unitOfWorkMoq.Object);
+
+            Assert.IsFalse(congregationUserServiceMoq.Add(new CongregationUserDto
+            {
+                CongregationId = 1,
+                PublisherId = 1
+            }).IsSuccess);
+        }
+
+        [Test]
+        public void CreateNew_User_NoPassword()
+        {
+            unitOfWorkMoq.Setup(m => m.CongregationUserRepository).Returns(congregationUserRepoMoq.Object);
+            unitOfWorkMoq.Setup(m => m.PublisherRepository).Returns(publisherRepo);
+            unitOfWorkMoq.Setup(m => m.CongregationRepository).Returns(congregationRepo);
+            congregationUserServiceMoq = new CongregationUserService(unitOfWorkMoq.Object);
+
+            Assert.IsFalse(congregationUserServiceMoq.Add(new CongregationUserDto
+            {
+                CongregationId = 1,
+                PublisherId = 1,
+                Username = "johndoe"
+            }).IsSuccess);
+        }
+
+        [Test]
+        public void CreateNew_User_NoRole()
+        {
+            unitOfWorkMoq.Setup(m => m.CongregationUserRepository).Returns(congregationUserRepoMoq.Object);
+            unitOfWorkMoq.Setup(m => m.PublisherRepository).Returns(publisherRepo);
+            unitOfWorkMoq.Setup(m => m.CongregationRepository).Returns(congregationRepo);
+            congregationUserServiceMoq = new CongregationUserService(unitOfWorkMoq.Object);
+            Assert.IsFalse(congregationUserServiceMoq.Add(new CongregationUserDto
+            {
+                CongregationId = 1,
+                PublisherId = 1,
+                Username = "johndoe",
+                Password = "12345"
+            }).IsSuccess);
+        }
     }
 }

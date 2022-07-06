@@ -41,7 +41,7 @@ namespace JWDataTracker.Api.Controllers
                     _configuration["Jwt:Issuer"],
                     _configuration["Jwt:Audience"],
                     claims,
-                    expires: DateTime.UtcNow.AddMinutes(10),
+                    expires: DateTime.UtcNow.AddMonths(12),
                     signingCredentials: signIn);
 
                 response.Message = new JwtSecurityTokenHandler().WriteToken(token);

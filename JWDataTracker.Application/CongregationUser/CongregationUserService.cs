@@ -1,5 +1,6 @@
 ﻿using JWDataTracker.Helper;
 using JWDataTracker.Infrastructure.Repository;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,15 +23,21 @@ namespace JWDataTracker.Application.CongregationUser
                 if (unitOfWork.CongregationRepository.GetByID(model.CongregationId) == null)
                     return response = new Response(false, "Congregation is not existing");
 
-                if (unitOfWork.CongregationUserRepository.Get(i => i.Username == model.Username).Any())
-                    return response = new Response(false, "Username already exists");
-
                 if (!unitOfWork.PublisherRepository.Get(i => i.PublisherId == model.PublisherId).Any())
                     return response = new Response(false, "Publisher is not existing");
 
+                if (string.IsNullOrEmpty(model.Username) || string.IsNullOrEmpty(model.Password))
+                    return response = new Response(false, "Username/Password is required");
+
+                if (model.RoleId == 0)
+                    return response = new Response(false, "Role Id is not specified");
+
+                if (unitOfWork.CongregationUserRepository.Get(i => i.Username == model.Username).Any())
+                    return response = new Response(false, "Username already exists");
+
                 var entity = new entity.CongregationUser()
                 {
-                    CreatedDate = DateTime.UtcNow.ToLongDateString(),
+                    CreatedDate = JsonConvert.SerializeObject(DateTime.UtcNow),
                     Email = model.Email,
                     IsPasswordReset = 0,
                     Password = model.Password,
@@ -70,6 +77,7 @@ namespace JWDataTracker.Application.CongregationUser
             catch (Exception e)
             {
                 response = new Response(false, e.GetBaseException().Message);
+                response.HasException = true;
             }
             return response;
         }
