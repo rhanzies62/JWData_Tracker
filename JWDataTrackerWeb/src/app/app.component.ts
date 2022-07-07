@@ -7,4 +7,14 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'JWDataTrackerWeb';
+  responsivehelper: boolean = false;
+  /**
+   *
+   */
+  constructor() {
+    if(window.location.href.indexOf('localhost') > -1){
+      this.responsivehelper = true;
+    }
+    
+  }
 }
