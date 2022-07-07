@@ -8,6 +8,7 @@ using JWDataTracker.Infrastructure;
 using JWDataTracker.Application.Congregation;
 using JWDataTracker.Application.CongregationUser;
 using JWDataTracker.Application.MidWeekMeetingSchedule;
+using Microsoft.Extensions.Configuration;
 
 namespace JWDataTracker.Application
 {
@@ -15,6 +16,7 @@ namespace JWDataTracker.Application
     {
         public static IServiceCollection AddInternalServices(this IServiceCollection services)
         {
+            services.AddScoped<IAuthenticatedUser, AuthenticatedUser>();
             services.AddScoped<ICongregationService, CongregationService>();
             services.AddScoped<ICongregationUserService, CongregationUserService>();
             services.AddScoped<IMidWeekMeetingScheduleService, MidWeekMeetingScheduleService>();

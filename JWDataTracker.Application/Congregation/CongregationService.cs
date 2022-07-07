@@ -20,8 +20,11 @@ namespace JWDataTracker.Application.Congregation
             var response = new Response(true, String.Empty);
             try
             {
-                if (unitOfWork.CongregationRepository.Get(i => i.Name.Trim().ToUpper() == model.Name.Trim().ToUpper()) != null)
+                if (unitOfWork.CongregationRepository.Get(i => i.Name.Trim().ToUpper() == model.Name.Trim().ToUpper()).Any())
                     return new Response(false, "Congregation Name Already Exist");
+
+                if (string.IsNullOrEmpty(model.Name))
+                    return new Response(false, "Congregation Name is required");
 
                 var entity = new entity.Congregation()
                 {
@@ -63,9 +66,12 @@ namespace JWDataTracker.Application.Congregation
             var response = new Response(true, String.Empty);
             try
             {
-                var entity = unitOfWork.CongregationRepository.Get(i => i.CongregationId == model.CongregationId).FirstOrDefault();
+                var entity = unitOfWork.CongregationRepository.GetByID(model.CongregationId);
                 if (entity == null)
                     return new Response(false, "Congregation is not existing");
+
+                if (string.IsNullOrEmpty(model.Name))
+                    return new Response(false, "Congregation Name is required");
 
                 entity.Name = model.Name;
                 unitOfWork.Save();
