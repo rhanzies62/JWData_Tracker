@@ -24,10 +24,4 @@
     <ProjectReference Include="..\JWDataTracker.Infrastructure\JWDataTracker.Infrastructure.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <None Update="DataTracker.db">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-
 </Project>

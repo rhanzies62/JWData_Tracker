@@ -28,7 +28,9 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.scss"
+              "src/styles.scss",
+              "src/app/bootstrap_util/bootstrap-grid.css",
+              "src/app/bootstrap_util/bootstrap-utilities.css"
             ],
             "scripts": []
           },
@@ -123,6 +125,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "JWDataTrackerWeb"
+    }
+  },
+  "defaultProject": "JWDataTrackerWeb",
+  "cli": {
+    "analytics": false
+  }
 }
