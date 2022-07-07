@@ -1,4 +1,6 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
+
 namespace JWDataTracker.Application.CongregationUser
 {
     public class CongregationUserDto
@@ -13,11 +15,10 @@ namespace JWDataTracker.Application.CongregationUser
         public string Salt { get; set; }
         public string Password { get; set; }
         public long RoleId { get; set; }
-        public string CreatedDate { get; set; }
+        public DateTime CreatedDate { get; set; }
         public long IsPasswordReset { get; set; }
         public string Email { get; set; }
         public long? CongregationId { get; set; }
-
         public string FirstName { get; set; }
         public string LastName { get; set; }
     }

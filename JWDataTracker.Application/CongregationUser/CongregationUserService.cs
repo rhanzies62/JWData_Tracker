@@ -1,9 +1,11 @@
 ﻿using JWDataTracker.Helper;
 using JWDataTracker.Infrastructure.Repository;
+using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using entity = JWDataTracker.Infrastructure;
@@ -35,16 +37,17 @@ namespace JWDataTracker.Application.CongregationUser
                 if (unitOfWork.CongregationUserRepository.Get(i => i.Username == model.Username).Any())
                     return response = new Response(false, "Username already exists");
 
+                var salt = GenerateSalt();
                 var entity = new entity.CongregationUser()
                 {
                     CreatedDate = JsonConvert.SerializeObject(DateTime.UtcNow),
                     Email = model.Email,
                     IsPasswordReset = 0,
-                    Password = model.Password,
+                    Password = HashPassword(model.Password,salt),
                     PublisherId = model.PublisherId,
                     RoleId = model.RoleId,
                     Username = model.Username,
-                    Salt = model.Salt,
+                    Salt = Convert.ToBase64String(salt),
                     CongregationId = model.CongregationId
                 };
 
@@ -115,7 +118,7 @@ namespace JWDataTracker.Application.CongregationUser
                     {
                         CongregationId = i.CongregationId,
                         CongregationUserId = i.CongregationUserId,
-                        CreatedDate = i.CreatedDate,
+                        CreatedDate = JsonConvert.DeserializeObject<DateTime>(i.CreatedDate),
                         Email = i.Email,
                         RoleId = i.RoleId,
                         IsPasswordReset = i.IsPasswordReset,
@@ -130,23 +133,29 @@ namespace JWDataTracker.Application.CongregationUser
             {
                 var user = (from cu in unitOfWork.CongregationUserRepository.Get()
                             join p in unitOfWork.PublisherRepository.Get() on cu.PublisherId equals p.PublisherId
-                            where cu.Username == model.Username && cu.Password == model.Password
+                            where cu.Username == model.Username
                             select new CongregationUserDto
                             {
                                 FirstName = p.FirstName,
                                 Email = cu.Email,
                                 CongregationId = cu.CongregationId,
                                 CongregationUserId = cu.CongregationUserId,
-                                CreatedDate = cu.CreatedDate,
+                                CreatedDate = JsonConvert.DeserializeObject<DateTime>(cu.CreatedDate),
                                 IsPasswordReset = cu.IsPasswordReset,
                                 LastName = p.LastName,
                                 PublisherId = p.PublisherId,
                                 RoleId = cu.RoleId,
-                                Username = cu.Username
+                                Username = cu.Username,
+                                Salt = cu.Salt,
+                                Password = cu.Password
                             }).FirstOrDefault();
 
                 if (user == null)
                     return new Response(false, "User not found");
+
+                var hashPassword = HashPassword(model.Password, Convert.FromBase64String(user.Salt));
+                if (hashPassword != user.Password)
+                    return new Response(false, "Incorrect username/password");
 
                 response.Data = user;
             }
@@ -155,6 +164,24 @@ namespace JWDataTracker.Application.CongregationUser
                 response = new Response(false, "Error Occured");
             }
             return response;
+        }
+        private string HashPassword(string password, byte[] salt)
+        {
+            return Convert.ToBase64String(KeyDerivation.Pbkdf2(
+            password: password,
+            salt: salt,
+            prf: KeyDerivationPrf.HMACSHA256,
+            iterationCount: 100000,
+            numBytesRequested: 256 / 8));
+        }
+        private byte[] GenerateSalt()
+        {
+            byte[] salt = new byte[128 / 8];
+            using (var rngCsp = new RNGCryptoServiceProvider())
+            {
+                rngCsp.GetNonZeroBytes(salt);
+            }
+            return salt;
         }
     }
 }
