@@ -68,7 +68,7 @@ namespace JWDataTracker.Test
             var result = congregationUserServiceMoq.Add(new CongregationUserDto
             {
                 CongregationId = 1,
-                CreatedDate = JsonConvert.SerializeObject(DateTime.UtcNow),
+                CreatedDate = DateTime.UtcNow,
                 Email = "TestEmail@email.com",
                 Password = "12345",
                 PublisherId = 1,
@@ -91,7 +91,7 @@ namespace JWDataTracker.Test
             var result = congregationUserServiceMoq.Add(new CongregationUserDto
             {
                 CongregationId = 2,
-                CreatedDate = JsonConvert.SerializeObject(DateTime.UtcNow),
+                CreatedDate = DateTime.UtcNow,
                 Email = "TestEmail@email.com",
                 Password = "12345",
                 PublisherId = 1,
@@ -114,7 +114,7 @@ namespace JWDataTracker.Test
             var result = congregationUserServiceMoq.Add(new CongregationUserDto
             {
                 CongregationId = 1,
-                CreatedDate = JsonConvert.SerializeObject(DateTime.UtcNow),
+                CreatedDate = DateTime.UtcNow,
                 Email = "TestEmail@email.com",
                 Password = "12345",
                 PublisherId = 1,
@@ -137,7 +137,7 @@ namespace JWDataTracker.Test
             var result = congregationUserServiceMoq.Add(new CongregationUserDto
             {
                 CongregationId = 1,
-                CreatedDate = JsonConvert.SerializeObject(DateTime.UtcNow),
+                CreatedDate = DateTime.UtcNow,
                 Email = "TestEmail@email.com",
                 Password = "12345",
                 PublisherId = 2,
