@@ -55,6 +55,36 @@ input, button{
     text-decoration: none;
 }
 
+.card {
+    background: #FFFFFF;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.card .card-header{
+    background: #F2F1EF;
+    padding: 10px;
+}
+
+
+.bg-gray {
+    background: #626262 !important;
+}
+
+.bg-yellow {
+    background: #C48430 !important;
+}
+
+.bg-red {
+    background: #942926 !important;
+}
+
+.bg-blue{
+    background: #3E85FC !important;
+}
+
+.text-white{
+    color:white !important; 
+}
 
 // Small devices (landscape phones, 576px and up)
 @media (min-width: 576px) { }
