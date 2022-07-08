@@ -9,6 +9,7 @@ import { ForgotPasswordComponent } from './pages/forgot-password/forgot-password
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { NavMenuComponent } from './shared/components/nav-menu/nav-menu.component';
 import { MainContentComponent } from './pages/main-content/main-content.component';
+import { MidWeekSchedulePanelComponent } from './pages/dashboard/mid-week-schedule-panel/mid-week-schedule-panel.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { MainContentComponent } from './pages/main-content/main-content.componen
     ForgotPasswordComponent,
     DashboardComponent,
     NavMenuComponent,
-    MainContentComponent
+    MainContentComponent,
+    MidWeekSchedulePanelComponent
   ],
   imports: [
     BrowserModule,
