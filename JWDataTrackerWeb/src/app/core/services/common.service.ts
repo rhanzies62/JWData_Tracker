@@ -1,6 +1,6 @@
 import { Component, Injectable } from "@angular/core";
 import { JwtHelperService } from "@auth0/angular-jwt";
-// import { DialogCloseResult, DialogRef, DialogService, WindowCloseResult, WindowService } from "@progress/kendo-angular-dialog";
+import { DialogCloseResult, DialogRef, DialogService, WindowCloseResult, WindowService } from "@progress/kendo-angular-dialog";
 import { BehaviorSubject, of } from "rxjs";
 import { LocalStorageKey } from "../../shared/models/constant";
 import { EncryptionService } from "./encryption.service";
@@ -9,9 +9,8 @@ import { EncryptionService } from "./encryption.service";
   providedIn: "root",
 })
 export class CommonService {
-//   dialogRef: DialogRef;
-//   constructor(private encryptionService: EncryptionService,private dialogService: DialogService) {}
-  constructor(private encryptionService: EncryptionService) {}
+   dialogRef: DialogRef;
+   constructor(private encryptionService: EncryptionService,private dialogService: DialogService) {}
 
   private _isLoadingObs = new BehaviorSubject<boolean>(false);
   isLoadingObs = this._isLoadingObs.asObservable();
@@ -70,53 +69,53 @@ export class CommonService {
     }
   }
 
-//   displayAlert(title: string, component: any,width: number,onWindowClose: any = null) : any{
-//     if(this.dialogRef) this.dismissDialog();
-//     this.dialogRef = this.dialogService.open({
-//       title: title,
-//       content: component,
-//       width: width,
-//     });
+  displayAlert(title: string, component: any,width: number,onWindowClose: any = null) : any{
+    if(this.dialogRef) this.dismissDialog();
+    this.dialogRef = this.dialogService.open({
+      title: title,
+      content: component,
+      width: width,
+    });
 
-//     if(onWindowClose){
-//       this.dialogRef.result.subscribe((result)=>{
-//         if(result instanceof DialogCloseResult){
-//           onWindowClose();
-//         }
-//       })
-//     }
-//     return this.dialogRef.content.instance;
-//   }
+    if(onWindowClose){
+      this.dialogRef.result.subscribe((result)=>{
+        if(result instanceof DialogCloseResult){
+          onWindowClose();
+        }
+      })
+    }
+    return this.dialogRef.content.instance;
+  }
 
-//   dismissDialog() {
-//     if(this.dialogRef){
-//       this.dialogRef.close();
-//     }
-//   }
+  dismissDialog() {
+    if(this.dialogRef){
+      this.dialogRef.close();
+    }
+  }
 
-//   displayConfirmation(title: string, content: string, onConfirm: any, onDismiss: any,isYesNo:boolean = true) {
-//     this.dialogRef = this.dialogService.open({
-//       title: title,
-//       content: content,
-//       actions: isYesNo ? [{ text: "No" }, { text: "Yes", primary: true }] : [{ text: "Confirm", primary: true }],
-//       width: 450,
-//       height: 200,
-//       minWidth: 250,
-//     });
+  displayConfirmation(title: string, content: string, onConfirm: any, onDismiss: any,isYesNo:boolean = true) {
+    this.dialogRef = this.dialogService.open({
+      title: title,
+      content: content,
+      actions: isYesNo ? [{ text: "No" }, { text: "Yes", primary: true }] : [{ text: "Confirm", primary: true }],
+      width: 450,
+      height: 200,
+      minWidth: 250,
+    });
 
-//     this.dialogRef.result.subscribe((result: any) => {
-//       if (result instanceof DialogCloseResult) {
-//         if(onDismiss) onDismiss();
-//       } else {
-//         if(result.primary){
-//           if(onConfirm) onConfirm();
-//         } else {
-//           if(onDismiss) onDismiss();
-//           this.dismissDialog();
-//         }
-//       }
-//     });
-//   }
+    this.dialogRef.result.subscribe((result: any) => {
+      if (result instanceof DialogCloseResult) {
+        if(onDismiss) onDismiss();
+      } else {
+        if(result.primary){
+          if(onConfirm) onConfirm();
+        } else {
+          if(onDismiss) onDismiss();
+          this.dismissDialog();
+        }
+      }
+    });
+  }
 
   imgToFile(dataurl, filename){
     var arr = dataurl.split(','),

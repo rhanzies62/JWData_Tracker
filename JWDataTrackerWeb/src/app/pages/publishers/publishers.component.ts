@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { CommonService } from 'src/app/core/services/common.service';
+import { AddEditPubilisherComponent } from './add-edit-pubilisher/add-edit-pubilisher.component';
 
 @Component({
   selector: 'app-publishers',
@@ -17,9 +19,13 @@ export class PublishersComponent implements OnInit {
           }
       }
   ];
-  constructor() { }
+  constructor(private commonService: CommonService) { }
 
   ngOnInit(): void {
+  }
+
+  openPublisherModal(){
+    this.commonService.displayAlert("Add/Edit Publisher",AddEditPubilisherComponent,window.innerWidth * .5,()=> {});
   }
 
 }

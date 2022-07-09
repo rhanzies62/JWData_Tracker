@@ -26,6 +26,9 @@ import { BaseModuleComponent } from './pages/base-module/base-module.component';
 import { GridModule } from '@progress/kendo-angular-grid';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { PublishersComponent } from './pages/publishers/publishers.component';
+import { DialogsModule } from '@progress/kendo-angular-dialog';
+import { AddEditPubilisherComponent } from './pages/publishers/add-edit-pubilisher/add-edit-pubilisher.component';
+
 
 
 @NgModule({
@@ -43,7 +46,8 @@ import { PublishersComponent } from './pages/publishers/publishers.component';
     MeetingAttendanceSummaryPanelComponent,
     LoadingScreenComponent,
     BaseModuleComponent,
-    PublishersComponent
+    PublishersComponent,
+    AddEditPubilisherComponent
   ],
   imports: [
     BrowserModule,
@@ -62,8 +66,10 @@ import { PublishersComponent } from './pages/publishers/publishers.component';
     ], { scrollPositionRestoration: 'enabled' }),
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
     GridModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    DialogsModule
   ],
+  entryComponents: [AddEditPubilisherComponent],
   providers: [{ provide: JWT_OPTIONS, useValue: JWT_OPTIONS },JwtHelperService, AuthenticateApiService],
   bootstrap: [AppComponent]
 })

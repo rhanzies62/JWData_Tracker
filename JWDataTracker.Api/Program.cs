@@ -13,8 +13,7 @@ builder.Services.AddCors(options =>
     options.AddPolicy(name: "AllMyDomains",
                       builder =>
                       {
-                          builder.WithOrigins("http://localhost:4200",
-                                              "https://datatracker-web.azurewebsites.net")
+                          builder.AllowAnyOrigin()
                           .AllowAnyHeader()
                           .AllowAnyMethod();
                       });
