@@ -14,6 +14,8 @@ import { WeekendMeetingSchedulePanelComponent } from './pages/dashboard/weekend-
 import { CongregationStatsComponent } from './pages/dashboard/congregation-stats/congregation-stats.component';
 import { PublisherAnalysisPanelComponent } from './pages/dashboard/publisher-analysis-panel/publisher-analysis-panel.component';
 import { MeetingAttendanceSummaryPanelComponent } from './pages/dashboard/meeting-attendance-summary-panel/meeting-attendance-summary-panel.component';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
 
 @NgModule({
   declarations: [
@@ -39,7 +41,8 @@ import { MeetingAttendanceSummaryPanelComponent } from './pages/dashboard/meetin
           { path: 'dashboard', component: DashboardComponent} 
         ]
       }
-    ], { scrollPositionRestoration: 'enabled' })
+    ], { scrollPositionRestoration: 'enabled' }),
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [],
   bootstrap: [AppComponent]
