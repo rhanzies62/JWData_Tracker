@@ -1,6 +1,7 @@
 ﻿using JWDataTracker.Application.CongregationUser;
 using JWDataTracker.Helper;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -13,6 +14,7 @@ namespace JWDataTracker.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [EnableCors]
     public class AuthenticateController : ControllerBase
     {
         private readonly ICongregationUserService _congregationUserService;
