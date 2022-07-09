@@ -14,7 +14,6 @@ namespace JWDataTracker.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [EnableCors]
     public class AuthenticateController : ControllerBase
     {
         private readonly ICongregationUserService _congregationUserService;

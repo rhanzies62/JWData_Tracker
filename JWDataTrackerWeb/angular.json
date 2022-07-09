@@ -30,6 +30,9 @@
               "src/manifest.webmanifest"
             ],
             "styles": [
+              {
+                "input": "node_modules/@progress/kendo-theme-default/dist/all.css"
+              },
               "src/styles.scss",
               "src/app/bootstrap_util/bootstrap-grid.css",
               "src/app/bootstrap_util/bootstrap-utilities.css"
@@ -99,6 +102,9 @@
               "src/manifest.webmanifest"
             ],
             "styles": [
+              {
+                "input": "node_modules/@progress/kendo-theme-default/dist/all.css"
+              },
               "src/styles.scss"
             ],
             "scripts": []
