@@ -4,10 +4,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace JWDataTracker.Api.Controllers
 {
-    [Authorize]
     [ApiController]
     [Route("[controller]")]
-    public class WeatherForecastController : BaseController
+    public class WeatherForecastController : ControllerBase
     {
         private static readonly string[] Summaries = new[]
         {
@@ -15,14 +14,13 @@ namespace JWDataTracker.Api.Controllers
     };
 
 
-        public WeatherForecastController(IAuthenticatedUser currentUser) : base(currentUser)
+        public WeatherForecastController(IAuthenticatedUser currentUser) 
         {
         }
 
-        [HttpGet(Name = "GetWeatherForecast")]
+        [AllowAnonymous,HttpGet(Name = "GetWeatherForecast")]
         public IEnumerable<WeatherForecast> Get()
         {
-            var id = _currentUser.Id;
             return Enumerable.Range(1, 5).Select(index => new WeatherForecast
             {
                 Date = DateTime.Now.AddDays(index),

@@ -8,6 +8,17 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddHttpContextAccessor();
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: "AllMyDomains",
+                      builder =>
+                      {
+                          builder.WithOrigins("http://localhost:4200",
+                                              "http://datatracker-web.azurewebsites.net")
+                          .AllowAnyHeader()
+                          .AllowAnyMethod();
+                      });
+});
 builder.Services.AddControllers();
 builder.Services.AddInternalServices();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -32,10 +43,12 @@ builder.Services.Configure<ApiBehaviorOptions>(options =>
     options.SuppressModelStateInvalidFilter = true;
 });
 
-var app = builder.Build();
 
+
+var app = builder.Build();
+app.UseRouting();
 // Configure the HTTP request pipeline.
-app.UseCors();
+app.UseCors("AllMyDomains");
 app.UseAuthentication();
 app.UseSwagger();
 app.UseSwaggerUI();
