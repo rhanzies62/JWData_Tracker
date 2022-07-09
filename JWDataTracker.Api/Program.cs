@@ -14,7 +14,7 @@ builder.Services.AddCors(options =>
                       builder =>
                       {
                           builder.WithOrigins("http://localhost:4200",
-                                              "http://datatracker-web.azurewebsites.net")
+                                              "https://datatracker-web.azurewebsites.net")
                           .AllowAnyHeader()
                           .AllowAnyMethod();
                       });
