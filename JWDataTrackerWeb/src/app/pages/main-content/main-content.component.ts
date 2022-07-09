@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { AuthService } from 'src/app/core/services/auth.service';
 
 @Component({
   selector: 'app-main-content',
@@ -7,9 +9,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MainContentComponent implements OnInit {
 
-  constructor() { }
+  constructor(public authService: AuthService, private router: Router) { }
 
   ngOnInit(): void {
+    if(this.authService.isTokenValid()){
+      this.router.navigate(['dashboard']);
+    }
   }
 
 }

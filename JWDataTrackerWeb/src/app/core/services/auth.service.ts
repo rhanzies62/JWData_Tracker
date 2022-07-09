@@ -1,5 +1,7 @@
 import { Injectable } from "@angular/core";
 import { JwtHelperService } from "@auth0/angular-jwt";
+import { ApiResponse } from "src/app/shared/models/apiresponse";
+import { CongregationUser } from "src/app/shared/models/congregationuser";
 import { LocalStorageKey } from "../../shared/models/constant";
 import { CommonService } from "./common.service";
 import { routeConfig } from "./routeConfig";
@@ -16,6 +18,7 @@ export class AuthService {
 
   isTokenValid(): boolean {
     const token = this.getUserToken();
+    console.log(token);
     if (!token) return false;
     const isTokenExpired = this.jwtHelper.isTokenExpired(
       token.authenticationToken
@@ -27,14 +30,14 @@ export class AuthService {
     this.commonService.clearSession();
   }
 
-  saveUserToken(userToken: any): void {
+  saveUserToken(userToken: ApiResponse<CongregationUser>): void {
     this.commonService.setLocalStorageItems(
       LocalStorageKey.AUTH_TOKEN,
-      userToken.UserToken
+      userToken.message
     );
     this.commonService.setLocalStorageItems(
       LocalStorageKey.LOGIN_DETAILS,
-      JSON.stringify(userToken)
+      JSON.stringify(userToken.data)
     );
   }
 
@@ -57,7 +60,7 @@ export class AuthService {
     return token;
   }
 
-  getUserDetails() {
+  getUserDetails() : CongregationUser {
     var userJson = this.commonService.getLocalStorageItems(
       LocalStorageKey.LOGIN_DETAILS
     );
@@ -66,7 +69,7 @@ export class AuthService {
 
   hasAccessOnPage(url: string): boolean {
     const userDetails = this.getUserDetails();
-    const routes = this.routeConfig[userDetails.SecurityTypeId.toString()];
+    const routes = this.routeConfig[userDetails.roleId.toString()];
     let hasAccess = false;
     for (var key in routes) {
       if(url.startsWith(key)) hasAccess = true;

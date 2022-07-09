@@ -16,8 +16,8 @@
                             <a [routerLink]="['/servicereport']" [routerLinkActive]="['link-active']">Reports</a>
                             <a [routerLink]="['/users']" [routerLinkActive]="['link-active']">Users</a>
                             <div class="menu-user">
-                                <a [routerLink]="['/users']" [routerLinkActive]="['link-active']">Arnel Dela Cruz</a>
-                                <button class="btn btn-default">Logout</button>
+                                <a [routerLink]="['/users']" [routerLinkActive]="['link-active']">{{fullname}}</a>
+                                <button class="btn btn-default" (click)="logout()">Logout</button>
                             </div>  
                         </div>                        
                     </div>

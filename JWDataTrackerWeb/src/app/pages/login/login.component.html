@@ -1,11 +1,14 @@
-<div class="container" style="height:98vh">
-    <div class="d-flex justify-content-center align-items-center h-100">
-        <div class="col-12 col-md-6 col-lg-5 col-xl-4 py-5 logincontainer p-3 d-flex justify-content-center align-items-center flex-column">
-            <h1 class="m-0 p-0">Data Tracker</h1>
-            <input type="text" class="form-control w-75 my-2" placeholder="Username" />
-            <input type="password" class="form-control w-75 my-2" placeholder="Password" />
-            <button class="btn btn-default" style="width:82%" [routerLink]="['/dashboard']">Login</button>
-            <a class="btn-link my-2" style="width:82%" [routerLink]="['/forgotpassword']">Forgot Password?</a>
+<form [formGroup]="loginForm" *ngIf="loginForm" (submit)="submit()">
+    <div class="container" style="height:98vh">
+        <div class="d-flex justify-content-center align-items-center h-100">
+            <div class="col-12 col-md-6 col-lg-5 col-xl-4 py-5 logincontainer p-3 d-flex justify-content-center align-items-center flex-column">
+                    <h1 class="m-0 p-0">Data Tracker</h1>
+                    <label class="text-red my-2">{{message}}</label>
+                    <input formControlName="username" name="username"  type="text" class="form-control w-75 my-2" placeholder="Username" />
+                    <input formControlName="password" name="password" type="password" class="form-control w-75 my-2" placeholder="Password" />
+                    <button [disabled]="!loginForm.valid" class="btn btn-default" style="width:82%" [routerLink]="['/dashboard']">Login</button>
+                <a class="btn-link my-2" style="width:82%" [routerLink]="['/forgotpassword']">Forgot Password?</a>
+            </div>
         </div>
     </div>
-</div>
+</form>
