@@ -3,7 +3,9 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  apiUrl: "http://data-tracker-prod-web.azurewebsites.net/"
+  // apiUrl: "https://localhost:7240/"
 };
 
 /*

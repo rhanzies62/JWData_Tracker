@@ -16,6 +16,13 @@ import { PublisherAnalysisPanelComponent } from './pages/dashboard/publisher-ana
 import { MeetingAttendanceSummaryPanelComponent } from './pages/dashboard/meeting-attendance-summary-panel/meeting-attendance-summary-panel.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
+import { AuthenticationGuardService } from "./core/services/authguard.service";
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { JwtHelperService, JWT_OPTIONS } from '@auth0/angular-jwt';
+import { AuthenticateApiService } from './core/apiService/authenticate-api.service';
+import { HttpClientModule } from '@angular/common/http';
+import { LoadingScreenComponent } from './shared/components/loading-screen/loading-screen.component';
+import { BaseModuleComponent } from './pages/base-module/base-module.component';
 
 @NgModule({
   declarations: [
@@ -29,22 +36,27 @@ import { environment } from '../environments/environment';
     WeekendMeetingSchedulePanelComponent,
     CongregationStatsComponent,
     PublisherAnalysisPanelComponent,
-    MeetingAttendanceSummaryPanelComponent
+    MeetingAttendanceSummaryPanelComponent,
+    LoadingScreenComponent,
+    BaseModuleComponent
   ],
   imports: [
     BrowserModule,
+    FormsModule,
+    ReactiveFormsModule,
+    HttpClientModule,
     RouterModule.forRoot([
       { path: 'login', component: LoginComponent, pathMatch: 'full' },
       { path: 'forgotpassword', component: ForgotPasswordComponent, pathMatch: 'full' },
       {
-        path: '', component: MainContentComponent, children: [
-          { path: 'dashboard', component: DashboardComponent} 
+        path: '', component: MainContentComponent,canActivate: [AuthenticationGuardService] , children: [
+          { path: 'dashboard', component: DashboardComponent, canActivate: [AuthenticationGuardService] } 
         ]
       }
     ], { scrollPositionRestoration: 'enabled' }),
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
-  providers: [],
+  providers: [{ provide: JWT_OPTIONS, useValue: JWT_OPTIONS },JwtHelperService, AuthenticateApiService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
