@@ -1,6 +1,19 @@
-<div class="container">
-    <div class="col-12">
-        <kendo-grid [data]="gridData">
+<div class="container mt-4 my-5">
+    <div class="col-12 d-flex align-items-center justify-content-between mb-3">
+        <input type="text" class="form-control" placeholder="Search Publisher." style="width:30%"/>
+        <button class="btn btn-default">Add Publisher</button>
+    </div>
+    <div class="col-12 shadow">
+        <kendo-grid 
+            [data]="gridData"
+            [pageable]="{
+                buttonCount: 5,
+                info: true,
+                type: 'numeric',
+                pageSizes: true,
+                previousNext: true,
+                position: 'bottom'
+              }">
             <kendo-grid-column field="ProductID" title="ID"> </kendo-grid-column>
             <kendo-grid-column field="ProductName" title="Name"> </kendo-grid-column>
             <kendo-grid-column field="Category.CategoryName" title="Category"> </kendo-grid-column>

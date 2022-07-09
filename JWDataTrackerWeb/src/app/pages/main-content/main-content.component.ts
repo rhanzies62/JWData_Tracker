@@ -12,7 +12,7 @@ export class MainContentComponent implements OnInit {
   constructor(public authService: AuthService, private router: Router) { }
 
   ngOnInit(): void {
-    if(this.authService.isTokenValid()){
+    if(window.location.pathname === ""){
       this.router.navigate(['dashboard']);
     }
   }
