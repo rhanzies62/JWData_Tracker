@@ -1,29 +1,31 @@
-<div class="nav row w-100 p-2">
-    <div class="col-6 col-md-12 col-lg-3 col-xl-6 d-flex align-items-center my-2 ">
-        <h3 class="m-0 p-0 text-md-center text-lg-start w-100">DataTracker</h3>
-    </div>
-    <div class="d-none d-md-block col-12 col-lg-9 col-xl-6">
-        <div class="row">
-            <div class="col-12 col-md-8 col-lg-9 d-flex align-items-center">
-                <div class="menu-item w-100">
-                    <a [routerLink]="['/dashboard']" [routerLinkActive]="['link-active']">Dashboard</a>
-                    <a [routerLink]="['/meetings']" [routerLinkActive]="['link-active']">Meetings</a>
-                    <a [routerLink]="['/publishers']" [routerLinkActive]="['link-active']">Publishers</a>
-                    <a [routerLink]="['/servicereport']" [routerLinkActive]="['link-active']">Reports</a>
-                    <a [routerLink]="['/users']" [routerLinkActive]="['link-active']">Users</a>
-                </div>                        
+<div class="nav">
+    <div class="container">
+        <div class="row w-100 p-2">
+            <div class="col-6 col-md-12 col-lg-3 col-xl-6 d-flex align-items-center my-2 ">
+                <h3 class="m-0 p-0 text-md-center text-lg-start w-100">DataTracker</h3>
             </div>
-            <div class=" col-12 col-md-4 col-lg-3 d-flex align-items-center">
-                <div class="menu-user">
-                    <a [routerLink]="['/users']" [routerLinkActive]="['link-active']">John Doe</a>
-                    <div class="profile-pic"></div>
-                </div>                          
+            <div class="d-none d-md-block col-12 col-lg-9 col-xl-6">
+                <div class="row">
+                    <div class="col-12 d-flex align-items-center justify-content-end">
+                        <div class="menu-item w-100">
+                            <a [routerLink]="['/dashboard']" [routerLinkActive]="['link-active']">Dashboard</a>
+                            <a [routerLink]="['/meetings']" [routerLinkActive]="['link-active']">Meetings</a>
+                            <a [routerLink]="['/publishers']" [routerLinkActive]="['link-active']">Publishers</a>
+                            <a [routerLink]="['/servicereport']" [routerLinkActive]="['link-active']">Reports</a>
+                            <a [routerLink]="['/users']" [routerLinkActive]="['link-active']">Users</a>
+                            <div class="menu-user">
+                                <a [routerLink]="['/users']" [routerLinkActive]="['link-active']">Arnel Dela Cruz</a>
+                                <div class="profile-pic"></div>
+                            </div>  
+                        </div>                        
+                    </div>
+                </div>           
             </div>
-        </div>           
-    </div>
-    <div class="col-6 d-block d-md-none">
-        <button class="btn btn-default d-flex align-items-center float-end">
-            <i class='bx bx-menu fs-4'></i>
-        </button>
+            <div class="col-6 d-block d-md-none">
+                <button class="btn btn-default d-flex align-items-center float-end">
+                    <i class='bx bx-menu fs-4'></i>
+                </button>
+            </div>
+        </div>
     </div>
 </div>
