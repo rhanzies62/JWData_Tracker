@@ -10,6 +10,10 @@ import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { NavMenuComponent } from './shared/components/nav-menu/nav-menu.component';
 import { MainContentComponent } from './pages/main-content/main-content.component';
 import { MidWeekSchedulePanelComponent } from './pages/dashboard/mid-week-schedule-panel/mid-week-schedule-panel.component';
+import { WeekendMeetingSchedulePanelComponent } from './pages/dashboard/weekend-meeting-schedule-panel/weekend-meeting-schedule-panel.component';
+import { CongregationStatsComponent } from './pages/dashboard/congregation-stats/congregation-stats.component';
+import { PublisherAnalysisPanelComponent } from './pages/dashboard/publisher-analysis-panel/publisher-analysis-panel.component';
+import { MeetingAttendanceSummaryPanelComponent } from './pages/dashboard/meeting-attendance-summary-panel/meeting-attendance-summary-panel.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +23,11 @@ import { MidWeekSchedulePanelComponent } from './pages/dashboard/mid-week-schedu
     DashboardComponent,
     NavMenuComponent,
     MainContentComponent,
-    MidWeekSchedulePanelComponent
+    MidWeekSchedulePanelComponent,
+    WeekendMeetingSchedulePanelComponent,
+    CongregationStatsComponent,
+    PublisherAnalysisPanelComponent,
+    MeetingAttendanceSummaryPanelComponent
   ],
   imports: [
     BrowserModule,
