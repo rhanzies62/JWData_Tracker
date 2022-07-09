@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  apiUrl: "http://data-tracker-prod-web.azurewebsites.net/"
+  apiUrl: "https://data-tracker-prod-web.azurewebsites.net/"
   // apiUrl: "https://localhost:7240/"
 };
 
