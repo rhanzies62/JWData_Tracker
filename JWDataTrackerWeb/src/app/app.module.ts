@@ -23,6 +23,10 @@ import { AuthenticateApiService } from './core/apiService/authenticate-api.servi
 import { HttpClientModule } from '@angular/common/http';
 import { LoadingScreenComponent } from './shared/components/loading-screen/loading-screen.component';
 import { BaseModuleComponent } from './pages/base-module/base-module.component';
+import { GridModule } from '@progress/kendo-angular-grid';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { PublishersComponent } from './pages/publishers/publishers.component';
+
 
 @NgModule({
   declarations: [
@@ -38,7 +42,8 @@ import { BaseModuleComponent } from './pages/base-module/base-module.component';
     PublisherAnalysisPanelComponent,
     MeetingAttendanceSummaryPanelComponent,
     LoadingScreenComponent,
-    BaseModuleComponent
+    BaseModuleComponent,
+    PublishersComponent
   ],
   imports: [
     BrowserModule,
@@ -50,11 +55,14 @@ import { BaseModuleComponent } from './pages/base-module/base-module.component';
       { path: 'forgotpassword', component: ForgotPasswordComponent, pathMatch: 'full' },
       {
         path: '', component: MainContentComponent,canActivate: [AuthenticationGuardService] , children: [
-          { path: 'dashboard', component: DashboardComponent, canActivate: [AuthenticationGuardService] } 
+          { path: 'dashboard', component: DashboardComponent, canActivate: [AuthenticationGuardService] },
+          { path: 'publishers', component: PublishersComponent, canActivate: [AuthenticationGuardService] }
         ]
       }
     ], { scrollPositionRestoration: 'enabled' }),
-    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
+    GridModule,
+    BrowserAnimationsModule
   ],
   providers: [{ provide: JWT_OPTIONS, useValue: JWT_OPTIONS },JwtHelperService, AuthenticateApiService],
   bootstrap: [AppComponent]
