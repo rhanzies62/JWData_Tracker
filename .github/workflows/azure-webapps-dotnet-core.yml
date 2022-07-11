@@ -52,9 +52,6 @@ jobs:
           key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json') }}
           restore-keys: |
             ${{ runner.os }}-nuget-
-            
-      - name: Run unit Testing
-        run: dotnet test
 
       - name: Build with dotnet
         run: dotnet build --configuration Release
