@@ -11,12 +11,12 @@ namespace JWDataTracker.Application.Publisher
         public long PublisherId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public string CreatedDate { get; set; }
+        public DateTime CreatedDate { get; set; }
         public long? CongregationId { get; set; }
-        public long IsElder { get; set; }
-        public long IsMs { get; set; }
-        public long IsRp { get; set; }
-        public long IsUnBaptized { get; set; }
+        public bool IsElder { get; set; }
+        public bool IsMs { get; set; }
+        public bool IsRp { get; set; }
+        public bool IsUnBaptized { get; set; }
         public long GroupNumber { get; set; }
     }
 }
