@@ -15,7 +15,7 @@ namespace JWDataTracker.Application.Publisher
             var response = new Response(true, String.Empty);
             try
             {
-                if (!unitOfWork.CongregationRepository.Get(c => c.CongregationId == model.CongregationId).Any())
+                if (unitOfWork.CongregationRepository.GetByID(model.CongregationId) == null)
                     return new Response(false, "Congregation is not existing");
 
                 if(string.IsNullOrEmpty(model.FirstName) || string.IsNullOrEmpty(model.LastName))
