@@ -363,3 +363,4 @@ FodyWeavers.xsd
 
 .angular/
 coveragereport/
+/JWDataTracker.Api/DataTracker.db
