@@ -10,6 +10,7 @@ import { BaseModuleComponent } from 'src/app/pages/base-module/base-module.compo
 })
 export class NavMenuComponent extends BaseModuleComponent implements OnInit {
   fullname: string;
+  showMenu: boolean = false;
   constructor(private commonService: CommonService, public authService: AuthService) {
     super(authService);
    }

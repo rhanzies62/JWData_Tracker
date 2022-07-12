@@ -1,12 +1,14 @@
 ﻿using JWDataTracker.Application;
 using JWDataTracker.Application.Publisher;
+using JWDataTracker.Domain.Grid;
 using JWDataTracker.Helper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace JWDataTracker.Api.Controllers
 {
-    [Route("[controller]")]
+    
     [ApiController]
     public class PublisherController : BaseController
     {
@@ -21,6 +23,12 @@ namespace JWDataTracker.Api.Controllers
         {
             if (model.PublisherId == 0) return publisherService.Add(model);
             else return publisherService.Edit(model);
+        }
+
+        [HttpPost]
+        public GridResultGeneric<PublisherGridDto> ListPublishers(GridFilter filter)
+        {
+            return publisherService.ListPublishers(filter);
         }
 
     }

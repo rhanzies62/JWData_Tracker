@@ -1,4 +1,5 @@
-﻿using JWDataTracker.Helper;
+﻿using JWDataTracker.Domain.Grid;
+using JWDataTracker.Helper;
 using JWDataTracker.Infrastructure.Repository;
 using Newtonsoft.Json;
 using System;
@@ -124,6 +125,11 @@ namespace JWDataTracker.Application.Publisher
                 IsUnBaptized = p.IsUnBaptized == 1,
                 LastName = p.LastName
             });
+        }
+
+        public GridResultGeneric<PublisherGridDto> ListPublishers(GridFilter filter)
+        {
+            return unitOfWork.DataGridRepository.ListPublishers(filter);
         }
     }
 }

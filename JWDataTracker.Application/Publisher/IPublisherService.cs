@@ -1,4 +1,5 @@
-﻿using JWDataTracker.Helper;
+﻿using JWDataTracker.Domain.Grid;
+using JWDataTracker.Helper;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,5 +15,6 @@ namespace JWDataTracker.Application.Publisher
         IEnumerable<PublisherDto> List();
         Response Delete(int publisherId);
         PublisherDto GetById(int publisherId);
+        GridResultGeneric<PublisherGridDto> ListPublishers(GridFilter filter);
     }
 }

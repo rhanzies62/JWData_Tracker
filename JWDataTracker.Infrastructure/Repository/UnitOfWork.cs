@@ -14,7 +14,9 @@ namespace JWDataTracker.Infrastructure.Repository
         IGenericRepository<MidWeekScheduleItem> MidWeekScheduleItemRepository { get; }
         IGenericRepository<Publisher> PublisherRepository { get; }
         IGenericRepository<ServiceReport> ServiceReportRepository { get; }
+        IDataGridRepository DataGridRepository { get; }
         void Save();
+        DataTrackerContext Database { get; }
     }
     public class UnitOfWork : IDisposable, IUnitOfWork
     {
@@ -25,6 +27,7 @@ namespace JWDataTracker.Infrastructure.Repository
         private IGenericRepository<MidWeekScheduleItem> midWeekScheduleItemRepository;
         private IGenericRepository<Publisher> publisherRepository;
         private IGenericRepository<ServiceReport> serviceReportRepository;
+        private IDataGridRepository dataGridRepository;
 
         public IGenericRepository<Congregation> CongregationRepository
         {
@@ -98,6 +101,18 @@ namespace JWDataTracker.Infrastructure.Repository
                 return serviceReportRepository;
             }
         }
+        public IDataGridRepository DataGridRepository
+        {
+            get
+            {
+
+                if (this.dataGridRepository == null)
+                {
+                    this.dataGridRepository = new DataGridRepository(context);
+                }
+                return dataGridRepository;
+            }
+        }
 
         public void Save()
         {
@@ -119,6 +134,14 @@ namespace JWDataTracker.Infrastructure.Repository
         {
             Dispose(true);
             GC.SuppressFinalize(this);
+        }
+
+        public DataTrackerContext Database
+        {
+            get
+            {
+                return context;
+            }
         }
     }
 }
