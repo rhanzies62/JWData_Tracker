@@ -25,7 +25,7 @@ export class PublishersComponent implements OnInit {
   }
 
   openPublisherModal(){
-    this.commonService.displayAlert("Add/Edit Publisher",AddEditPubilisherComponent,window.innerWidth * .5,()=> {});
+    this.commonService.displayAlert("Add/Edit Publisher",AddEditPubilisherComponent,this.commonService.getModalWidth(),()=> {});
   }
 
 }

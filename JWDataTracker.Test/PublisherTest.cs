@@ -26,8 +26,6 @@ namespace JWDataTracker.Test
             dbContext = new DataTrackerContext("DataSource=DataTracker.db");
             publisherRepo = new GenericRepository<entity.Publisher>(dbContext);
             congregationRepo = new GenericRepository<entity.Congregation>(dbContext);
-
-
         }
 
         [Test]

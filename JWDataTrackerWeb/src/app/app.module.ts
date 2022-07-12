@@ -28,6 +28,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { PublishersComponent } from './pages/publishers/publishers.component';
 import { DialogsModule } from '@progress/kendo-angular-dialog';
 import { AddEditPubilisherComponent } from './pages/publishers/add-edit-pubilisher/add-edit-pubilisher.component';
+import { PublisherApiService } from './core/apiService/publisher-api.service';
 
 
 
@@ -70,7 +71,7 @@ import { AddEditPubilisherComponent } from './pages/publishers/add-edit-pubilish
     DialogsModule
   ],
   entryComponents: [AddEditPubilisherComponent],
-  providers: [{ provide: JWT_OPTIONS, useValue: JWT_OPTIONS },JwtHelperService, AuthenticateApiService],
+  providers: [{ provide: JWT_OPTIONS, useValue: JWT_OPTIONS },JwtHelperService, AuthenticateApiService,PublisherApiService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
