@@ -3,6 +3,7 @@ using JWDataTracker.Application.CongregationUser;
 using JWDataTracker.Infrastructure.Repository;
 using Moq;
 using Newtonsoft.Json;
+using System.Linq.Expressions;
 using entity = JWDataTracker.Infrastructure;
 
 namespace JWDataTracker.Test
@@ -20,7 +21,7 @@ namespace JWDataTracker.Test
         [SetUp]
         public void Setup()
         {
-            dbContext = new DataTrackerContext();
+            dbContext = new DataTrackerContext("DataSource=DataTracker.db");
             congregationRepo = new GenericRepository<entity.Congregation>(dbContext);
         }
 
