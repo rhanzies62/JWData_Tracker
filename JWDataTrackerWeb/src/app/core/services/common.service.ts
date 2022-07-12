@@ -135,4 +135,9 @@ export class CommonService {
   
     return date;
   }
+
+  getModalWidth() : number{
+    if(window.innerWidth >= 1366) return window.innerWidth * 0.5;
+    else return window.innerWidth * 0.9;
+  }
 }

@@ -49,3 +49,11 @@
     width:45px;
 }
 
+.sliding_menu {
+    background: #F2F1EF;
+    width: 100%;
+    height:100vh;
+    position:fixed;
+    top:0;
+    z-index:9999;
+}
