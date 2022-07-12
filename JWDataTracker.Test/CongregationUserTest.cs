@@ -140,7 +140,7 @@ namespace JWDataTracker.Test
                 CreatedDate = DateTime.UtcNow,
                 Email = "TestEmail@email.com",
                 Password = "ferndale",
-                PublisherId = 2,
+                PublisherId = 999,
                 RoleId = 1,
                 Username = "mgutierrez",
                 Salt = "ferndale67",
