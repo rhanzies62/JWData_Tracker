@@ -1,2 +1,6 @@
+select * from (
 select * from Publisher
+) as q
+##WHERE##
+Order By ##ORDERBY##
 LIMIT ##SKIP##,##TAKE##;

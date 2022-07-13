@@ -14,7 +14,7 @@ export class AuthenticateApiService {
     }
 
     async Login(model: Authentication): Promise<ApiResponse<CongregationUser>> {
-        var result = await this.baseApiService.post<Authentication,ApiResponse<CongregationUser>>('api/authenticate',model,false);
+        var result = await this.baseApiService.post<Authentication,ApiResponse<CongregationUser>>('authenticate',model,false);
         if(result.isSuccess){
             this.authService.saveUserToken(result);
         }

@@ -29,6 +29,8 @@ import { PublishersComponent } from './pages/publishers/publishers.component';
 import { DialogsModule } from '@progress/kendo-angular-dialog';
 import { AddEditPubilisherComponent } from './pages/publishers/add-edit-pubilisher/add-edit-pubilisher.component';
 import { PublisherApiService } from './core/apiService/publisher-api.service';
+import { GridTextCellComponent } from './shared/components/grid/grid-text-cell/grid-text-cell.component';
+import { GridComponent } from './shared/components/grid/grid/grid.component';
 
 
 
@@ -48,7 +50,9 @@ import { PublisherApiService } from './core/apiService/publisher-api.service';
     LoadingScreenComponent,
     BaseModuleComponent,
     PublishersComponent,
-    AddEditPubilisherComponent
+    AddEditPubilisherComponent,
+    GridTextCellComponent,
+    GridComponent
   ],
   imports: [
     BrowserModule,
