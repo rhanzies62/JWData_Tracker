@@ -35,7 +35,7 @@ namespace JWDataTracker.Infrastructure.Repository
                 context.Database.CloseConnection();
 
                 context.Database.OpenConnection();
-                cmd.CommandText = Resource.PublisherGridCount;
+                cmd.CommandText = Resource.PublisherGridCount.ParseQuery(filter, "PublisherId"); ;
                 var countReader = cmd.ExecuteReader();
                 countReader.Read();
                 result.TotalCount = int.Parse(countReader.GetValue(0).ToString());

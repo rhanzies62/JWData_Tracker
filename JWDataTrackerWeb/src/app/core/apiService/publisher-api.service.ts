@@ -5,6 +5,8 @@ import { Authentication } from "../../shared/models/authentication"
 import { ApiResponse } from "src/app/shared/models/apiresponse";
 import { CongregationUser } from "src/app/shared/models/congregationuser";
 import { Publisher } from "src/app/shared/models/publisher";
+import { GridFilter, GridResultGeneric } from "src/app/shared/models/GridFilter";
+import { PublisherGrid } from "src/app/shared/models/PublisherGrid";
 @Injectable({
     providedIn: 'root'
   })
@@ -15,8 +17,13 @@ export class PublisherApiService {
     }
 
     async addedit(model: Publisher): Promise<ApiResponse<CongregationUser>> {
-        var result = await this.baseApiService.post<Publisher,ApiResponse<any>>('publisher',model);
+        var result = await this.baseApiService.post<Publisher,ApiResponse<any>>('publisher/AddEdit',model);
         return result;
-      }
+    }
+
+    async ListPublishers(filter: GridFilter): Promise<GridResultGeneric<PublisherGrid>> {
+      var result = await this.baseApiService.post<GridFilter,GridResultGeneric<PublisherGrid>>(`publisher/ListPublishers`,filter);
+      return result;
+    }
 
 }
