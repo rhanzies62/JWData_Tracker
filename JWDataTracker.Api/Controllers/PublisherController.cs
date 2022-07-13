@@ -10,15 +10,16 @@ namespace JWDataTracker.Api.Controllers
 {
     
     [ApiController]
-    public class PublisherController : BaseController
+    public class PublisherController : ControllerBase
     {
         private readonly IPublisherService publisherService;
-        public PublisherController(IAuthenticatedUser currentUser, IPublisherService publisherService) : base(currentUser)
+        public PublisherController(IAuthenticatedUser currentUser, IPublisherService publisherService) //: base(currentUser)
         {
             this.publisherService = publisherService;
         }
 
         [HttpPost]
+        [Route("AddEdit")]
         public Response AddEdit(PublisherDto model)
         {
             if (model.PublisherId == 0) return publisherService.Add(model);
@@ -26,6 +27,7 @@ namespace JWDataTracker.Api.Controllers
         }
 
         [HttpPost]
+        [Route("ListPublishers")]
         public GridResultGeneric<PublisherGridDto> ListPublishers(GridFilter filter)
         {
             return publisherService.ListPublishers(filter);

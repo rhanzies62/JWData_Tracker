@@ -13,9 +13,7 @@ builder.Services.AddCors(options =>
     options.AddPolicy(name: "AllMyDomains",
                       builder =>
                       {
-                          builder.AllowAnyOrigin()
-                          .AllowAnyHeader()
-                          .AllowAnyMethod();
+                          builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
                       });
 });
 builder.Services.AddControllers();
