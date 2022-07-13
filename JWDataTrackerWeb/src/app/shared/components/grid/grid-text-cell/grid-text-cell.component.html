@@ -1,0 +1,13 @@
+<span
+  *ngIf="
+    column.type !== 'currency' &&
+    column.type !== 'date' &&
+    column.type !== 'action' &&
+    column.type !== 'lookup' &&
+    column.type !== 'link' &&
+    column.type !== 'status' && 
+    column.type !== 'crosscheck'
+  "
+  class=""
+  >{{ dataItem[column.fieldName] }}</span
+>

@@ -1,0 +1,55 @@
+<div class="card">
+    <div class="card-header">
+        <div class="row align-items-center">
+            <div class="col-2">
+                <h3 class="m-0 p-0">{{gridTitle}}</h3>
+            </div>
+            <div class="col-10 d-flex align-items-center justify-content-end">
+                <button class="btn btn-default" (click)="onAddClick()">
+                    {{addButtonTitle}} <i class='bx bx-plus'></i>
+                </button>
+            </div>
+        </div> 
+    </div>
+    <div class="card-body p-3">
+        <kendo-grid 
+            [data]="pageGrid.gridResult"
+            [loading]="isLoading"
+            [pageSize]="pageGrid.gridFilter.Take"
+            [skip]="pageGrid.gridFilter.Skip"
+            [pageable]="pageGrid.pagerSettings"
+            (pageChange)="pageChange($event)"
+            [sortable]="true"
+            [sort]="pageGrid.sort"
+            (sortChange)="sortChange($event)"
+            [filter]="pageGrid.filter"
+            [filterable]="true"
+            (filterChange)="filterChange($event)"
+            >
+            <kendo-grid-column
+            [field]="column.fieldName"
+            [title]="column.title"
+            [width]="column.width"
+            [hidden]="!column.isVisible"
+            [filterable]="column.filterable"
+            *ngFor="let column of pageGrid.columns">
+                <ng-template kendoGridFilterCellTemplate let-filter let-column="column">
+                    <kendo-grid-string-filter-cell
+                    [showOperators]="false"
+                    [column]="column"
+                    [filter]="filter"
+                    >
+                    </kendo-grid-string-filter-cell>
+                </ng-template>
+                <ng-template kendoGridCellTemplate let-dataItem>
+                    <span *ngIf="column.type === 'date'" >{{ dataItem[column.fieldName] | date }}</span>
+                    <div *ngIf="column.type === 'crosscheck'" class="w-100 text-center">
+                        <i class='bx bx-check text-green fs-2' *ngIf="dataItem[column.fieldName]"></i>
+                        <!-- <i class='bx bx-x' *ngIf="!dataItem[column.fieldName]"></i> -->
+                    </div>
+                    <app-grid-text-cell  [column]="column" [dataItem]="dataItem" ></app-grid-text-cell>
+                </ng-template>
+            </kendo-grid-column>
+            </kendo-grid>
+    </div>
+</div>

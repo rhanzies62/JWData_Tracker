@@ -1,1 +1,3 @@
-select count(publisherid) as TotalCount from Publisher
+select count(*) as TotalCount from
+(select * from Publisher) q
+##WHERE##
