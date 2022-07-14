@@ -26,4 +26,14 @@ export class PublisherApiService {
       return result;
     }
 
+    async Get(id: number): Promise<Publisher> {
+      var result = await this.baseApiService.get<Publisher>(`publisher/get?publisherId=${id}`);
+      return result;
+    }
+
+    async Delete(id: number): Promise<ApiResponse<boolean>> {
+      var result = await this.baseApiService.get<ApiResponse<boolean>>(`publisher/delete?publisherId=${id}`);
+      return result;
+    }
+
 }

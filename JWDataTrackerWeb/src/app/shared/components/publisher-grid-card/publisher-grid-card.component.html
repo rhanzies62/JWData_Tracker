@@ -1,0 +1,11 @@
+<div class="border p-2" *ngIf="dataItem">
+    <h4 class="m-0 p-0">{{dataItem.firstName}} {{dataItem.lastName}}</h4>
+    <h5 class="m-0 p-0">Field Service Group: #{{dataItem.groupNumber}}</h5>
+    <h5 class="m-0 p-0">
+        Tags:
+        <label *ngIf="dataItem.isElder" class="ms-1 badge bg-blue">Elder</label>
+        <label *ngIf="dataItem.isMs" class="ms-1 badge bg-red">Ministerial Servant</label>
+        <label *ngIf="dataItem.isRp" class="ms-1 badge bg-green">Regular Pioneer</label>
+        <label *ngIf="dataItem.isUnbaptized" class="ms-1 badge bg-gray">Unbaptized</label>
+    </h5>
+</div>

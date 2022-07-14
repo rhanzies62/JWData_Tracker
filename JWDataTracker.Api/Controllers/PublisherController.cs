@@ -5,6 +5,8 @@ using JWDataTracker.Helper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Kendo.Mvc.Extensions;
+using Kendo.Mvc.UI;
 
 namespace JWDataTracker.Api.Controllers
 {
@@ -31,5 +33,20 @@ namespace JWDataTracker.Api.Controllers
             return publisherService.ListPublishers(filter);
         }
 
+        [HttpGet]
+        public PublisherDto Get(int publisherId)
+        {
+            PublisherDto model = publisherService.GetById(publisherId);
+            return model;
+
+        }
+
+        [HttpGet]
+        public Response Delete(long publisherId)
+        {
+            Response model = publisherService.Delete(publisherId);
+            return model;
+
+        }
     }
 }

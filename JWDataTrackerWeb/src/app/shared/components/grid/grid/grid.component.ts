@@ -14,6 +14,8 @@ export class GridComponent implements OnInit {
   @Input() gridTitle: string;
   @Input() addButtonTitle: string;
   @Input() onAdd: any;
+  @Input() onEdit: any;
+  @Input() mobileViewComponent: string;
   @Output() onReload = new EventEmitter<string>();
   
   isLoading: boolean = false;
@@ -40,6 +42,10 @@ export class GridComponent implements OnInit {
 
   onAddClick() {
     if(this.onAdd) this.onAdd();
+  }
+
+  onRowClick(dataItem: any) {
+    if(this.onEdit) this.onEdit(dataItem);
   }
 
   public async loadDataGrid() : Promise<void> {

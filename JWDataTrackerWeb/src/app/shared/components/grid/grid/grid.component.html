@@ -11,7 +11,7 @@
             </div>
         </div> 
     </div>
-    <div class="card-body p-3">
+    <div class="card-body p-3 d-none d-md-block">
         <kendo-grid 
             [data]="pageGrid.gridResult"
             [loading]="isLoading"
@@ -25,6 +25,8 @@
             [filter]="pageGrid.filter"
             [filterable]="true"
             (filterChange)="filterChange($event)"
+            [selectable]="true"
+            (selectionChange)="onRowClick($event.selectedRows[0].dataItem)" 
             >
             <kendo-grid-column
             [field]="column.fieldName"
@@ -50,6 +52,19 @@
                     <app-grid-text-cell  [column]="column" [dataItem]="dataItem" ></app-grid-text-cell>
                 </ng-template>
             </kendo-grid-column>
-            </kendo-grid>
+        </kendo-grid>
+    </div>
+    <div class="card-body p-2 d-block d-md-none" *ngIf="mobileViewComponent === 'PublisherGridCardComponent'">
+        <div *ngFor="let dataItem of pageGrid.gridResult.data" (click)="onRowClick(dataItem)">
+            <app-publisher-grid-card [dataItem]="dataItem"></app-publisher-grid-card>
+        </div>
+
+        <kendo-datapager
+            [total]="pageGrid.gridResult.total"
+            [pageSize]="pageGrid.gridFilter.Take"
+            [skip]="pageGrid.gridFilter.Skip"
+            (pageChange)="pageChange($event)"
+        >
+        </kendo-datapager>
     </div>
 </div>

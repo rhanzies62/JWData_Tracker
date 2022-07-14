@@ -36,4 +36,8 @@ namespace JWDataTracker.Domain.Grid
 
         public long GroupNumber { get; set; }
     }
+    public class Count
+    {
+        public int TotalCount { get; set; }
+    }
 }

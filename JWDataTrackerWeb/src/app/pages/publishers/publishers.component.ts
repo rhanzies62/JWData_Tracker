@@ -25,10 +25,14 @@ export class PublishersComponent implements OnInit {
   async ngOnInit(): Promise<void> {
   }
 
-  openPublisherModal = () => {
-    this.commonService.displayAlert("Add/Edit Publisher",AddEditPubilisherComponent,this.commonService.getModalWidth(),()=> {
+  openPublisherModal = (dataItem: any = null) => {
+    var component = this.commonService.displayAlert("Add/Edit Publisher",AddEditPubilisherComponent,this.commonService.getModalWidth(),()=> {
       this.publisherGrid.loadDataGrid();
     });
+
+    if(dataItem){
+      component.id = dataItem.publisherId;
+    }
   }
 
 

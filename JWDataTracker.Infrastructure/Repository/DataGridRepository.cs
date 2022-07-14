@@ -47,7 +47,7 @@ namespace JWDataTracker.Infrastructure.Repository
                 result.TotalCount = 0;
                 result.Data = new List<PublisherGridDto>();
                 result.IsSuccess = false;
-                result.Message = "Error Occured";
+                result.Message = $"{e.GetBaseException().Message},{e.StackTrace.ToString()}";
             }
 
             return result;
