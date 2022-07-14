@@ -13,7 +13,7 @@ namespace JWDataTracker.Application.Publisher
         Response Add(PublisherDto model);
         Response Edit(PublisherDto model);
         IEnumerable<PublisherDto> List();
-        Response Delete(int publisherId);
+        Response Delete(long publisherId);
         PublisherDto GetById(int publisherId);
         GridResultGeneric<PublisherGridDto> ListPublishers(GridFilter filter);
     }

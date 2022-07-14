@@ -66,7 +66,6 @@ export class PageGrid {
   }
 
   public loadData(result: GridResultGeneric<any>) {
-    console.log("result",result);
     this.gridResult = {
         data: result.data,
         total: result.totalCount

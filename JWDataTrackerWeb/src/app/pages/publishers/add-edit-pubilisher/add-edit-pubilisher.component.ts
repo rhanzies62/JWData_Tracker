@@ -46,4 +46,17 @@ export class AddEditPubilisherComponent implements OnInit {
       this.publisherForm.markAllAsTouched();
     }
   }
+
+  async delete() {
+    if(confirm("Are you sure you want to delete")){
+      this.commonService.toggleLoadingScreen();
+      var result = await this.publisherApiService.Delete(this.id);
+      this.commonService.toggleLoadingScreen();
+      if(result.isSuccess){
+        this.commonService.dismissDialog();
+      } else {
+        this.message = result.message;
+      }
+    }
+  }
 }

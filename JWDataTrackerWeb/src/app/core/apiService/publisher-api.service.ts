@@ -31,4 +31,9 @@ export class PublisherApiService {
       return result;
     }
 
+    async Delete(id: number): Promise<ApiResponse<boolean>> {
+      var result = await this.baseApiService.get<ApiResponse<boolean>>(`publisher/delete?publisherId=${id}`);
+      return result;
+    }
+
 }

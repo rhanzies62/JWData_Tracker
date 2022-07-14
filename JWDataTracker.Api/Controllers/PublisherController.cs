@@ -40,5 +40,13 @@ namespace JWDataTracker.Api.Controllers
             return model;
 
         }
+
+        [HttpGet]
+        public Response Delete(long publisherId)
+        {
+            Response model = publisherService.Delete(publisherId);
+            return model;
+
+        }
     }
 }

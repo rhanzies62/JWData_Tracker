@@ -55,8 +55,16 @@
         </kendo-grid>
     </div>
     <div class="card-body p-2 d-block d-md-none" *ngIf="mobileViewComponent === 'PublisherGridCardComponent'">
-        <div *ngFor="let dataItem of pageGrid.gridResult.data">
+        <div *ngFor="let dataItem of pageGrid.gridResult.data" (click)="onRowClick(dataItem)">
             <app-publisher-grid-card [dataItem]="dataItem"></app-publisher-grid-card>
         </div>
+
+        <kendo-datapager
+            [total]="pageGrid.gridResult.total"
+            [pageSize]="pageGrid.gridFilter.Take"
+            [skip]="pageGrid.gridFilter.Skip"
+            (pageChange)="pageChange($event)"
+        >
+        </kendo-datapager>
     </div>
 </div>

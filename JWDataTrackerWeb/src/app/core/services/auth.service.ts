@@ -18,7 +18,6 @@ export class AuthService {
 
   isTokenValid(): boolean {
     const token = this.getUserToken();
-    console.log(token);
     if (!token) return false;
     const isTokenExpired = this.jwtHelper.isTokenExpired(
       token.authenticationToken
@@ -42,7 +41,6 @@ export class AuthService {
   }
 
   updateUserProfile(user: any) : void {
-    console.log(user);
     this.commonService.setLocalStorageItems(
       LocalStorageKey.LOGIN_DETAILS,
       JSON.stringify(user)

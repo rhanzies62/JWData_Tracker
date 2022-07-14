@@ -32,6 +32,8 @@ import { PublisherApiService } from './core/apiService/publisher-api.service';
 import { GridTextCellComponent } from './shared/components/grid/grid-text-cell/grid-text-cell.component';
 import { GridComponent } from './shared/components/grid/grid/grid.component';
 import { PublisherGridCardComponent } from './shared/components/publisher-grid-card/publisher-grid-card.component';
+import { PagerModule } from '@progress/kendo-angular-pager';
+
 
 
 
@@ -74,7 +76,8 @@ import { PublisherGridCardComponent } from './shared/components/publisher-grid-c
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
     GridModule,
     BrowserAnimationsModule,
-    DialogsModule
+    DialogsModule,
+    PagerModule
   ],
   entryComponents: [AddEditPubilisherComponent],
   providers: [{ provide: JWT_OPTIONS, useValue: JWT_OPTIONS },JwtHelperService, AuthenticateApiService,PublisherApiService],
