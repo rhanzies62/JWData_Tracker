@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormControlName, FormGroup, Validators } from '@angular/forms';
 import { PublisherApiService } from 'src/app/core/apiService/publisher-api.service';
 import { CommonService } from 'src/app/core/services/common.service';
+import { Publisher } from 'src/app/shared/models/publisher';
 
 @Component({
   selector: 'app-add-edit-pubilisher',
@@ -9,20 +10,25 @@ import { CommonService } from 'src/app/core/services/common.service';
   styleUrls: ['./add-edit-pubilisher.component.scss']
 })
 export class AddEditPubilisherComponent implements OnInit {
+  @Input() id: number = 0;
   publisherForm: FormGroup;
   message: string;
   constructor(private formBuilder: FormBuilder,private commonService: CommonService,private publisherApiService: PublisherApiService) { }
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
+    let publisher: Publisher;
+    if(this.id) publisher = await this.publisherApiService.Get(this.id);
+    
     this.publisherForm = this.formBuilder.group({
-      firstName: new FormControl('',[Validators.required]),
-      lastName: new FormControl('',[Validators.required]),
-      groupNumber: new FormControl('',[Validators.required]),
+      publisherId:  new FormControl(this.id || 0),
+      firstName: new FormControl(this.id ? publisher.firstName : '',[Validators.required]),
+      lastName: new FormControl(this.id ? publisher.lastName : '',[Validators.required]),
+      groupNumber: new FormControl(this.id ? publisher.groupNumber : '',[Validators.required]),
       congregationId: new FormControl(1),
-      isElder: new FormControl(false),
-      isMs: new FormControl(false),
-      isRp: new FormControl(false),
-      isUnBaptized: new FormControl(false),
+      isElder: new FormControl(this.id ? publisher.isElder : false),
+      isMs: new FormControl(this.id ? publisher.isMs : false),
+      isRp: new FormControl(this.id ? publisher.isRp : false),
+      isUnBaptized: new FormControl(this.id ? publisher.isUnBaptized :false),
     });
   }
 

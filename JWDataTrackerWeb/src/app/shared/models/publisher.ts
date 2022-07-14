@@ -1,4 +1,5 @@
 export class Publisher {
+    publisherId: number;
     firstName: string;
     lastName: string;
     congregationId:number;

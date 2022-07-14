@@ -32,5 +32,13 @@ namespace JWDataTracker.Api.Controllers
         {
             return publisherService.ListPublishers(filter);
         }
+
+        [HttpGet]
+        public PublisherDto Get(int publisherId)
+        {
+            PublisherDto model = publisherService.GetById(publisherId);
+            return model;
+
+        }
     }
 }

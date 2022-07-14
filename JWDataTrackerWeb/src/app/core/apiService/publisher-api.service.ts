@@ -26,4 +26,9 @@ export class PublisherApiService {
       return result;
     }
 
+    async Get(id: number): Promise<Publisher> {
+      var result = await this.baseApiService.get<Publisher>(`publisher/get?publisherId=${id}`);
+      return result;
+    }
+
 }
