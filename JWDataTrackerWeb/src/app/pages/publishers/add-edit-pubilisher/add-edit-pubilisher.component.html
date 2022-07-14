@@ -63,6 +63,7 @@
         </div>
         <div class="col-12">
             <hr/>
+            <div *ngIf="id" class="btn btn-default bg-red text-white float-end mx-1" (click)="delete()">Delete</div>
             <button class="btn btn-default bg-green text-white float-end mx-1" >Submit</button>
         </div>
     </div>

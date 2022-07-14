@@ -49,7 +49,7 @@ namespace JWDataTracker.Application.Publisher
             return response;
         }
 
-        public Response Delete(int publisherId)
+        public Response Delete(long publisherId)
         {
             var response = new Response(true, String.Empty);
             try

@@ -35,7 +35,6 @@ export class BaseApiService {
                 var token = this.authService.getUserToken();
                 headers.Authorization = "bearer " + token.authenticationToken;
             }
-            console.log(model);
             var result = await this.http.post<TResponse>(this.baseUrl + uri, JSON.stringify(model), { headers }).toPromise();
             return result;
         } catch (error) {
