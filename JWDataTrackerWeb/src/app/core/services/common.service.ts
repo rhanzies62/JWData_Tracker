@@ -137,7 +137,7 @@ export class CommonService {
   }
 
   getModalWidth() : number{
-    if(window.innerWidth >= 1366) return window.innerWidth * 0.5;
+    if(window.innerWidth >= 1200) return window.innerWidth * 0.5;
     else return window.innerWidth * 0.9;
   }
 }

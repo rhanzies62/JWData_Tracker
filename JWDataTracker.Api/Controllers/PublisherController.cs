@@ -5,8 +5,6 @@ using JWDataTracker.Helper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Kendo.Mvc.Extensions;
-using Kendo.Mvc.UI;
 
 namespace JWDataTracker.Api.Controllers
 {
