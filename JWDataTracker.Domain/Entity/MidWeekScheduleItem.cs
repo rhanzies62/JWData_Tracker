@@ -11,6 +11,7 @@ namespace JWDataTracker.Infrastructure
         public long PartnerPublisherId { get; set; }
         public string HallNumber { get; set; }
         public long MidWeekScheduleId { get; set; }
+        public string Category { get; set; }
 
         public virtual Publisher PartnerPublisher { get; set; }
         public virtual Publisher Publisher { get; set; }

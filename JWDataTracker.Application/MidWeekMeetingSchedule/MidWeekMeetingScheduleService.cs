@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using entity = JWDataTracker.Infrastructure;
 namespace JWDataTracker.Application.MidWeekMeetingSchedule
 {
     public class MidWeekMeetingScheduleService : BaseService, IMidWeekMeetingScheduleService
@@ -21,7 +21,34 @@ namespace JWDataTracker.Application.MidWeekMeetingSchedule
             var response = new Response(true, string.Empty);
             try
             {
+                response = model.Validate();
+                if (response.IsSuccess)
+                {
+                    var midWeekSchedule = new entity.MidWeekSchedule()
+                    {
+                        Attendance = 0,
+                        CongregationId = model.CongregationId,
+                        CreatedBy = model.CreatedBy,
+                        ScheduledDate = model.ScheduledDate
+                    };
+                    unitOfWork.MidWeekScheduleRepository.Insert(midWeekSchedule);
+                    unitOfWork.Save();
 
+
+                    foreach (var mwsi in model.MidWeekScheduleItems)
+                    {
+                        unitOfWork.MidWeekScheduleItemRepository.Insert(new entity.MidWeekScheduleItem
+                        {
+                            Category = mwsi.Category,
+                            HallNumber = mwsi.HallNumber,
+                            MidWeekScheduleId = midWeekSchedule.MidWeekScheduleId,
+                            PartnerPublisherId = mwsi.PartnerPublisherId,
+                            PublisherId = mwsi.PublisherId,
+                            Role = mwsi.Role
+                        });
+                    }
+                    unitOfWork.Save();
+                }
             }
             catch (Exception e)
             {
@@ -49,7 +76,33 @@ namespace JWDataTracker.Application.MidWeekMeetingSchedule
             var response = new Response(true, string.Empty);
             try
             {
-
+                response = model.Validate();
+                if (response.IsSuccess)
+                {
+                    var midWeekSchedule = unitOfWork.MidWeekScheduleRepository.GetByID(model.MidWeekScheduleId);
+                    if (midWeekSchedule == null) return new Response(false, "Can't find Mid Week Schedule");
+                    foreach (var mwsi in model.MidWeekScheduleItems)
+                    {
+                        entity.MidWeekScheduleItem midWeekScheduleItem;
+                        if (mwsi.MidWeekScheduleItemId == 0)
+                        {
+                            midWeekScheduleItem = new entity.MidWeekScheduleItem();
+                            unitOfWork.MidWeekScheduleItemRepository.Insert(midWeekScheduleItem);
+                        }
+                        else
+                        {
+                            midWeekScheduleItem = unitOfWork.MidWeekScheduleItemRepository.GetByID(mwsi.MidWeekScheduleItemId);
+                            unitOfWork.MidWeekScheduleItemRepository.Update(midWeekScheduleItem);
+                        }
+                        midWeekScheduleItem.Category = mwsi.Category;
+                        midWeekScheduleItem.HallNumber = mwsi.HallNumber;
+                        midWeekScheduleItem.MidWeekScheduleId = midWeekSchedule.MidWeekScheduleId;
+                        midWeekScheduleItem.PartnerPublisherId = mwsi.PartnerPublisherId;
+                        midWeekScheduleItem.PublisherId = mwsi.PublisherId;
+                        midWeekScheduleItem.Role = mwsi.Role;
+                        unitOfWork.Save();
+                    }
+                }
             }
             catch (Exception e)
             {
@@ -81,19 +134,20 @@ namespace JWDataTracker.Application.MidWeekMeetingSchedule
                                                          Role = mwsi.Role,
                                                          Publisher = (from p in unitOfWork.PublisherRepository.Get()
                                                                       where p.PublisherId == mwsi.PublisherId
-                                                                      select new PublisherDto { 
-                                                                          PublisherId = p.PublisherId,
-                                                                          FirstName = p.FirstName,
-                                                                          LastName = p.LastName
-                                                                      }).FirstOrDefault(),
-                                                         PartnerPublisher = (from p in unitOfWork.PublisherRepository.Get()
-                                                                      where p.PublisherId == mwsi.PartnerPublisherId
                                                                       select new PublisherDto
                                                                       {
                                                                           PublisherId = p.PublisherId,
                                                                           FirstName = p.FirstName,
                                                                           LastName = p.LastName
-                                                                      }).FirstOrDefault()
+                                                                      }).FirstOrDefault(),
+                                                         PartnerPublisher = (from p in unitOfWork.PublisherRepository.Get()
+                                                                             where p.PublisherId == mwsi.PartnerPublisherId
+                                                                             select new PublisherDto
+                                                                             {
+                                                                                 PublisherId = p.PublisherId,
+                                                                                 FirstName = p.FirstName,
+                                                                                 LastName = p.LastName
+                                                                             }).FirstOrDefault()
                                                      })
 
                          }).FirstOrDefault();
