@@ -18,5 +18,6 @@ namespace JWDataTracker.Application.Publisher
         public bool IsRp { get; set; }
         public bool IsUnBaptized { get; set; }
         public long GroupNumber { get; set; }
+        public string FullName { get { return $"{FirstName} {LastName}"; } }
     }
 }

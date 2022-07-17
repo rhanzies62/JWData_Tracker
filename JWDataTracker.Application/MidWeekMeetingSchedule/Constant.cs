@@ -24,20 +24,20 @@ namespace JWDataTracker.Application.MidWeekMeetingSchedule
         public const string SecondHall = "SecondHall";
 
         public const string Chairman = "Chairman";
-        public const string OpeningPrayer = "OpeningPrayer";
-        public const string ClosingPrayer = "ClosingPrayer";
-        public const string InstructionalTalk = "InstructionalTalk";
-        public const string SpiritualGem = "SpiritualGem";
-        public const string BibleReading = "BibleReading";
-        public const string VideoDiscussion = "VideoDiscussion";
-        public const string FirstPart = "FirstPart";
-        public const string SecondPart = "SecondPart";
-        public const string ThirPart = "ThirPart";
-        public const string CBSConductor = "CBSConductor";
-        public const string CBSReader = "CBSReader";
-        public const string AudioVideo = "AudioVideo";
+        public const string OpeningPrayer = "Opening Prayer";
+        public const string ClosingPrayer = "Closing Prayer";
+        public const string InstructionalTalk = "Instructional Talk";
+        public const string SpiritualGem = "Spiritual Gem";
+        public const string BibleReading = "Bible Reading";
+        public const string VideoDiscussion = "Video Discussion";
+        public const string FirstPart = "First Part";
+        public const string SecondPart = "Second Part";
+        public const string ThirPart = "Thir Part";
+        public const string CBSConductor = "CBS Conductor";
+        public const string CBSReader = "CBS Reader";
+        public const string AudioVideo = "Audio Video";
         public const string Zoom = "Zoom";
-        public const string MicRoving = "MicRoving";
+        public const string MicRoving = "Mic Roving";
 
     }
 }

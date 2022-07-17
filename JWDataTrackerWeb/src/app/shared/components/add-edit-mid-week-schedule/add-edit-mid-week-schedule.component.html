@@ -6,9 +6,100 @@
         </div>
     </div>
     <div class="col-12 mt-2 d-flex justify-content-center">
-        <div class="col-12 col-md-8 col-lg-5 col-xl-7">
-            <div class="bg-gray p-2 text-white text-center" style="font-weight:700">
+        <div class="col-12 col-md-8 col-lg-5 col-xl-8">
+            <div *ngIf="currentCategory === midWeekCategories.OPENING" class="bg-default p-2 text-center mb-2" style="font-weight:700">
+                <h3 class="p-0 m-0">Opening</h3>
+            </div>
+            <div *ngIf="currentCategory === midWeekCategories.TREASUREFROMGODSWORD" class="bg-gray p-2 text-white text-center mb-2" style="font-weight:700">
                 <h3 class="p-0 m-0">TREASURE FROM GOD’S WORD</h3>
+            </div>
+            <div *ngIf="currentCategory === midWeekCategories.APPLYYOURSELFTOTHEFIELDMINISTRY" class="bg-yellow p-2 text-white text-center mb-2" style="font-weight:700">
+                <h3 class="p-0 m-0">Apply Yourself To The Field Ministry</h3>
+            </div>
+            <div *ngIf="currentCategory === midWeekCategories.LIVINGASACHRISTIAN" class="bg-red p-2 text-white text-center mb-2" style="font-weight:700">
+                <h3 class="p-0 m-0">Living as a Christian</h3>
+            </div>
+            <div *ngIf="currentCategory === midWeekCategories.ATTENDANTS" class="bg-blue p-2 text-white text-center mb-2" style="font-weight:700">
+                <h3 class="p-0 m-0">Attendants</h3>
+            </div>
+            <div class="d-flex align-items-center justify-content-between py-2 border-bottom border-secondary" style="column-gap:1rem" *ngFor="let scheduleItem of loadSchedulesByCategory()">
+                <label>{{scheduleItem.role}}: </label>
+                <div style="width:50%" *ngIf="currentCategory !== midWeekCategories.ATTENDANTS && !scheduleItem.withPartner">
+                    <kendo-dropdownlist 
+                        *ngIf="!scheduleItem.isForElderMs"
+                        [data]="filteredPublisher"
+                        [filterable]="true"
+                        textField="fullName"
+                        valueField="publisherId"
+                        (filterChange)="handleFilter($event)"
+                        [(ngModel)]="scheduleItem.publisher"
+                        (ngModelChange)="onModelChange(scheduleItem)"
+                        >
+                    </kendo-dropdownlist>
+                    <kendo-dropdownlist 
+                        *ngIf="scheduleItem.isForElderMs"
+                        [data]="filteredElderMs"
+                        [filterable]="true"
+                        textField="fullName"
+                        valueField="publisherId"
+                        (filterChange)="handleFilterForElderMs($event)"
+                        [(ngModel)]="scheduleItem.publisher"
+                        (ngModelChange)="onModelChange(scheduleItem)">
+                    </kendo-dropdownlist>
+                </div>
+                <div style="width:50%"  *ngIf="currentCategory !== midWeekCategories.ATTENDANTS && scheduleItem.withPartner">
+                    <kendo-dropdownlist style="margin-bottom:.5rem"
+                        [data]="filteredPublisher"
+                        [filterable]="true"
+                        textField="fullName"
+                        valueField="publisherId"
+                        (filterChange)="handleFilter($event)"
+                        [(ngModel)]="scheduleItem.publisher"
+                        (ngModelChange)="onModelChange(scheduleItem)"
+                    >
+                    </kendo-dropdownlist>
+                    <kendo-dropdownlist style="margin-bottom:.5rem"
+                        [data]="filteredPublisher"
+                        [filterable]="true"
+                        textField="fullName"
+                        valueField="publisherId"
+                        (filterChange)="handleFilter($event)"
+                        [(ngModel)]="scheduleItem.partnerPublisher"
+                        (ngModelChange)="onModelChange(scheduleItem,true)"
+                        >
+                    </kendo-dropdownlist>
+                </div>
+                <div style="width:50%"  *ngIf="currentCategory === midWeekCategories.ATTENDANTS && scheduleItem.withPartner">
+                    <kendo-dropdownlist style="margin-bottom:.5rem"
+                        [data]="filteredAttendants"
+                        [filterable]="true"
+                        textField="fullName"
+                        valueField="publisherId"
+                        (filterChange)="handleFilterForAttendants($event)"
+                        [(ngModel)]="scheduleItem.publisher"
+                        (ngModelChange)="onModelChangeForAttendant(scheduleItem)"
+                    >
+                    </kendo-dropdownlist>
+                    <kendo-dropdownlist style="margin-bottom:.5rem"
+                        [data]="filteredAttendants"
+                        [filterable]="true"
+                        textField="fullName"
+                        valueField="publisherId"
+                        (filterChange)="handleFilterForAttendants($event)"
+                        [(ngModel)]="scheduleItem.partnerPublisher"
+                        (ngModelChange)="onModelChangeForAttendant(scheduleItem)"
+                        >
+                    </kendo-dropdownlist>
+                </div>
+            </div>
+
+            <div class="col-12 d-flex justify-content-between align-items-center mt-3">
+                <div>
+                    <button (click)="changeCategory(-1)"  *ngIf="currentCategory !== midWeekCategories.OPENING" class="btn btn-default">Previous</button>
+                </div>
+                <div>
+                    <button (click)="changeCategory(1)" *ngIf="currentCategory !== midWeekCategories.ATTENDANTS" class="btn btn-default">Next</button>
+                </div>
             </div>
         </div>
     </div>

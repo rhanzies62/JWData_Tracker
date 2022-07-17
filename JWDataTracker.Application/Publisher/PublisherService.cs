@@ -123,7 +123,8 @@ namespace JWDataTracker.Application.Publisher
                 IsMs = p.IsMs == 1,
                 IsRp = p.IsRp == 1,
                 IsUnBaptized = p.IsUnBaptized == 1,
-                LastName = p.LastName
+                LastName = p.LastName,
+                PublisherId = p.PublisherId
             });
         }
 

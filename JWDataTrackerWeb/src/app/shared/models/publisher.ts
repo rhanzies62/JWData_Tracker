@@ -8,4 +8,5 @@ export class Publisher {
     isRp: boolean;
     isUnBaptized: boolean;
     groupNumber:number;
+    fullName:string;
 }

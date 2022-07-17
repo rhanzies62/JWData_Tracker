@@ -35,6 +35,8 @@ import { PublisherGridCardComponent } from './shared/components/publisher-grid-c
 import { PagerModule } from '@progress/kendo-angular-pager';
 import { MidWeekScheduleComponent } from './pages/mid-week-schedule/mid-week-schedule.component';
 import { AddEditMidWeekScheduleComponent } from './shared/components/add-edit-mid-week-schedule/add-edit-mid-week-schedule.component';
+import { DropDownsModule } from '@progress/kendo-angular-dropdowns';
+
 
 
 
@@ -82,7 +84,8 @@ import { AddEditMidWeekScheduleComponent } from './shared/components/add-edit-mi
     GridModule,
     BrowserAnimationsModule,
     DialogsModule,
-    PagerModule
+    PagerModule,
+    DropDownsModule
   ],
   entryComponents: [AddEditPubilisherComponent,AddEditMidWeekScheduleComponent],
   providers: [{ provide: JWT_OPTIONS, useValue: JWT_OPTIONS },JwtHelperService, AuthenticateApiService,PublisherApiService],

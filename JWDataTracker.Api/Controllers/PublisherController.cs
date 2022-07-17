@@ -44,7 +44,12 @@ namespace JWDataTracker.Api.Controllers
         {
             Response model = publisherService.Delete(publisherId);
             return model;
+        }
 
+        [HttpGet]
+        public IEnumerable<PublisherDto> List()
+        {
+            return publisherService.List();
         }
     }
 }
