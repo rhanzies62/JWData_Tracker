@@ -12,7 +12,7 @@ namespace JWDataTracker.Application.MidWeekMeetingSchedule
         public string ScheduledDate { get; set; }
         public long? CreatedBy { get; set; }
         public long Attendance { get; set; }
-
+        public long CongregationId { get; set; }
         public DateTime ScheduleDT
         {
             get
