@@ -36,6 +36,9 @@ import { PagerModule } from '@progress/kendo-angular-pager';
 import { MidWeekScheduleComponent } from './pages/mid-week-schedule/mid-week-schedule.component';
 import { AddEditMidWeekScheduleComponent } from './shared/components/add-edit-mid-week-schedule/add-edit-mid-week-schedule.component';
 import { DropDownsModule } from '@progress/kendo-angular-dropdowns';
+import { MidWeekScheduleApiservice } from './core/apiService/mid-week-schedule-api.service';
+import { DateInputsModule } from '@progress/kendo-angular-dateinputs';
+
 
 
 
@@ -85,10 +88,11 @@ import { DropDownsModule } from '@progress/kendo-angular-dropdowns';
     BrowserAnimationsModule,
     DialogsModule,
     PagerModule,
-    DropDownsModule
+    DropDownsModule,
+    DateInputsModule
   ],
   entryComponents: [AddEditPubilisherComponent,AddEditMidWeekScheduleComponent],
-  providers: [{ provide: JWT_OPTIONS, useValue: JWT_OPTIONS },JwtHelperService, AuthenticateApiService,PublisherApiService],
+  providers: [{ provide: JWT_OPTIONS, useValue: JWT_OPTIONS },JwtHelperService, AuthenticateApiService,PublisherApiService,MidWeekScheduleApiservice],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

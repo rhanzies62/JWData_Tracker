@@ -84,16 +84,6 @@ namespace JWDataTracker.Infrastructure.Repository
                 entity.Property(e => e.HallNumber).IsRequired();
 
                 entity.Property(e => e.Role).IsRequired();
-
-                entity.HasOne(d => d.PartnerPublisher)
-                    .WithMany(p => p.MidWeekScheduleItemPartnerPublishers)
-                    .HasForeignKey(d => d.PartnerPublisherId)
-                    .OnDelete(DeleteBehavior.ClientSetNull);
-
-                entity.HasOne(d => d.Publisher)
-                    .WithMany(p => p.MidWeekScheduleItemPublishers)
-                    .HasForeignKey(d => d.PublisherId)
-                    .OnDelete(DeleteBehavior.ClientSetNull);
             });
 
             modelBuilder.Entity<Publisher>(entity =>
@@ -101,6 +91,8 @@ namespace JWDataTracker.Infrastructure.Repository
                 entity.ToTable("Publisher");
 
                 entity.Property(e => e.FirstName).IsRequired();
+
+                entity.Property(e => e.IsBaptized).HasDefaultValueSql("1");
 
                 entity.Property(e => e.IsMs).HasColumnName("IsMS");
 

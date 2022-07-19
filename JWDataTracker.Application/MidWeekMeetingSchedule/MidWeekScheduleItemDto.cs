@@ -37,9 +37,9 @@ namespace JWDataTracker.Application.MidWeekMeetingSchedule
         }
         public long MidWeekScheduleItemId { get; set; }
         public string Role { get; set; }
-        public long PublisherId { get; set; }
+        public long? PublisherId { get; set; }
         public string PublisherName { get; set; }
-        public long PartnerPublisherId { get; set; }
+        public long? PartnerPublisherId { get; set; }
         public string PartnerName { get; set; }
         public string HallNumber { get; set; }
         public long MidWeekScheduleId { get; set; }

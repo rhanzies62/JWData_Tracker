@@ -25,6 +25,7 @@ namespace JWDataTracker.Api.Controllers
             if(model.MidWeekScheduleId == 0)
             {
                 model.CreatedBy = _currentUser.Id;
+                model.CongregationId = 1;
                 var response = midWeekScheduleService.Add(model);
                 return response;
             } else
@@ -32,6 +33,20 @@ namespace JWDataTracker.Api.Controllers
                 var response = midWeekScheduleService.Edit(model);
                 return response;
             }
+        }
+
+        [HttpGet]
+        public MidWeekMeetingScheduleDto GetMidWeekScheduleByDate(DateTime date)
+        {
+            var response = midWeekScheduleService.GetMidWeekScheduleByDate(date,1);
+            return response;
+        }
+
+        [HttpGet]
+        public IEnumerable<MidWeekMeetingScheduleDto> List()
+        {
+            var response = midWeekScheduleService.List(1);
+            return response;
         }
     }
 }

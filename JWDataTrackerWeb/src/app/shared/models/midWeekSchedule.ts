@@ -3,6 +3,7 @@ import { Publisher } from "./publisher";
 export class MidWeekSchedule {
     midWeekScheduleId: number;
     scheduledDate: Date;
+    scheduleDT: Date;
     attendance: number;
     midWeekScheduleItems: MidWeekScheduleItem[];
 }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using Newtonsoft.Json;
 namespace JWDataTracker.Application.MidWeekMeetingSchedule
 {
     public class MidWeekMeetingScheduleDto
@@ -17,8 +17,7 @@ namespace JWDataTracker.Application.MidWeekMeetingSchedule
         {
             get
             {
-                DateTime.TryParse(ScheduledDate, out DateTime scheduleDt);
-                return scheduleDt;
+                return JsonConvert.DeserializeObject<DateTime>(ScheduledDate);
             }
         }
 

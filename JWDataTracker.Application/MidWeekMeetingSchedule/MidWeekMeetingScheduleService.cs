@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using entity = JWDataTracker.Infrastructure;
+using Newtonsoft.Json;
 namespace JWDataTracker.Application.MidWeekMeetingSchedule
 {
     public class MidWeekMeetingScheduleService : BaseService, IMidWeekMeetingScheduleService
@@ -114,9 +115,9 @@ namespace JWDataTracker.Application.MidWeekMeetingSchedule
         public MidWeekMeetingScheduleDto GetMidWeekScheduleByDate(DateTime date, int congregationId)
         {
             var query = (from mws in unitOfWork.MidWeekScheduleRepository.Get()
-                         where DateTime.Parse(mws.ScheduledDate).Month == date.Month &&
-                               DateTime.Parse(mws.ScheduledDate).Date == date.Date &&
-                               DateTime.Parse(mws.ScheduledDate).Year == date.Year &&
+                         where JsonConvert.DeserializeObject<DateTime>(mws.ScheduledDate).Month == date.Month &&
+                               JsonConvert.DeserializeObject<DateTime>(mws.ScheduledDate).Date == date.Date &&
+                               JsonConvert.DeserializeObject<DateTime>(mws.ScheduledDate).Year == date.Year &&
                                mws.CongregationId == congregationId
                          select new MidWeekMeetingScheduleDto
                          {
@@ -131,6 +132,7 @@ namespace JWDataTracker.Application.MidWeekMeetingSchedule
                                                          MidWeekScheduleItemId = mwsi.MidWeekScheduleId,
                                                          PartnerPublisherId = mwsi.MidWeekScheduleId,
                                                          PublisherId = mwsi.PublisherId,
+                                                         Category = mwsi.Category,
                                                          Role = mwsi.Role,
                                                          Publisher = (from p in unitOfWork.PublisherRepository.Get()
                                                                       where p.PublisherId == mwsi.PublisherId

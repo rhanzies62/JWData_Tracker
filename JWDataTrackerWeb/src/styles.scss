@@ -162,6 +162,11 @@ input, button{
     border-radius: var(--bs-badge-border-radius, 0);
   }
 
+.k-dropdownlist
+{
+    margin-bottom: 0px !important;
+}
+
 // Small devices (landscape phones, 576px and up)
 @media (min-width: 576px) { }
 

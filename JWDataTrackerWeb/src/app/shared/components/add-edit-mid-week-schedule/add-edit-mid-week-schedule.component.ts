@@ -1,5 +1,8 @@
+import { ThrowStmt } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
+import { MidWeekScheduleApiservice } from 'src/app/core/apiService/mid-week-schedule-api.service';
 import { PublisherApiService } from 'src/app/core/apiService/publisher-api.service';
+import { CommonService } from 'src/app/core/services/common.service';
 import { MidWeekCategories, MidWeekCategoryRoles, MidWeekSchedule, MidWeekScheduleItem, MidWeekScheduleRoles } from '../../models/midWeekSchedule';
 import { Publisher } from '../../models/publisher';
 
@@ -23,7 +26,7 @@ export class AddEditMidWeekScheduleComponent implements OnInit {
 
   sourceAttendants: Publisher[] = [];
   filteredAttendants: Publisher[] = [];
-  constructor(private publisherApiService: PublisherApiService) { }
+  constructor(private publisherApiService: PublisherApiService,private midWeekScheduleApiService: MidWeekScheduleApiservice,private commonService: CommonService) { }
 
   async ngOnInit(): Promise<void> {
     this.buildMidWeekSchedule();
@@ -36,10 +39,38 @@ export class AddEditMidWeekScheduleComponent implements OnInit {
     this.handleFilterForAttendants("");
   }
 
+  async onScheduleDateChange() {
+    var result = await this.midWeekScheduleApiService.GetMidWeekScheduleByDate(this.midWeekSchedule.scheduledDate);
+    if(result){
+      result.scheduledDate = new Date(result.scheduleDT);
+      result.midWeekScheduleItems.map(mwsi => {
+        if((mwsi.category === MidWeekCategories.APPLYYOURSELFTOTHEFIELDMINISTRY && mwsi.role !== MidWeekScheduleRoles.VideoDiscussion) ||
+            mwsi.category === MidWeekCategories.ATTENDANTS) {
+            mwsi.withPartner = true;
+        }
+
+        if(mwsi.category === MidWeekCategories.OPENING ||
+           (mwsi.category === MidWeekCategories.TREASUREFROMGODSWORD && mwsi.role !== MidWeekScheduleRoles.BibleReading) ||
+           (mwsi.category === MidWeekCategories.APPLYYOURSELFTOTHEFIELDMINISTRY && mwsi.role === MidWeekScheduleRoles.VideoDiscussion) ||
+           (mwsi.category === MidWeekCategories.LIVINGASACHRISTIAN && mwsi.role !== MidWeekScheduleRoles.CBSReader)) {
+           mwsi.isForElderMs = true;
+        }
+        
+      });
+      this.midWeekSchedule = result;
+    } else{
+      this.buildMidWeekSchedule();
+    }
+  }
+
   changeCategory(nextPrevious: number){
     var index = this.categoryArrangement.indexOf(this.currentCategory) + nextPrevious;
     if(index > -1 && index < this.categoryArrangement.length)
       this.currentCategory = this.categoryArrangement[index];
+  }
+
+  clearValue(midWeekScheduleItem : MidWeekScheduleItem, obj: string){
+    midWeekScheduleItem[obj] = null;
   }
 
   loadSchedulesByCategory(){
@@ -102,14 +133,15 @@ export class AddEditMidWeekScheduleComponent implements OnInit {
       attendance: 0,
       midWeekScheduleId: 0,
       midWeekScheduleItems: [],
-      scheduledDate: new Date()
+      scheduledDate: new Date(),
+      scheduleDT: null
     };
 
     var midWeekCategoryRoles = MidWeekCategoryRoles;
     midWeekCategoryRoles.map(mwcr => {
       mwcr.roles.map(r => {
         this.midWeekSchedule.midWeekScheduleItems.push({
-          category: mwcr.category,
+          category: mwcr.category,  
           hallNumber: "Main",
           midWeekScheduleId: 0,
           midWeekScheduleItemId: 0,
@@ -125,4 +157,13 @@ export class AddEditMidWeekScheduleComponent implements OnInit {
     });
   }
 
+  async submit(){
+    this.commonService.toggleLoadingScreen();
+    this.midWeekSchedule.midWeekScheduleItems.map(mwsi => {
+      mwsi.publisherId = mwsi.publisher ? mwsi.publisher.publisherId : 0;
+      mwsi.partnerPublisherId = mwsi.partnerPublisher ? mwsi.partnerPublisher.publisherId : 0;
+    });
+    this.midWeekScheduleApiService.addedit(this.midWeekSchedule);
+    this.commonService.toggleLoadingScreen();
+  }
 }
