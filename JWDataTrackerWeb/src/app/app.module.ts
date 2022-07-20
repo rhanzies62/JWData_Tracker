@@ -33,6 +33,13 @@ import { GridTextCellComponent } from './shared/components/grid/grid-text-cell/g
 import { GridComponent } from './shared/components/grid/grid/grid.component';
 import { PublisherGridCardComponent } from './shared/components/publisher-grid-card/publisher-grid-card.component';
 import { PagerModule } from '@progress/kendo-angular-pager';
+import { MidWeekScheduleComponent } from './pages/mid-week-schedule/mid-week-schedule.component';
+import { AddEditMidWeekScheduleComponent } from './shared/components/add-edit-mid-week-schedule/add-edit-mid-week-schedule.component';
+import { DropDownsModule } from '@progress/kendo-angular-dropdowns';
+import { MidWeekScheduleApiservice } from './core/apiService/mid-week-schedule-api.service';
+import { DateInputsModule } from '@progress/kendo-angular-dateinputs';
+
+
 
 
 
@@ -56,7 +63,9 @@ import { PagerModule } from '@progress/kendo-angular-pager';
     AddEditPubilisherComponent,
     GridTextCellComponent,
     GridComponent,
-    PublisherGridCardComponent
+    PublisherGridCardComponent,
+    MidWeekScheduleComponent,
+    AddEditMidWeekScheduleComponent
   ],
   imports: [
     BrowserModule,
@@ -69,7 +78,8 @@ import { PagerModule } from '@progress/kendo-angular-pager';
       {
         path: '', component: MainContentComponent,canActivate: [AuthenticationGuardService] , children: [
           { path: 'dashboard', component: DashboardComponent, canActivate: [AuthenticationGuardService] },
-          { path: 'publishers', component: PublishersComponent, canActivate: [AuthenticationGuardService] }
+          { path: 'publishers', component: PublishersComponent, canActivate: [AuthenticationGuardService] },
+          { path: 'midweekmeeting', component: MidWeekScheduleComponent, canActivate: [AuthenticationGuardService] }
         ]
       }
     ], { scrollPositionRestoration: 'enabled' }),
@@ -77,10 +87,12 @@ import { PagerModule } from '@progress/kendo-angular-pager';
     GridModule,
     BrowserAnimationsModule,
     DialogsModule,
-    PagerModule
+    PagerModule,
+    DropDownsModule,
+    DateInputsModule
   ],
-  entryComponents: [AddEditPubilisherComponent],
-  providers: [{ provide: JWT_OPTIONS, useValue: JWT_OPTIONS },JwtHelperService, AuthenticateApiService,PublisherApiService],
+  entryComponents: [AddEditPubilisherComponent,AddEditMidWeekScheduleComponent],
+  providers: [{ provide: JWT_OPTIONS, useValue: JWT_OPTIONS },JwtHelperService, AuthenticateApiService,PublisherApiService,MidWeekScheduleApiservice],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

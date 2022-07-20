@@ -1,0 +1,210 @@
+<div class="row px-3">
+    <div class="col-12 d-flex flex-column justify-content-between align-items-center border-bottom border-secondary pb-3">
+        <h3 class="m-0 p-2">Mid Week Schedule</h3>
+        <div class="col-12 col-md-2">
+            <kendo-datepicker [(ngModel)]="midWeekSchedule.scheduledDate" (ngModelChange)="onScheduleDateChange()"></kendo-datepicker>
+        </div>
+
+        <div class="my-2">
+            <p class="fs-2 m-0 p-0 text-red">{{message}}</p>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-2">
+    <div class="col-12 col-lg-8 col-xxl-6 mb-2">
+        <div *ngIf="currentCategory === midWeekCategories.OPENING" class="bg-default p-2 text-center mb-2" style="font-weight:700">
+            <h3 class="p-0 m-0">Opening</h3>
+        </div>
+        <div *ngIf="currentCategory === midWeekCategories.TREASUREFROMGODSWORD" class="bg-gray p-2 text-white text-center mb-2" style="font-weight:700">
+            <h3 class="p-0 m-0">TREASURE FROM GOD’S WORD</h3>
+        </div>
+        <div *ngIf="currentCategory === midWeekCategories.APPLYYOURSELFTOTHEFIELDMINISTRY" class="bg-yellow p-2 text-white text-center mb-2" style="font-weight:700">
+            <h3 class="p-0 m-0">Apply Yourself To The Field Ministry</h3>
+        </div>
+        <div *ngIf="currentCategory === midWeekCategories.LIVINGASACHRISTIAN" class="bg-red p-2 text-white text-center mb-2" style="font-weight:700">
+            <h3 class="p-0 m-0">Living as a Christian</h3>
+        </div>
+        <div *ngIf="currentCategory === midWeekCategories.ATTENDANTS" class="bg-blue p-2 text-white text-center mb-2" style="font-weight:700">
+            <h3 class="p-0 m-0">Attendants</h3>
+        </div>
+        <div class="row py-2 border-bottom border-secondary" *ngFor="let scheduleItem of loadSchedulesByCategory()">
+            <div class="col-md-4 col-12">
+                <label>{{scheduleItem.role}}: </label>
+            </div>
+            <div class="col-md-8 col-12" *ngIf="currentCategory !== midWeekCategories.ATTENDANTS && !scheduleItem.withPartner">
+                <div class="d-flex align-items-center mb-2" style="column-gap:10px;" *ngIf="!scheduleItem.isForElderMs">
+                    <kendo-dropdownlist 
+                        [data]="filteredPublisher"
+                        [filterable]="true"
+                        textField="fullName"
+                        valueField="publisherId"
+                        (filterChange)="handleFilter($event)"
+                        [(ngModel)]="scheduleItem.publisher"
+                        (ngModelChange)="onModelChange(scheduleItem);loadPublisherRecentParts(scheduleItem.publisher.publisherId)"
+                        >
+                    </kendo-dropdownlist>
+                    <button class="btn bg-red  text-white" (click)="clearValue(scheduleItem,'publisher');onModelChange(scheduleItem)">
+                        <i class='bx bx-x' ></i>
+                    </button>
+                    <button class="btn btn-default" (click)="loadPublisherRecentParts(scheduleItem.publisher.publisherId)">
+                        <i class='bx bx-history'></i>
+                    </button>
+                </div>
+                <div class="d-flex align-items-center mb-2" style="column-gap:10px;" *ngIf="scheduleItem.isForElderMs">
+                    <kendo-dropdownlist 
+                        [data]="filteredElderMs"
+                        [filterable]="true"
+                        textField="fullName"
+                        valueField="publisherId"
+                        (filterChange)="handleFilterForElderMs($event)"
+                        [(ngModel)]="scheduleItem.publisher"
+                        (ngModelChange)="onModelChange(scheduleItem);loadPublisherRecentParts(scheduleItem.publisher.publisherId)">
+                    </kendo-dropdownlist>
+                    <button class="btn bg-red text-white"  (click)="clearValue(scheduleItem,'publisher')">
+                        <i class='bx bx-x' ></i>
+                    </button>
+                    <button class="btn btn-default" (click)="loadPublisherRecentParts(scheduleItem.publisher.publisherId)">
+                        <i class='bx bx-history'></i>
+                    </button>                    
+                </div>
+            </div>
+            <div class="col-md-8 col-12"  *ngIf="currentCategory !== midWeekCategories.ATTENDANTS && scheduleItem.withPartner">
+                <div class="d-flex align-items-center mb-2" style="column-gap:10px;">
+                    <kendo-dropdownlist style="margin-bottom:.5rem"
+                        [data]="filteredPublisher"
+                        [filterable]="true"
+                        textField="fullName"
+                        valueField="publisherId"
+                        (filterChange)="handleFilter($event)"
+                        [(ngModel)]="scheduleItem.publisher"
+                        (ngModelChange)="onModelChange(scheduleItem);loadPublisherRecentParts(scheduleItem.publisher.publisherId)"
+                    >
+                    </kendo-dropdownlist> 
+                    <button class="btn bg-red  text-white"  (click)="clearValue(scheduleItem,'publisher');onModelChange(scheduleItem)">
+                        <i class='bx bx-x' ></i>
+                    </button> 
+                    <button class="btn btn-default" (click)="loadPublisherRecentParts(scheduleItem.publisher.publisherId)">
+                        <i class='bx bx-history'></i>
+                    </button>                  
+                </div>
+                <div class="d-flex align-items-center mb-2" style="column-gap:10px;">
+                    <kendo-dropdownlist style="margin-bottom:.5rem"
+                        [data]="filteredPublisher"
+                        [filterable]="true"
+                        textField="fullName"
+                        valueField="publisherId"
+                        (filterChange)="handleFilter($event)"
+                        [(ngModel)]="scheduleItem.partnerPublisher"
+                        (ngModelChange)="onModelChange(scheduleItem,true);loadPublisherRecentParts(scheduleItem.partnerPublisher.publisherId)"
+                        >
+                    </kendo-dropdownlist>
+                    <button class="btn bg-red  text-white"  (click)="clearValue(scheduleItem,'partnerPublisher');onModelChange(scheduleItem,true)">
+                        <i class='bx bx-x' ></i>
+                    </button>
+                    <button class="btn btn-default" (click)="loadPublisherRecentParts(scheduleItem.partnerPublisher.publisherId)">
+                        <i class='bx bx-history'></i>
+                    </button>                        
+                </div>
+            </div>
+            <div class="col-md-8 col-12"  *ngIf="currentCategory === midWeekCategories.ATTENDANTS && scheduleItem.withPartner">
+                <div class="d-flex align-items-center mb-2" style="column-gap:10px;">
+                    <kendo-dropdownlist style="margin-bottom:.5rem"
+                        [data]="filteredAttendants"
+                        [filterable]="true"
+                        textField="fullName"
+                        valueField="publisherId"
+                        (filterChange)="handleFilterForAttendants($event)"
+                        [(ngModel)]="scheduleItem.publisher"
+                        (ngModelChange)="onModelChangeForAttendant(scheduleItem);loadPublisherRecentParts(scheduleItem.publisher.publisherId)"
+                    >
+                    </kendo-dropdownlist>
+                    <button class="btn bg-red  text-white" (click)="clearValue(scheduleItem,'publisher');onModelChangeForAttendant(scheduleItem)">
+                        <i class='bx bx-x' ></i>
+                    </button>
+                    <button class="btn btn-default" (click)="loadPublisherRecentParts(scheduleItem.publisher.publisherId)">
+                        <i class='bx bx-history'></i>
+                    </button>  
+                </div>
+                <div class="d-flex align-items-center mb-2" style="column-gap:10px;">
+                    <kendo-dropdownlist style="margin-bottom:.5rem"
+                        [data]="filteredAttendants"
+                        [filterable]="true"
+                        textField="fullName"
+                        valueField="publisherId"
+                        (filterChange)="handleFilterForAttendants($event)"
+                        [(ngModel)]="scheduleItem.partnerPublisher"
+                        (ngModelChange)="onModelChangeForAttendant(scheduleItem);loadPublisherRecentParts(scheduleItem.partnerPublisher.publisherId)"
+                        >
+                    </kendo-dropdownlist>
+                    <button class="btn bg-red text-white" (click)="clearValue(scheduleItem,'partnerPublisher');onModelChangeForAttendant(scheduleItem)">
+                        <i class='bx bx-x' ></i>
+                    </button>
+                    <button class="btn btn-default" (click)="loadPublisherRecentParts(scheduleItem.partnerPublisher.publisherId)">
+                        <i class='bx bx-history'></i>
+                    </button>  
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 d-flex justify-content-between align-items-center mt-3">
+            <div>
+                <button (click)="changeCategory(-1)"  *ngIf="currentCategory !== midWeekCategories.OPENING" class="btn btn-default">Previous</button>
+            </div>
+            <div>
+                <button (click)="changeCategory(1)" *ngIf="currentCategory !== midWeekCategories.ATTENDANTS" class="btn btn-default">Next</button>
+                <button (click)="submit()" *ngIf="currentCategory === midWeekCategories.ATTENDANTS" class="btn bg-green text-white">Submit</button>
+            </div>
+        </div>
+    </div>
+    <div class="col-12 col-lg-4 col-xxl-6">
+        <div *ngIf="!selectedPublisher" class="bg-default p-2 text-center mb-2" style="font-weight:700">
+            <h3 class="p-0 m-0">Publisher Recent Parts</h3>
+        </div>
+        <div *ngIf="!selectedPublisher" class="py-2 border border-secondary d-flex justify-content-center align-items-center" style="min-height:200px;">
+            <div class="row">
+                <div class="col-12 text-center px-5">
+                    <p class="p-0 m-0" style="color: #0000007a;">Click the history button (<i class='bx bx-history'></i>) beside the publisher name to see their recent part.</p>
+                </div>
+            </div>
+        </div>
+
+        <div *ngIf="selectedPublisher" class="bg-default p-2 text-center mb-2" style="font-weight:700">
+            <h3 class="p-0 m-0">{{selectedPublisher.fullName}}</h3>
+            <label style="font-weight:400">Recent Parts</label>
+        </div>
+        <div *ngIf="selectedPublisher" class="py-2" style="min-height:200px;">
+            <div class="row">
+                <div class="col-12">
+                    <kendo-grid [data]="selectedPublisher.recentParts">
+                        <kendo-grid-column field="date" title="Date Part" [width]="100">
+                            <ng-template kendoGridCellTemplate let-dataItem>
+                                <span >{{ dataItem.date | date }}</span>
+                            </ng-template>
+                        </kendo-grid-column>
+                        <kendo-grid-column field="part.category" title="Category">
+                            <ng-template kendoGridCellTemplate let-dataItem>
+                                <div *ngIf="dataItem.part.category === midWeekCategories.OPENING">
+                                    <span class="p-0 m-0">Opening</span>
+                                </div>
+                                <div *ngIf="dataItem.part.category === midWeekCategories.TREASUREFROMGODSWORD">
+                                    <span class="p-0 m-0">TREASURE FROM GOD’S WORD</span>
+                                </div>
+                                <div *ngIf="dataItem.part.category === midWeekCategories.APPLYYOURSELFTOTHEFIELDMINISTRY">
+                                    <span class="p-0 m-0">Apply Yourself To The Field Ministry</span>
+                                </div>
+                                <div *ngIf="dataItem.part.category === midWeekCategories.LIVINGASACHRISTIAN">
+                                    <span class="p-0 m-0">Living as a Christian</span>
+                                </div>
+                                <div *ngIf="dataItem.part.category === midWeekCategories.ATTENDANTS">
+                                    <span class="p-0 m-0">Attendants</span>
+                                </div>
+                            </ng-template>
+                        </kendo-grid-column>
+                        <kendo-grid-column field="part.role" title="Role"  [width]="130"> </kendo-grid-column>
+                    </kendo-grid>
+                </div>
+            </div>
+        </div>
+    </div>            
+</div>

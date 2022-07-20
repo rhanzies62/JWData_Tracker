@@ -1,4 +1,5 @@
-﻿using JWDataTracker.Domain.Grid;
+﻿using JWDataTracker.Application.MidWeekMeetingSchedule;
+using JWDataTracker.Domain.Grid;
 using JWDataTracker.Helper;
 using JWDataTracker.Infrastructure.Repository;
 using Newtonsoft.Json;
@@ -96,7 +97,8 @@ namespace JWDataTracker.Application.Publisher
 
         public PublisherDto GetById(int publisherId)
         {
-            var publisher = unitOfWork.PublisherRepository.Get(p => p.PublisherId == publisherId).Select(p => new PublisherDto {
+            var publisher = unitOfWork.PublisherRepository.Get(p => p.PublisherId == publisherId).Select(p => new PublisherDto
+            {
                 CreatedDate = JsonConvert.DeserializeObject<DateTime>(p.CreatedDate),
                 CongregationId = p.CongregationId,
                 FirstName = p.FirstName,
@@ -123,7 +125,21 @@ namespace JWDataTracker.Application.Publisher
                 IsMs = p.IsMs == 1,
                 IsRp = p.IsRp == 1,
                 IsUnBaptized = p.IsUnBaptized == 1,
-                LastName = p.LastName
+                LastName = p.LastName,
+                PublisherId = p.PublisherId,
+                RecentParts = (from mwsi in unitOfWork.MidWeekScheduleItemRepository.Get()
+                               join mws in unitOfWork.MidWeekScheduleRepository.Get() on mwsi.MidWeekScheduleId equals mws.MidWeekScheduleId
+                               where mwsi.PublisherId == p.PublisherId
+                               orderby mwsi.MidWeekScheduleItemId descending
+                               select new RecentPart
+                               {
+                                   Date = JsonConvert.DeserializeObject<DateTime>(mws.ScheduledDate),
+                                   Part = new MidWeekScheduleItemDto()
+                                   {
+                                       Category = mwsi.Category,
+                                       Role = mwsi.Role
+                                   }
+                               }),
             });
         }
 

@@ -1,0 +1,70 @@
+<div class="container" style="margin-bottom:6rem;">
+    <div class="row">
+        <div class="mt-3 col-12 d-flex align-items-center justify-content-between">
+            <h3>Mid Week Meeting Schedules</h3>
+            <button class="btn btn-default" (click)="openMidWeekModal()">Create Schedule</button>
+        </div>
+        <div class="col-12">
+            <hr/>
+        </div>
+        <div class="col-12">
+            <kendo-datapager
+                [total]="schedules.totalCount"
+                [pageSize]="pageSize"
+                [skip]="skip"
+                (pageChange)="pageChange($event)"
+                [pageSizeValues]="false"
+            >
+            </kendo-datapager>            
+        </div>
+        <div class="col-12 col-md-6 col-lg-4" *ngFor="let schedule of schedules.data">
+            <div class="card">
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col-12 fw-bold text-center">
+                            {{schedule.scheduleDT | date}}
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body p-2">
+                    <div *ngFor="let category of categoryArrangement">
+                        <div class="section-header gray" *ngIf="category === midWeekCategories.TREASUREFROMGODSWORD">
+                            <span>
+                                TREASURE FROM GOD’S WORD
+                            </span>
+                            <div></div>
+                        </div>
+                        <div class="section-header yellow" *ngIf="category === midWeekCategories.APPLYYOURSELFTOTHEFIELDMINISTRY">
+                            <span>
+                                Apply Yourself To The Field Ministry
+                            </span>
+                            <div></div>
+                        </div>
+                        <div class="section-header red" *ngIf="category === midWeekCategories.LIVINGASACHRISTIAN">
+                            <span>
+                                Living as a Christian
+                            </span>
+                            <div></div>
+                        </div>
+                        <div class="section-header blue" *ngIf="category === midWeekCategories.ATTENDANTS">
+                            <span >
+                                Attendants
+                            </span>
+                            <div></div>
+                        </div>
+                        
+                        <div *ngFor="let scheduleItem of filterByCategory(category,schedule)">
+                            <div *ngIf="scheduleItem.publisher" class="d-flex justify-content-between align-items-center border-secondary border-bottom pb-2">
+                                <label>{{scheduleItem.role}}</label>
+                                <div>
+                                    <p class="m-0 p-0 fw-bold text-end" *ngIf="scheduleItem.publisher">{{scheduleItem.publisher.fullName}}</p>
+                                    <p class="m-0 p-0 fw-bold text-end" *ngIf="scheduleItem.partnerPublisher">{{scheduleItem.partnerPublisher.fullName}}</p>
+                                </div>
+                            </div>
+                        </div> 
+                    </div>
+                </div>
+            </div>
+        </div>      
+    </div>
+</div>

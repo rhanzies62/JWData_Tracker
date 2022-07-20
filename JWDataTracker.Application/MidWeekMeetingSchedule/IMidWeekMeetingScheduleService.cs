@@ -11,7 +11,7 @@ namespace JWDataTracker.Application.MidWeekMeetingSchedule
     {
         Response Add(MidWeekMeetingScheduleDto model);
         Response Edit(MidWeekMeetingScheduleDto model);
-        IEnumerable<MidWeekMeetingScheduleDto> List(long congregatonId);
+        GridResultGeneric<MidWeekMeetingScheduleDto> List(long congregationId, int skip, int take);
         Response Delete(long midWeekScheduleId);
         MidWeekMeetingScheduleDto GetMidWeekScheduleByDate(DateTime date, int congregationId);
     }
