@@ -20,6 +20,8 @@ export class MidWeekScheduleItem {
     isForElderMs: boolean;
     publisher: Publisher;
     partnerPublisher: Publisher;
+    publisherName: string;
+    partnerName: string;
 }
 
 export class Role {

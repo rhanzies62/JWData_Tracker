@@ -30,7 +30,7 @@ namespace JWDataTracker.Application.MidWeekMeetingSchedule
                         Attendance = 0,
                         CongregationId = model.CongregationId,
                         CreatedBy = model.CreatedBy,
-                        ScheduledDate = model.ScheduledDate
+                        ScheduledDate = JsonConvert.SerializeObject(model.ScheduledDate)
                     };
                     unitOfWork.MidWeekScheduleRepository.Insert(midWeekSchedule);
                     unitOfWork.Save();
@@ -123,14 +123,15 @@ namespace JWDataTracker.Application.MidWeekMeetingSchedule
                          {
                              Attendance = mws.Attendance,
                              MidWeekScheduleId = mws.MidWeekScheduleId,
-                             ScheduledDate = mws.ScheduledDate,
+                             ScheduledDate = JsonConvert.DeserializeObject<DateTime>(mws.ScheduledDate),
                              MidWeekScheduleItems = (from mwsi in unitOfWork.MidWeekScheduleItemRepository.Get()
+                                                     where mwsi.MidWeekScheduleId == mws.MidWeekScheduleId
                                                      select new MidWeekScheduleItemDto
                                                      {
                                                          HallNumber = mwsi.HallNumber,
                                                          MidWeekScheduleId = mwsi.MidWeekScheduleId,
-                                                         MidWeekScheduleItemId = mwsi.MidWeekScheduleId,
-                                                         PartnerPublisherId = mwsi.MidWeekScheduleId,
+                                                         MidWeekScheduleItemId = mwsi.MidWeekScheduleItemId,
+                                                         PartnerPublisherId = mwsi.PartnerPublisherId,
                                                          PublisherId = mwsi.PublisherId,
                                                          Category = mwsi.Category,
                                                          Role = mwsi.Role,
@@ -156,9 +157,50 @@ namespace JWDataTracker.Application.MidWeekMeetingSchedule
             return query;
         }
 
-        public IEnumerable<MidWeekMeetingScheduleDto> List(long congregatonId)
+        public GridResultGeneric<MidWeekMeetingScheduleDto> List(long congregationId,int skip, int take)
         {
-            throw new NotImplementedException();
+            var grid = new GridResultGeneric<MidWeekMeetingScheduleDto>();
+            var query = (from mws in unitOfWork.MidWeekScheduleRepository.Get()
+                         where mws.CongregationId == congregationId 
+                         && JsonConvert.DeserializeObject<DateTime>(mws.ScheduledDate) > DateTime.UtcNow
+                         select new MidWeekMeetingScheduleDto
+                         {
+                             Attendance = mws.Attendance,
+                             MidWeekScheduleId = mws.MidWeekScheduleId,
+                             ScheduledDate = JsonConvert.DeserializeObject<DateTime>(mws.ScheduledDate),
+                             MidWeekScheduleItems = (from mwsi in unitOfWork.MidWeekScheduleItemRepository.Get()
+                                                     where mwsi.MidWeekScheduleId == mws.MidWeekScheduleId
+                                                     select new MidWeekScheduleItemDto
+                                                     {
+                                                         HallNumber = mwsi.HallNumber,
+                                                         MidWeekScheduleId = mwsi.MidWeekScheduleId,
+                                                         MidWeekScheduleItemId = mwsi.MidWeekScheduleItemId,
+                                                         PartnerPublisherId = mwsi.PartnerPublisherId,
+                                                         PublisherId = mwsi.PublisherId,
+                                                         Category = mwsi.Category,
+                                                         Role = mwsi.Role,
+                                                         Publisher = (from p in unitOfWork.PublisherRepository.Get()
+                                                                      where p.PublisherId == mwsi.PublisherId
+                                                                      select new PublisherDto
+                                                                      {
+                                                                          PublisherId = p.PublisherId,
+                                                                          FirstName = p.FirstName,
+                                                                          LastName = p.LastName
+                                                                      }).FirstOrDefault(),
+                                                         PartnerPublisher = (from p in unitOfWork.PublisherRepository.Get()
+                                                                             where p.PublisherId == mwsi.PartnerPublisherId
+                                                                             select new PublisherDto
+                                                                             {
+                                                                                 PublisherId = p.PublisherId,
+                                                                                 FirstName = p.FirstName,
+                                                                                 LastName = p.LastName
+                                                                             }).FirstOrDefault()
+                                                     })
+                         });
+            
+            grid.Data = query.Skip(skip).Take(take);
+            grid.TotalCount = query.Count();
+            return grid;
         }
     }
 }

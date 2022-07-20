@@ -32,14 +32,14 @@ namespace JWDataTracker.Application.MidWeekMeetingSchedule
                 });
             });
 
-            if (response.IsSuccess)
-            {
-                var tsgw = model.MidWeekScheduleItems.Where(i => i.Category == Constant.TREASUREFROMGODSWORD && i.PublisherId != 0).ToList();
-                var lac = model.MidWeekScheduleItems.Where(i => i.Category == Constant.LIVINGASACHRISTIAN && i.PublisherId != 0).ToList();
+            //if (response.IsSuccess)
+            //{
+            //    var tsgw = model.MidWeekScheduleItems.Where(i => i.Category == Constant.TREASUREFROMGODSWORD && i.PublisherId != 0).ToList();
+            //    var lac = model.MidWeekScheduleItems.Where(i => i.Category == Constant.LIVINGASACHRISTIAN && i.PublisherId != 0).ToList();
 
-                response = ValidateExistence(tsgw, lac, "{0} already has a part in {1} and can't appear again in {2}", Constant.TreasureFromGodsWord, Constant.LivingAsAChristian);
-                if(response.IsSuccess) response = ValidateExistence(lac, tsgw, "{0} already has a part in {1} and can't appear again in {2}", Constant.LivingAsAChristian, Constant.TreasureFromGodsWord);
-            }
+            //    response = ValidateExistence(tsgw, lac, "{0} already has a part in {1} and can't appear again in {2}", Constant.TreasureFromGodsWord, Constant.LivingAsAChristian);
+            //    if(response.IsSuccess) response = ValidateExistence(lac, tsgw, "{0} already has a part in {1} and can't appear again in {2}", Constant.LivingAsAChristian, Constant.TreasureFromGodsWord);
+            //}
 
             if (response.IsSuccess)
             {

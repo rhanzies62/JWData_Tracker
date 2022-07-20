@@ -9,7 +9,7 @@ namespace JWDataTracker.Application.MidWeekMeetingSchedule
     public class MidWeekMeetingScheduleDto
     {
         public long MidWeekScheduleId { get; set; }
-        public string ScheduledDate { get; set; }
+        public DateTime ScheduledDate { get; set; }
         public long? CreatedBy { get; set; }
         public long Attendance { get; set; }
         public long CongregationId { get; set; }
@@ -17,7 +17,14 @@ namespace JWDataTracker.Application.MidWeekMeetingSchedule
         {
             get
             {
-                return JsonConvert.DeserializeObject<DateTime>(ScheduledDate);
+                try
+                {
+                    return ScheduledDate;
+                }catch(Exception e)
+                {
+                    return DateTime.UtcNow;
+                }
+                
             }
         }
 

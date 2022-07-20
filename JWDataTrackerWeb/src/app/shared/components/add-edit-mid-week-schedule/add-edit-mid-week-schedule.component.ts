@@ -12,11 +12,13 @@ import { Publisher } from '../../models/publisher';
   styleUrls: ['./add-edit-mid-week-schedule.component.scss']
 })
 export class AddEditMidWeekScheduleComponent implements OnInit {
+  message: string = "";
   midWeekSchedule: MidWeekSchedule;
   categoryArrangement: string[] = [ MidWeekCategories.OPENING,MidWeekCategories.TREASUREFROMGODSWORD,MidWeekCategories.APPLYYOURSELFTOTHEFIELDMINISTRY,MidWeekCategories.LIVINGASACHRISTIAN,MidWeekCategories.ATTENDANTS ];
   currentCategory: string = MidWeekCategories.OPENING;
   midWeekCategories: any = MidWeekCategories;
   publishers: Publisher[] = [];
+  selectedPublisher: Publisher;
 
   sourceElderMs: Publisher[] = [];
   filteredElderMs: Publisher[] = [];
@@ -100,18 +102,23 @@ export class AddEditMidWeekScheduleComponent implements OnInit {
         var list = this.midWeekSchedule.midWeekScheduleItems.filter(i => i.isForElderMs);
         this.sourceElderMs = this.publishers.filter(i => i.isElder || i.isMs);
         list.map(item => {
-          if(item.publisher && item.role !== MidWeekScheduleRoles.Chairman) this.sourceElderMs = this.sourceElderMs.filter(i => i.publisherId !== item.publisher.publisherId);
+          if(item.publisher){
+            if(item.role === MidWeekScheduleRoles.Chairman || item.role === MidWeekScheduleRoles.OpeningPrayer || item.role === MidWeekScheduleRoles.ClosingPrayer || item.role === MidWeekScheduleRoles.CBSConductor) { }
+            else this.sourceElderMs = this.sourceElderMs.filter(i => i.publisherId !== item.publisher.publisherId);
+          } 
         });
         this.handleFilterForElderMs("");
     } else {
-      var list = this.midWeekSchedule.midWeekScheduleItems.filter(i => !i.isForElderMs);
+      var list = this.midWeekSchedule.midWeekScheduleItems.filter(i => !i.isForElderMs && i.category === MidWeekCategories.APPLYYOURSELFTOTHEFIELDMINISTRY);
       this.sourcePublisher = this.publishers.filter(i => !i.isElder);
+      console.log("BEFORE:",this.sourcePublisher);
       list.map(item => {
         if(item.partnerPublisher)
           this.sourcePublisher = this.sourcePublisher.filter(i => i.publisherId !== item.partnerPublisher.publisherId);
         if(item.publisher)
           this.sourcePublisher = this.sourcePublisher.filter(i => i.publisherId !== item.publisher.publisherId); 
       });
+      console.log("AFTER:",this.sourcePublisher);
       this.handleFilter("");
     }
   }
@@ -133,7 +140,7 @@ export class AddEditMidWeekScheduleComponent implements OnInit {
       attendance: 0,
       midWeekScheduleId: 0,
       midWeekScheduleItems: [],
-      scheduledDate: new Date(),
+      scheduledDate: !this.midWeekSchedule ? new Date() : this.midWeekSchedule.scheduledDate,
       scheduleDT: null
     };
 
@@ -151,7 +158,9 @@ export class AddEditMidWeekScheduleComponent implements OnInit {
           withPartner: r.withPartner,
           isForElderMs: r.isForElderMs,
           publisher: null,
-          partnerPublisher: null
+          partnerPublisher: null,
+          partnerName: "",
+          publisherName: ""
         });
       })
     });
@@ -161,9 +170,19 @@ export class AddEditMidWeekScheduleComponent implements OnInit {
     this.commonService.toggleLoadingScreen();
     this.midWeekSchedule.midWeekScheduleItems.map(mwsi => {
       mwsi.publisherId = mwsi.publisher ? mwsi.publisher.publisherId : 0;
+      mwsi.publisherName = mwsi.publisher ? mwsi.publisher.fullName : "";
+
       mwsi.partnerPublisherId = mwsi.partnerPublisher ? mwsi.partnerPublisher.publisherId : 0;
+      mwsi.partnerName = mwsi.partnerPublisher ? mwsi.partnerPublisher.fullName : "";
     });
-    this.midWeekScheduleApiService.addedit(this.midWeekSchedule);
+    var result = await this.midWeekScheduleApiService.addedit(this.midWeekSchedule);
     this.commonService.toggleLoadingScreen();
+    if(!result.isSuccess) this.message = result.message;
+    else this.commonService.dismissDialog();
+  }
+
+  loadPublisherRecentParts(publisherId: number){
+    this.selectedPublisher = this.publishers.find(i => i.publisherId === publisherId);
+    console.log(this.selectedPublisher);
   }
 }

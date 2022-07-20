@@ -43,9 +43,9 @@ namespace JWDataTracker.Api.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<MidWeekMeetingScheduleDto> List()
+        public GridResultGeneric<MidWeekMeetingScheduleDto> List(int skip,int take)
         {
-            var response = midWeekScheduleService.List(1);
+            var response = midWeekScheduleService.List(1,skip,take);
             return response;
         }
     }
