@@ -5,12 +5,6 @@ namespace JWDataTracker.Infrastructure
 {
     public partial class Publisher
     {
-        public Publisher()
-        {
-            MidWeekScheduleItemPartnerPublishers = new HashSet<MidWeekScheduleItem>();
-            MidWeekScheduleItemPublishers = new HashSet<MidWeekScheduleItem>();
-        }
-
         public long PublisherId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
@@ -21,9 +15,8 @@ namespace JWDataTracker.Infrastructure
         public long IsRp { get; set; }
         public long IsUnBaptized { get; set; }
         public long GroupNumber { get; set; }
+        public long IsBaptized { get; set; }
 
         public virtual Congregation Congregation { get; set; }
-        public virtual ICollection<MidWeekScheduleItem> MidWeekScheduleItemPartnerPublishers { get; set; }
-        public virtual ICollection<MidWeekScheduleItem> MidWeekScheduleItemPublishers { get; set; }
     }
 }

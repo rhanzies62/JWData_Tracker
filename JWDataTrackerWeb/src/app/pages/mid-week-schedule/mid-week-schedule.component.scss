@@ -1,0 +1,58 @@
+.empty-schedule {
+    background: #FFFFFF;
+    border: 1px solid  rgba(0, 0, 0, 0.123);
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    height:100%;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.empty-schedule i {
+    font-size:150px;
+    color: rgba(0, 0, 0, 0.123);
+}
+.section-header {
+    margin: 1rem 0;
+    font-weight: 700;
+    display:flex;
+    flex-direction: column;
+}
+
+.section-header div {
+    height:5px;
+    width: 75%;
+}
+
+.section-header.gray{
+    color:#626262;
+}
+
+.section-header.gray div{
+    background-color:#626262;
+}
+
+.section-header.yellow{
+    color:#C48430;
+}
+
+.section-header.yellow div{
+    background-color:#C48430;
+}
+
+.section-header.red{
+    color:#942926;
+}
+
+.section-header.red div{
+    background-color:#942926;
+}
+
+.section-header.blue{
+    color:#3E85FC;
+}
+
+.section-header.blue div{
+    background-color:#3E85FC;
+}

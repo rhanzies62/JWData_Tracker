@@ -1,3 +1,5 @@
+import { MidWeekScheduleItem } from "./midWeekSchedule";
+
 export class Publisher {
     publisherId: number;
     firstName: string;
@@ -8,4 +10,12 @@ export class Publisher {
     isRp: boolean;
     isUnBaptized: boolean;
     groupNumber:number;
+    fullName:string;
+    mostRecentPart: RecentPart;
+    recentParts: RecentPart[];
+}
+
+export class RecentPart{
+    date: Date;
+    part: MidWeekScheduleItem
 }

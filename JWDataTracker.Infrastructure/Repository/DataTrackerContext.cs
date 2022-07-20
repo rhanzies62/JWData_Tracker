@@ -12,7 +12,6 @@ namespace JWDataTracker.Infrastructure.Repository
         public DataTrackerContext()
         {
         }
-
         public DataTrackerContext(string _connectionString)
         {
             connectionString = _connectionString;
@@ -35,7 +34,6 @@ namespace JWDataTracker.Infrastructure.Repository
         {
             if (!optionsBuilder.IsConfigured)
             {
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
                 optionsBuilder.UseSqlite(connectionString);
             }
         }
@@ -81,19 +79,11 @@ namespace JWDataTracker.Infrastructure.Repository
             {
                 entity.ToTable("MidWeekScheduleItem");
 
+                entity.Property(e => e.Category).IsRequired();
+
                 entity.Property(e => e.HallNumber).IsRequired();
 
                 entity.Property(e => e.Role).IsRequired();
-
-                entity.HasOne(d => d.PartnerPublisher)
-                    .WithMany(p => p.MidWeekScheduleItemPartnerPublishers)
-                    .HasForeignKey(d => d.PartnerPublisherId)
-                    .OnDelete(DeleteBehavior.ClientSetNull);
-
-                entity.HasOne(d => d.Publisher)
-                    .WithMany(p => p.MidWeekScheduleItemPublishers)
-                    .HasForeignKey(d => d.PublisherId)
-                    .OnDelete(DeleteBehavior.ClientSetNull);
             });
 
             modelBuilder.Entity<Publisher>(entity =>
@@ -101,6 +91,8 @@ namespace JWDataTracker.Infrastructure.Repository
                 entity.ToTable("Publisher");
 
                 entity.Property(e => e.FirstName).IsRequired();
+
+                entity.Property(e => e.IsBaptized).HasDefaultValueSql("1");
 
                 entity.Property(e => e.IsMs).HasColumnName("IsMS");
 
