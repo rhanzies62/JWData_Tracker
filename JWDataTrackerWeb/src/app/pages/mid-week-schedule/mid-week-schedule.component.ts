@@ -29,7 +29,7 @@ export class MidWeekScheduleComponent implements OnInit {
     });
 
     if(dataItem){
-      component.id = dataItem.publisherId;
+      component.scheduleDate = new Date(dataItem.scheduledDate);
     }
   }
 
