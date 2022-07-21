@@ -21,8 +21,11 @@
             <div class="card">
                 <div class="card-header">
                     <div class="row">
-                        <div class="col-12 fw-bold text-center">
-                            {{schedule.scheduleDT | date}}
+                        <div class="col-12 fw-bold text-center d-flex justify-content-between align-items-center">
+                            <span>{{schedule.scheduleDT | date}}</span>
+                            <button class="btn btn-default" (click)="openMidWeekModal(schedule)">
+                                <i class='bx bxs-calendar-plus'></i>
+                            </button>
                         </div>
                     </div>
                 </div>
