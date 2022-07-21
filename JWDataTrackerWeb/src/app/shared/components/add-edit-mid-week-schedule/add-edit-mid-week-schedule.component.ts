@@ -1,5 +1,5 @@
 import { ThrowStmt } from '@angular/compiler';
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { MidWeekScheduleApiservice } from 'src/app/core/apiService/mid-week-schedule-api.service';
 import { PublisherApiService } from 'src/app/core/apiService/publisher-api.service';
 import { CommonService } from 'src/app/core/services/common.service';
@@ -12,6 +12,7 @@ import { Publisher } from '../../models/publisher';
   styleUrls: ['./add-edit-mid-week-schedule.component.scss']
 })
 export class AddEditMidWeekScheduleComponent implements OnInit {
+  @Input() scheduleDate: Date;
   message: string = "";
   midWeekSchedule: MidWeekSchedule;
   categoryArrangement: string[] = [ MidWeekCategories.OPENING,MidWeekCategories.TREASUREFROMGODSWORD,MidWeekCategories.APPLYYOURSELFTOTHEFIELDMINISTRY,MidWeekCategories.LIVINGASACHRISTIAN,MidWeekCategories.ATTENDANTS ];
@@ -31,7 +32,12 @@ export class AddEditMidWeekScheduleComponent implements OnInit {
   constructor(private publisherApiService: PublisherApiService,private midWeekScheduleApiService: MidWeekScheduleApiservice,private commonService: CommonService) { }
 
   async ngOnInit(): Promise<void> {
-    this.buildMidWeekSchedule();
+    if(this.scheduleDate){
+      await this.loadScheduleByDate(this.scheduleDate);
+    } else {
+      this.buildMidWeekSchedule();  
+    }
+    
     this.publishers = await this.publisherApiService.List();
     this.sourcePublisher = this.publishers.filter(i => !i.isElder);
     this.sourceElderMs = this.publishers.filter(i => i.isElder || i.isMs);
@@ -41,8 +47,8 @@ export class AddEditMidWeekScheduleComponent implements OnInit {
     this.handleFilterForAttendants("");
   }
 
-  async onScheduleDateChange() {
-    var result = await this.midWeekScheduleApiService.GetMidWeekScheduleByDate(this.midWeekSchedule.scheduledDate);
+  async loadScheduleByDate(date: Date){
+    var result = await this.midWeekScheduleApiService.GetMidWeekScheduleByDate(date);
     if(result){
       result.scheduledDate = new Date(result.scheduleDT);
       result.midWeekScheduleItems.map(mwsi => {
@@ -57,12 +63,13 @@ export class AddEditMidWeekScheduleComponent implements OnInit {
            (mwsi.category === MidWeekCategories.LIVINGASACHRISTIAN && mwsi.role !== MidWeekScheduleRoles.CBSReader)) {
            mwsi.isForElderMs = true;
         }
-        
       });
       this.midWeekSchedule = result;
-    } else{
-      this.buildMidWeekSchedule();
-    }
+    } 
+  }
+
+  async onScheduleDateChange() {
+    await this.loadScheduleByDate(this.midWeekSchedule.scheduledDate);
   }
 
   changeCategory(nextPrevious: number){
