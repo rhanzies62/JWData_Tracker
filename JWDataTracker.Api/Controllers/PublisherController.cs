@@ -51,5 +51,11 @@ namespace JWDataTracker.Api.Controllers
         {
             return publisherService.List();
         }
+
+        [HttpPost]
+        public GridResultGeneric<PublisherRecentPartGrid> ListPublisherRecentParts(GridFilter filter, int publisherId)
+        {
+            return publisherService.ListPublisherRecentParts(filter,publisherId);
+        }
     }
 }

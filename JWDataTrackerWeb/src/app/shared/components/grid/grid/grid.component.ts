@@ -16,6 +16,7 @@ export class GridComponent implements OnInit {
   @Input() onAdd: any;
   @Input() onEdit: any;
   @Input() mobileViewComponent: string;
+  @Input() inCardView: boolean = true;
   @Output() onReload = new EventEmitter<string>();
   
   isLoading: boolean = false;
