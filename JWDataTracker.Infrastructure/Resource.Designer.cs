@@ -61,8 +61,12 @@ namespace JWDataTracker.Infrastructure {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to select * from Publisher
-        ///LIMIT 4,2;.
+        ///   Looks up a localized string similar to select * from (
+        ///select * from Publisher
+        ///) as q
+        ///##WHERE##
+        ///Order By ##ORDERBY##
+        ///LIMIT ##SKIP##,##TAKE##;.
         /// </summary>
         internal static string PublisherGrid {
             get {
@@ -71,11 +75,56 @@ namespace JWDataTracker.Infrastructure {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to select count(publisherid) as TotalCount from Publisher.
+        ///   Looks up a localized string similar to select count(*) as TotalCount from
+        ///(select * from Publisher) q
+        ///##WHERE##.
         /// </summary>
         internal static string PublisherGridCount {
             get {
                 return ResourceManager.GetString("PublisherGridCount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to select * from (
+        ///select 
+        ///mws.ScheduledDate,
+        ///mwsi.Category,
+        ///mwsi.Role as part,
+        ///case when mwsi.PartnerPublisherId = ##PublisherId## then true
+        ///else false end as IsPartner
+        ///from MidWeekScheduleItem mwsi
+        ///join MidWeekSchedule mws on mwsi.MidWeekScheduleId = mws.MidWeekScheduleId
+        ///where mwsi.Publisherid = ##PublisherId## or mwsi.PartnerPublisherId = ##PublisherId##
+        ///) as q
+        ///##WHERE##
+        ///Order By ##ORDERBY##
+        ///LIMIT ##SKIP##,##TAKE##;.
+        /// </summary>
+        internal static string PublisherRecentParts {
+            get {
+                return ResourceManager.GetString("PublisherRecentParts", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to select count(*) as TotalCount from
+        ///(
+        ///select 
+        ///mws.ScheduledDate,
+        ///mwsi.Category,
+        ///mwsi.Role as part,
+        ///case when mwsi.PartnerPublisherId = ##PublisherId## then true
+        ///else false end as IsPartner
+        ///from MidWeekScheduleItem mwsi
+        ///join MidWeekSchedule mws on mwsi.MidWeekScheduleId = mws.MidWeekScheduleId
+        ///where mwsi.Publisherid = ##PublisherId## or mwsi.PartnerPublisherId = ##PublisherId##
+        ///) q
+        ///##WHERE##.
+        /// </summary>
+        internal static string PublisherRecentPartsCount {
+            get {
+                return ResourceManager.GetString("PublisherRecentPartsCount", resourceCulture);
             }
         }
         

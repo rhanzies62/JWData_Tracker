@@ -126,26 +126,18 @@ namespace JWDataTracker.Application.Publisher
                 IsRp = p.IsRp == 1,
                 IsUnBaptized = p.IsUnBaptized == 1,
                 LastName = p.LastName,
-                PublisherId = p.PublisherId,
-                RecentParts = (from mwsi in unitOfWork.MidWeekScheduleItemRepository.Get()
-                               join mws in unitOfWork.MidWeekScheduleRepository.Get() on mwsi.MidWeekScheduleId equals mws.MidWeekScheduleId
-                               where mwsi.PublisherId == p.PublisherId
-                               orderby mwsi.MidWeekScheduleItemId descending
-                               select new RecentPart
-                               {
-                                   Date = JsonConvert.DeserializeObject<DateTime>(mws.ScheduledDate),
-                                   Part = new MidWeekScheduleItemDto()
-                                   {
-                                       Category = mwsi.Category,
-                                       Role = mwsi.Role
-                                   }
-                               }),
+                PublisherId = p.PublisherId
             });
         }
 
         public GridResultGeneric<PublisherGridDto> ListPublishers(GridFilter filter)
         {
             return unitOfWork.DataGridRepository.ListPublishers(filter);
+        }
+
+        public GridResultGeneric<PublisherRecentPartGrid> ListPublisherRecentParts(GridFilter filter,int publisherId)
+        {
+            return unitOfWork.DataGridRepository.ListPublisherRecentPart(filter, publisherId);
         }
     }
 }

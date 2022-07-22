@@ -1,10 +1,13 @@
 import { ThrowStmt } from '@angular/compiler';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { GridComponent } from '@progress/kendo-angular-grid';
 import { MidWeekScheduleApiservice } from 'src/app/core/apiService/mid-week-schedule-api.service';
 import { PublisherApiService } from 'src/app/core/apiService/publisher-api.service';
 import { CommonService } from 'src/app/core/services/common.service';
+import { PublisherRecentPartColumns } from '../../models/GridColumns';
+import { GridFilter, GridResultGeneric, PageGrid } from '../../models/GridFilter';
 import { MidWeekCategories, MidWeekCategoryRoles, MidWeekSchedule, MidWeekScheduleItem, MidWeekScheduleRoles } from '../../models/midWeekSchedule';
-import { Publisher } from '../../models/publisher';
+import { Publisher, RecentPart } from '../../models/publisher';
 
 @Component({
   selector: 'app-add-edit-mid-week-schedule',
@@ -12,6 +15,8 @@ import { Publisher } from '../../models/publisher';
   styleUrls: ['./add-edit-mid-week-schedule.component.scss']
 })
 export class AddEditMidWeekScheduleComponent implements OnInit {
+  public publisherRecentPartPageGrid : PageGrid;
+  @ViewChild(GridComponent) publisherGrid: GridComponent;
   @Input() scheduleDate: Date;
   message: string = "";
   midWeekSchedule: MidWeekSchedule;
@@ -29,9 +34,11 @@ export class AddEditMidWeekScheduleComponent implements OnInit {
 
   sourceAttendants: Publisher[] = [];
   filteredAttendants: Publisher[] = [];
+  
   constructor(private publisherApiService: PublisherApiService,private midWeekScheduleApiService: MidWeekScheduleApiservice,private commonService: CommonService) { }
 
   async ngOnInit(): Promise<void> {
+    this.publisherRecentPartPageGrid = new PageGrid(PublisherRecentPartColumns,4,'scheduledDate','desc');
     if(this.scheduleDate){
       await this.loadScheduleByDate(this.scheduleDate);
     } else {
@@ -189,7 +196,14 @@ export class AddEditMidWeekScheduleComponent implements OnInit {
   }
 
   loadPublisherRecentParts(publisherId: number){
-    this.selectedPublisher = this.publishers.find(i => i.publisherId === publisherId);
-    console.log(this.selectedPublisher);
+    this.selectedPublisher = null;
+    setTimeout(() => {
+      this.selectedPublisher = this.publishers.find(i => i.publisherId === publisherId);
+    }, 200);
+  }
+
+  loadDataGrid = async (gridFilter: GridFilter) : Promise<GridResultGeneric<RecentPart>> => {
+    var result = await this.publisherApiService.ListPublisherRecentParts(gridFilter,this.selectedPublisher.publisherId);
+    return result;
   }
 }

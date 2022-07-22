@@ -162,7 +162,7 @@ namespace JWDataTracker.Application.MidWeekMeetingSchedule
             var grid = new GridResultGeneric<MidWeekMeetingScheduleDto>();
             var query = (from mws in unitOfWork.MidWeekScheduleRepository.Get()
                          where mws.CongregationId == congregationId 
-                         && JsonConvert.DeserializeObject<DateTime>(mws.ScheduledDate) > DateTime.UtcNow
+                         && JsonConvert.DeserializeObject<DateTime>(mws.ScheduledDate) > DateTime.UtcNow.AddDays(-1)
                          select new MidWeekMeetingScheduleDto
                          {
                              Attendance = mws.Attendance,

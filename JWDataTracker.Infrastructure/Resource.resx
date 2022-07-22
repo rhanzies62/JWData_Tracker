@@ -122,7 +122,13 @@
     <value>Resources\PublisherGrid.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;iso-8859-1</value>
   </data>
   <data name="PublisherGridCount" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Resources\PublisherGrid1.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>Resources\PublisherGridCount.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="PublisherRecentParts" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\PublisherRecentParts.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="PublisherRecentPartsCount" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\PublisherRecentPartsCount.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="QueryToken_OrderBy" xml:space="preserve">
     <value>##ORDERBY##</value>

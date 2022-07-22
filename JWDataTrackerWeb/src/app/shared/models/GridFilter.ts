@@ -28,6 +28,8 @@ export class PageGrid {
     }
 
     if (defaultSortField && defaultSortFieldDirection) {
+      this.gridFilter.Field = defaultSortField;
+      this.gridFilter.Direction = defaultSortFieldDirection;
       this.sort = [
         {
           field: defaultSortField,

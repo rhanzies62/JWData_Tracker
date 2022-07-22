@@ -17,5 +17,7 @@ export class Publisher {
 
 export class RecentPart{
     date: Date;
-    part: MidWeekScheduleItem
+    category: string;
+    role: string;
+    isPartner: Boolean;
 }

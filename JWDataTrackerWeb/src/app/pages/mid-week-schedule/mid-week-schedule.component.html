@@ -57,10 +57,10 @@
                         </div>
                         
                         <div *ngFor="let scheduleItem of filterByCategory(category,schedule)">
-                            <div *ngIf="scheduleItem.publisher" class="d-flex justify-content-between align-items-center border-secondary border-bottom pb-2">
+                            <div class="d-flex justify-content-between align-items-center border-secondary border-bottom pb-2">
                                 <label>{{scheduleItem.role}}</label>
                                 <div>
-                                    <p class="m-0 p-0 fw-bold text-end" *ngIf="scheduleItem.publisher">{{scheduleItem.publisher.fullName}}</p>
+                                    <p class="m-0 p-0 fw-bold text-end" >{{scheduleItem.publisher ? scheduleItem.publisher.fullName : "-"}}</p>
                                     <p class="m-0 p-0 fw-bold text-end" *ngIf="scheduleItem.partnerPublisher">{{scheduleItem.partnerPublisher.fullName}}</p>
                                 </div>
                             </div>

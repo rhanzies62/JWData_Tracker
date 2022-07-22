@@ -16,5 +16,6 @@ namespace JWDataTracker.Application.Publisher
         Response Delete(long publisherId);
         PublisherDto GetById(int publisherId);
         GridResultGeneric<PublisherGridDto> ListPublishers(GridFilter filter);
+        GridResultGeneric<PublisherRecentPartGrid> ListPublisherRecentParts(GridFilter filter, int publisherId);
     }
 }

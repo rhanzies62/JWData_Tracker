@@ -18,4 +18,10 @@ export const PublisherColumns:Columns[] = [
     { fieldName: 'isRpBool', title: 'Is RP', type: 'crosscheck', width: 15,isVisible:true, sortColumn: "isRp", filterable: false },
     { fieldName: 'isUnBaptizedBool', title: 'Is Unbaptize', type: 'crosscheck', width: 20,isVisible:true, sortColumn: "isUnBaptized", filterable: false },
     { fieldName: 'createdDateDt', title: 'Created Date', type: 'date', width: 25,isVisible:true, sortColumn: "createdDate", filterable: false },
+];
+
+export const PublisherRecentPartColumns: Columns[] = [
+    { fieldName: 'scheduledDateDT', title: 'Date', type: 'date', width: 40,isVisible:true, sortColumn: "scheduledDate", filterable: false },
+    { fieldName: 'category', title: 'Category', type: 'text', width: 70,isVisible:true, sortColumn: "", filterable: false },
+    { fieldName: 'part', title: 'Role', type: 'text', width: 50,isVisible:true, sortColumn: "", filterable: false },
 ]
