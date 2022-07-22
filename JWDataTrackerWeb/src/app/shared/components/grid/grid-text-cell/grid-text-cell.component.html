@@ -9,5 +9,16 @@
     column.type !== 'crosscheck'
   "
   class=""
-  >{{ dataItem[column.fieldName] }}</span
+  >
+    <span *ngIf="column.fieldName === 'category'">
+          <span class="p-0 m-0" *ngIf="dataItem.category === midWeekCategories.OPENING">Opening</span>
+          <span class="p-0 m-0" *ngIf="dataItem.category === midWeekCategories.TREASUREFROMGODSWORD">Treasure From God's Word</span>
+          <span class="p-0 m-0" *ngIf="dataItem.category === midWeekCategories.APPLYYOURSELFTOTHEFIELDMINISTRY">Apply Yourself To The Field Ministry</span>
+          <span class="p-0 m-0" *ngIf="dataItem.category === midWeekCategories.LIVINGASACHRISTIAN">Living as a Christian</span>
+          <span class="p-0 m-0" *ngIf="dataItem.category === midWeekCategories.ATTENDANTS">Attendants</span>
+    </span>
+    <span *ngIf="column.fieldName !== 'category'">
+      {{ dataItem[column.fieldName] }}
+    </span>
+  </span
 >

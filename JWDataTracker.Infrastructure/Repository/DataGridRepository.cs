@@ -12,6 +12,7 @@ namespace JWDataTracker.Infrastructure.Repository
     public interface IDataGridRepository
     {
         GridResultGeneric<PublisherGridDto> ListPublishers(GridFilter filter);
+        GridResultGeneric<PublisherRecentPartGrid> ListPublisherRecentPart(GridFilter filter, int publisherId);
     }
     public class DataGridRepository : IDataGridRepository
     {
@@ -46,6 +47,38 @@ namespace JWDataTracker.Infrastructure.Repository
             {
                 result.TotalCount = 0;
                 result.Data = new List<PublisherGridDto>();
+                result.IsSuccess = false;
+                result.Message = $"{e.GetBaseException().Message},{e.StackTrace.ToString()}";
+            }
+
+            return result;
+        }
+
+        public GridResultGeneric<PublisherRecentPartGrid> ListPublisherRecentPart(GridFilter filter,int publisherId)
+        {
+            var result = new GridResultGeneric<PublisherRecentPartGrid>();
+            var cmd = context.Database.GetDbConnection().CreateCommand();
+            try
+            {
+                context.Database.OpenConnection();
+                cmd.CommandText = Resource.PublisherRecentParts.ParseQuery(filter, "ScheduledDate").Replace("##PublisherId##",publisherId.ToString());
+                var reader = cmd.ExecuteReader();
+                result.Data = reader.DataReaderMapToList<PublisherRecentPartGrid>().ToList();
+                reader.Dispose();
+                context.Database.CloseConnection();
+
+                context.Database.OpenConnection();
+                cmd.CommandText = Resource.PublisherRecentPartsCount.ParseQuery(filter, "ScheduledDate").Replace("##PublisherId##", publisherId.ToString());
+                var countReader = cmd.ExecuteReader();
+                countReader.Read();
+                result.TotalCount = int.Parse(countReader.GetValue(0).ToString());
+                countReader.Dispose();
+                context.Database.CloseConnection();
+            }
+            catch (Exception e)
+            {
+                result.TotalCount = 0;
+                result.Data = new List<PublisherRecentPartGrid>();
                 result.IsSuccess = false;
                 result.Message = $"{e.GetBaseException().Message},{e.StackTrace.ToString()}";
             }

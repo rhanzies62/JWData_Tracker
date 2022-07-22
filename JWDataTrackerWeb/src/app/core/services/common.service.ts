@@ -136,8 +136,8 @@ export class CommonService {
     return date;
   }
 
-  getModalWidth() : number{
-    if(window.innerWidth >= 1400) return window.innerWidth * 0.5;
+  getModalWidth(minWidth: number = 0.4) : number{
+    if(window.innerWidth >= 1400) return window.innerWidth * minWidth;
     else return window.innerWidth * 0.9;
   }
 }

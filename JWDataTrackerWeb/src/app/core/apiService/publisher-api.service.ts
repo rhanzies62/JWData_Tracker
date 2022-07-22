@@ -41,4 +41,9 @@ export class PublisherApiService {
       return result;
     }
 
+    async ListPublisherRecentParts(filter: GridFilter,publisherId): Promise<GridResultGeneric<PublisherGrid>> {
+      var result = await this.baseApiService.post<GridFilter,GridResultGeneric<PublisherGrid>>(`publisher/ListPublisherRecentParts?publisherId=${publisherId}`,filter);
+      return result;
+    }
+
 }

@@ -24,7 +24,7 @@ export class MidWeekScheduleComponent implements OnInit {
   }
 
   openMidWeekModal = (dataItem: any = null) => {
-    var component = this.commonService.displayAlert("Add/Edit Mid Week Schedule",AddEditMidWeekScheduleComponent,this.commonService.getModalWidth(), async ()=> {
+    var component = this.commonService.displayAlert("Add/Edit Mid Week Schedule",AddEditMidWeekScheduleComponent,this.commonService.getModalWidth(0.6), async ()=> {
       this.schedules = await this.midWeekScheduleApiService.List(this.skip,this.pageSize);
     });
 
