@@ -1,12 +1,21 @@
-<div class="container-xxl" style="margin-bottom:6rem;">
+<div class="container-xxl" style="margin-bottom:6rem;" *ngIf="schedules">
     <div class="row">
         <div class="mt-3 col-12 d-flex align-items-center justify-content-between">
             <h3>Mid Week Meeting Schedules</h3>
-            <button class="btn btn-default" (click)="openMidWeekModal()">Create Schedule</button>
+            <div class="d-flex" style="column-gap:10px;">
+                <button class="btn btn-default" (click)="openMidWeekModal()">
+                    <i class='bx bx-calendar-plus'></i>
+                </button>
+                <button class="btn btn-default" (click)="capture()">
+                    <i class='bx bxs-camera'></i>
+                </button>
+            </div>
         </div>
         <div class="col-12">
             <hr/>
-        </div>
+        </div>      
+    </div>
+    <div class="row">
         <div class="col-12">
             <kendo-datapager
                 [total]="schedules.totalCount"
@@ -17,15 +26,22 @@
             >
             </kendo-datapager>            
         </div>
-        <div class="col-12 col-md-6 col-lg-4" *ngFor="let schedule of schedules.data">
+    </div>
+    <div class="row" id="scheduleContent">
+        <div #scheduleElement class="col-12 col-md-6 col-lg-4" *ngFor="let schedule of schedules.data">
             <div class="card">
                 <div class="card-header">
                     <div class="row">
                         <div class="col-12 fw-bold text-center d-flex justify-content-between align-items-center">
                             <span>{{schedule.scheduleDT | date}}</span>
-                            <button class="btn btn-default" (click)="openMidWeekModal(schedule)">
-                                <i class='bx bxs-calendar-plus'></i>
-                            </button>
+                            <div class="d-flex" style="column-gap:10px;">
+                                <button class="btn btn-default" (click)="openMidWeekModal(schedule)">
+                                    <i class='bx bxs-calendar-plus'></i>
+                                </button>
+                                <button class="btn btn-default" (click)="capture(scheduleElement,schedule)">
+                                    <i class='bx bxs-camera'></i>
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -68,6 +84,6 @@
                     </div>
                 </div>
             </div>
-        </div>      
+        </div>
     </div>
 </div>
