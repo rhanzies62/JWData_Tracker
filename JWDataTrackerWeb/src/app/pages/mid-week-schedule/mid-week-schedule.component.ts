@@ -1,11 +1,11 @@
 import { Component, HostListener, OnInit } from '@angular/core';
 import { PageChangeEvent } from '@progress/kendo-angular-grid';
+import html2canvas from 'html2canvas';
 import { MidWeekScheduleApiservice } from 'src/app/core/apiService/mid-week-schedule-api.service';
 import { CommonService } from 'src/app/core/services/common.service';
 import { AddEditMidWeekScheduleComponent } from 'src/app/shared/components/add-edit-mid-week-schedule/add-edit-mid-week-schedule.component';
 import { GridResultGeneric } from 'src/app/shared/models/GridFilter';
 import { MidWeekCategories, MidWeekSchedule, MidWeekScheduleItem } from 'src/app/shared/models/midWeekSchedule';
-
 @Component({
   selector: 'app-mid-week-schedule',
   templateUrl: './mid-week-schedule.component.html',
@@ -21,6 +21,21 @@ export class MidWeekScheduleComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
     await this.loadSchedules();
+    
+  }
+
+  capture(element = null,schedule: MidWeekSchedule = null){
+    html2canvas(element || document.getElementById("scheduleContent")).then((canvas) => {
+      let a = document.createElement("a");
+      let filename = "MidWeekSchedule.png";
+      if(schedule){
+          var date = new Date(schedule.scheduleDT);
+          filename = `MidWeekSchedule-${date.getMonth()+1}-${date.getDate()}-${date.getFullYear()}.png`;
+      }
+      a.download = filename;
+      a.href = canvas.toDataURL("image/png");
+      a.click();
+    });
   }
 
   openMidWeekModal = (dataItem: any = null) => {

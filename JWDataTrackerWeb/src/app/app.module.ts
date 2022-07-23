@@ -38,6 +38,7 @@ import { AddEditMidWeekScheduleComponent } from './shared/components/add-edit-mi
 import { DropDownsModule } from '@progress/kendo-angular-dropdowns';
 import { MidWeekScheduleApiservice } from './core/apiService/mid-week-schedule-api.service';
 import { DateInputsModule } from '@progress/kendo-angular-dateinputs';
+import { PublisherRecentPartCardComponent } from './shared/publisher-recent-part-card/publisher-recent-part-card.component';
 
 
 
@@ -65,7 +66,8 @@ import { DateInputsModule } from '@progress/kendo-angular-dateinputs';
     GridComponent,
     PublisherGridCardComponent,
     MidWeekScheduleComponent,
-    AddEditMidWeekScheduleComponent
+    AddEditMidWeekScheduleComponent,
+    PublisherRecentPartCardComponent
   ],
   imports: [
     BrowserModule,

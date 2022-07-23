@@ -16,7 +16,9 @@ export class MidWeekSchedulePanelComponent implements OnInit {
   constructor(private midWeekScheduleApiService: MidWeekScheduleApiservice, private commonService: CommonService) { }
 
   async ngOnInit(): Promise<void> {
+    this.commonService.toggleLoadingScreen();
     var schedules = await this.midWeekScheduleApiService.List(0,1);
+    this.commonService.toggleLoadingScreen();
     if(schedules.data){
       this.currentMidWeekSchedule = schedules.data[0];
     }
