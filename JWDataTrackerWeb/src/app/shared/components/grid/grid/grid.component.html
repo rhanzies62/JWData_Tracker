@@ -54,9 +54,11 @@
             </kendo-grid-column>
         </kendo-grid>
     </div>
-    <div class="card-body p-2 d-block d-md-none" *ngIf="mobileViewComponent === 'PublisherGridCardComponent'">
-        <div *ngFor="let dataItem of pageGrid.gridResult.data" (click)="onRowClick(dataItem)">
-            <app-publisher-grid-card [dataItem]="dataItem"></app-publisher-grid-card>
+    <div class="card-body p-2 d-block d-md-none">
+        <div *ngIf="mobileViewComponent === 'PublisherGridCardComponent'">
+            <div *ngFor="let dataItem of pageGrid.gridResult.data" (click)="onRowClick(dataItem)">
+                <app-publisher-grid-card [dataItem]="dataItem"></app-publisher-grid-card>
+            </div>
         </div>
 
         <kendo-datapager
@@ -69,45 +71,68 @@
     </div>
 </div>
 
-<kendo-grid 
-*ngIf="!inCardView"
-[data]="pageGrid.gridResult"
-[loading]="isLoading"
-[pageSize]="pageGrid.gridFilter.Take"
-[skip]="pageGrid.gridFilter.Skip"
-[pageable]="pageGrid.pagerSettings"
-(pageChange)="pageChange($event)"
-[sortable]="true"
-[sort]="pageGrid.sort"
-(sortChange)="sortChange($event)"
-[filter]="pageGrid.filter"
-[filterable]="true"
-(filterChange)="filterChange($event)"
-[selectable]="true"
-(selectionChange)="onRowClick($event.selectedRows[0].dataItem)" 
->
-<kendo-grid-column
-[field]="column.fieldName"
-[title]="column.title"
-[width]="column.width"
-[hidden]="!column.isVisible"
-[filterable]="column.filterable"
-*ngFor="let column of pageGrid.columns">
-    <ng-template kendoGridFilterCellTemplate let-filter let-column="column">
-        <kendo-grid-string-filter-cell
-        [showOperators]="false"
-        [column]="column"
-        [filter]="filter"
-        >
-        </kendo-grid-string-filter-cell>
-    </ng-template>
-    <ng-template kendoGridCellTemplate let-dataItem>
-        <span *ngIf="column.type === 'date'" >{{ dataItem[column.fieldName] | date }}</span>
-        <div *ngIf="column.type === 'crosscheck'" class="w-100 text-center">
-            <i class='bx bx-check text-green fs-2' *ngIf="dataItem[column.fieldName]"></i>
-            <!-- <i class='bx bx-x' *ngIf="!dataItem[column.fieldName]"></i> -->
+<div class="d-none d-md-block">
+    <kendo-grid 
+    *ngIf="!inCardView"
+    [data]="pageGrid.gridResult"
+    [loading]="isLoading"
+    [pageSize]="pageGrid.gridFilter.Take"
+    [skip]="pageGrid.gridFilter.Skip"
+    [pageable]="pageGrid.pagerSettings"
+    (pageChange)="pageChange($event)"
+    [sortable]="true"
+    [sort]="pageGrid.sort"
+    (sortChange)="sortChange($event)"
+    [filter]="pageGrid.filter"
+    [filterable]="true"
+    (filterChange)="filterChange($event)"
+    [selectable]="true"
+    (selectionChange)="onRowClick($event.selectedRows[0].dataItem)" 
+    >
+    <kendo-grid-column
+    [field]="column.fieldName"
+    [title]="column.title"
+    [width]="column.width"
+    [hidden]="!column.isVisible"
+    [filterable]="column.filterable"
+    *ngFor="let column of pageGrid.columns">
+        <ng-template kendoGridFilterCellTemplate let-filter let-column="column">
+            <kendo-grid-string-filter-cell
+            [showOperators]="false"
+            [column]="column"
+            [filter]="filter"
+            >
+            </kendo-grid-string-filter-cell>
+        </ng-template>
+        <ng-template kendoGridCellTemplate let-dataItem>
+            <span *ngIf="column.type === 'date'" >{{ dataItem[column.fieldName] | date }}</span>
+            <div *ngIf="column.type === 'crosscheck'" class="w-100 text-center">
+                <i class='bx bx-check text-green fs-2' *ngIf="dataItem[column.fieldName]"></i>
+                <!-- <i class='bx bx-x' *ngIf="!dataItem[column.fieldName]"></i> -->
+            </div>
+            <app-grid-text-cell  [column]="column" [dataItem]="dataItem" ></app-grid-text-cell>
+        </ng-template>
+    </kendo-grid-column>
+    </kendo-grid>
+</div>
+
+<div class="d-block d-md-none" >
+    <div *ngIf="mobileViewComponent === 'PublisherGridCardComponent'">
+        <div *ngFor="let dataItem of pageGrid.gridResult.data" (click)="onRowClick(dataItem)">
+            <app-publisher-grid-card [dataItem]="dataItem"></app-publisher-grid-card>
         </div>
-        <app-grid-text-cell  [column]="column" [dataItem]="dataItem" ></app-grid-text-cell>
-    </ng-template>
-</kendo-grid-column>
-</kendo-grid>
+    </div>
+    <div *ngIf="mobileViewComponent === 'PublisherRecentPartCardComponent'">
+        <div *ngFor="let dataItem of pageGrid.gridResult.data" (click)="onRowClick(dataItem)">
+            <app-publisher-recent-part-card [dataItem]="dataItem"></app-publisher-recent-part-card>
+        </div>
+    </div>
+
+    <kendo-datapager
+        [total]="pageGrid.gridResult.total"
+        [pageSize]="pageGrid.gridFilter.Take"
+        [skip]="pageGrid.gridFilter.Skip"
+        (pageChange)="pageChange($event)"
+    >
+    </kendo-datapager>
+</div>

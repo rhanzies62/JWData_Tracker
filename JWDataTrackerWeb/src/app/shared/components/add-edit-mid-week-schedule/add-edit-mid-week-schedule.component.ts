@@ -34,7 +34,11 @@ export class AddEditMidWeekScheduleComponent implements OnInit {
 
   sourceAttendants: Publisher[] = [];
   filteredAttendants: Publisher[] = [];
-  
+
+  displayRecentParts: boolean = false;
+  displayPartConfirmation: boolean = false;
+  confirmationMessage: string = "";
+  selectedSchedule: MidWeekScheduleItem;
   constructor(private publisherApiService: PublisherApiService,private midWeekScheduleApiService: MidWeekScheduleApiservice,private commonService: CommonService) { }
 
   async ngOnInit(): Promise<void> {
@@ -112,28 +116,43 @@ export class AddEditMidWeekScheduleComponent implements OnInit {
   }
 
   onModelChange(schedule: MidWeekScheduleItem,isPartner: boolean = false) {
-    if(schedule.isForElderMs){
-        var list = this.midWeekSchedule.midWeekScheduleItems.filter(i => i.isForElderMs);
-        this.sourceElderMs = this.publishers.filter(i => i.isElder || i.isMs);
+    if(schedule){
+      if(schedule.isForElderMs){
+          var list = this.midWeekSchedule.midWeekScheduleItems.filter(i => i.isForElderMs);
+          this.sourceElderMs = this.publishers.filter(i => i.isElder || i.isMs);
+          list.map(item => {
+            if(item.publisher){
+              if(item.role === MidWeekScheduleRoles.Chairman || 
+                item.role === MidWeekScheduleRoles.OpeningPrayer || 
+                item.role === MidWeekScheduleRoles.ClosingPrayer || 
+                item.role === MidWeekScheduleRoles.InstructionalTalk ||
+                item.role === MidWeekScheduleRoles.FirstPart ||
+                item.role === MidWeekScheduleRoles.SecondPart || 
+                item.role === MidWeekScheduleRoles.CBSConductor) { }
+              else this.sourceElderMs = this.sourceElderMs.filter(i => i.publisherId !== item.publisher.publisherId);
+            } 
+          });
+
+          if(schedule.publisher){
+            var publisherPart = this.midWeekSchedule.midWeekScheduleItems.filter(mwsi => mwsi.publisher && mwsi.publisher.publisherId === schedule.publisher.publisherId && (mwsi.category === MidWeekCategories.LIVINGASACHRISTIAN || mwsi.category === MidWeekCategories.TREASUREFROMGODSWORD));
+            if(publisherPart.length === 2){
+              this.selectedSchedule = schedule;
+              this.displayPartConfirmation = true;
+              this.confirmationMessage = `<b>${schedule.publisher.fullName}</b> already been assigned in <b>${publisherPart[0].role}</b> in <b>${publisherPart[0].category === MidWeekCategories.LIVINGASACHRISTIAN ? "Living as a Christian" : "Treasure from God's word"}</b>. Are you sure you want to assign him again in <b>${publisherPart[1].role}</b> in <b>${publisherPart[1].category === MidWeekCategories.LIVINGASACHRISTIAN ? "Living as a Christian" : "Treasure from God's word"}</b>?`
+            } 
+          }
+          this.handleFilterForElderMs("");
+      } else {
+        var list = this.midWeekSchedule.midWeekScheduleItems.filter(i => !i.isForElderMs && i.category === MidWeekCategories.APPLYYOURSELFTOTHEFIELDMINISTRY);
+        this.sourcePublisher = this.publishers.filter(i => !i.isElder);
         list.map(item => {
-          if(item.publisher){
-            if(item.role === MidWeekScheduleRoles.Chairman || item.role === MidWeekScheduleRoles.OpeningPrayer || item.role === MidWeekScheduleRoles.ClosingPrayer || item.role === MidWeekScheduleRoles.CBSConductor) { }
-            else this.sourceElderMs = this.sourceElderMs.filter(i => i.publisherId !== item.publisher.publisherId);
-          } 
+          if(item.partnerPublisher)
+            this.sourcePublisher = this.sourcePublisher.filter(i => i.publisherId !== item.partnerPublisher.publisherId);
+          if(item.publisher)
+            this.sourcePublisher = this.sourcePublisher.filter(i => i.publisherId !== item.publisher.publisherId); 
         });
-        this.handleFilterForElderMs("");
-    } else {
-      var list = this.midWeekSchedule.midWeekScheduleItems.filter(i => !i.isForElderMs && i.category === MidWeekCategories.APPLYYOURSELFTOTHEFIELDMINISTRY);
-      this.sourcePublisher = this.publishers.filter(i => !i.isElder);
-      console.log("BEFORE:",this.sourcePublisher);
-      list.map(item => {
-        if(item.partnerPublisher)
-          this.sourcePublisher = this.sourcePublisher.filter(i => i.publisherId !== item.partnerPublisher.publisherId);
-        if(item.publisher)
-          this.sourcePublisher = this.sourcePublisher.filter(i => i.publisherId !== item.publisher.publisherId); 
-      });
-      console.log("AFTER:",this.sourcePublisher);
-      this.handleFilter("");
+        this.handleFilter("");
+      }
     }
   }
 
@@ -199,6 +218,9 @@ export class AddEditMidWeekScheduleComponent implements OnInit {
     this.selectedPublisher = null;
     setTimeout(() => {
       this.selectedPublisher = this.publishers.find(i => i.publisherId === publisherId);
+      if(window.innerWidth < 576){
+        this.displayRecentParts = !this.displayRecentParts;
+      }
     }, 200);
   }
 

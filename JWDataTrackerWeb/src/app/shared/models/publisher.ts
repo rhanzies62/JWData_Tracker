@@ -20,4 +20,6 @@ export class RecentPart{
     category: string;
     role: string;
     isPartner: Boolean;
+    scheduledDateDT: Date;
+    part: string;
 }
