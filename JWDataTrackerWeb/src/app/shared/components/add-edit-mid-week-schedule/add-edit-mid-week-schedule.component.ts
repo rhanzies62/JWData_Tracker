@@ -138,7 +138,7 @@ export class AddEditMidWeekScheduleComponent implements OnInit {
             if(publisherPart.length === 2){
               this.selectedSchedule = schedule;
               this.displayPartConfirmation = true;
-              this.confirmationMessage = `<b>${schedule.publisher.fullName}</b> already been assigned in <b>${publisherPart[0].role}</b> in <b>${publisherPart[0].category === MidWeekCategories.LIVINGASACHRISTIAN ? "Living as a Christian" : "Treasure from God's word"}</b>. Are you sure you want to assign him again in <b>${publisherPart[1].role}</b> in <b>${publisherPart[1].category === MidWeekCategories.LIVINGASACHRISTIAN ? "Living as a Christian" : "Treasure from God's word"}</b>?`
+              this.confirmationMessage = `<b>${schedule.publisher.fullName}</b> already been assigned in <b>${publisherPart[0].role}</b> of <b>${publisherPart[0].category === MidWeekCategories.LIVINGASACHRISTIAN ? "Living as a Christian" : "Treasure from God's word"}</b>. Are you sure you want to assign him again in <b>${publisherPart[1].role}</b> of <b>${publisherPart[1].category === MidWeekCategories.LIVINGASACHRISTIAN ? "Living as a Christian" : "Treasure from God's word"}</b>?`
             } 
           }
           this.handleFilterForElderMs("");

@@ -45,31 +45,36 @@
                         </div>
                     </div>
                 </div>
-                <div class="card-body p-2">
-                    <div *ngFor="let category of categoryArrangement">
+                <div class="card-body">
+                    <div #categorySection *ngFor="let category of categoryArrangement" class="p-2">
                         <div class="section-header gray" *ngIf="category === midWeekCategories.TREASUREFROMGODSWORD">
                             <span>
-                                TREASURE FROM GOD’S WORD
+                                Treasure from God's Word
                             </span>
-                            <div></div>
+                            <div class="bottom-border"></div>
                         </div>
                         <div class="section-header yellow" *ngIf="category === midWeekCategories.APPLYYOURSELFTOTHEFIELDMINISTRY">
-                            <span>
-                                Apply Yourself To The Field Ministry
-                            </span>
-                            <div></div>
+                            <div class="d-flex justify-content-between align-items-center w-100">
+                                <span>
+                                    Apply Yourself To The Field Ministry
+                                </span>
+                                <button class="btn bg-yellow text-white" (click)="capture(categorySection,schedule)">
+                                    <i class='bx bxs-camera'></i>   
+                                </button>
+                            </div>
+                            <div class="bottom-border"></div>
                         </div>
                         <div class="section-header red" *ngIf="category === midWeekCategories.LIVINGASACHRISTIAN">
                             <span>
                                 Living as a Christian
                             </span>
-                            <div></div>
+                            <div class="bottom-border"></div>
                         </div>
                         <div class="section-header blue" *ngIf="category === midWeekCategories.ATTENDANTS">
                             <span >
                                 Attendants
                             </span>
-                            <div></div>
+                            <div class="bottom-border"></div>
                         </div>
                         
                         <div *ngFor="let scheduleItem of filterByCategory(category,schedule)">

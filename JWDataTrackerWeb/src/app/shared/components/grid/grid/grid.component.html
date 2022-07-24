@@ -71,7 +71,7 @@
     </div>
 </div>
 
-<div class="d-none d-md-block">
+<div class="d-none d-md-block" *ngIf="!inCardView">
     <kendo-grid 
     *ngIf="!inCardView"
     [data]="pageGrid.gridResult"
@@ -116,7 +116,7 @@
     </kendo-grid>
 </div>
 
-<div class="d-block d-md-none" >
+<div class="d-block d-md-none" *ngIf="!inCardView">
     <div *ngIf="mobileViewComponent === 'PublisherGridCardComponent'">
         <div *ngFor="let dataItem of pageGrid.gridResult.data" (click)="onRowClick(dataItem)">
             <app-publisher-grid-card [dataItem]="dataItem"></app-publisher-grid-card>

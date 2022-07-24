@@ -38,7 +38,9 @@ export class GridComponent implements OnInit {
 
   async filterChange(filter: any): Promise<void> {
     this.pageGrid.filterChange(filter);
+    this.isLoading = true;
     await this.loadDataGrid();
+    this.isLoading = false;
   }
 
   onAddClick() {

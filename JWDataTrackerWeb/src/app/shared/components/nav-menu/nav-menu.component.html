@@ -1,7 +1,7 @@
 
 
 <div class="nav">
-    <div class="container">
+    <div class="container-xxl">
         <div class="row p-2">
             <div class="col-6 col-md-12 col-lg-3 align-items-center my-2 ">
                 <h3 class="m-0 p-0 text-md-center text-lg-start w-100">DataTracker</h3>
@@ -11,7 +11,8 @@
                     <div class="col-12 d-flex align-items-center justify-content-end">
                         <div class="menu-item w-100">
                             <a [routerLink]="['/dashboard']" [routerLinkActive]="['link-active']">Dashboard</a>
-                            <a [routerLink]="['/midweekmeeting']" [routerLinkActive]="['link-active']">Meetings</a>
+                            <a [routerLink]="['/midweekmeeting']" [routerLinkActive]="['link-active']">Mid Week Meetings</a>
+                            <a [routerLink]="['/weekendmeeting']" [routerLinkActive]="['link-active']">Week End Meetings</a>
                             <a [routerLink]="['/publishers']" [routerLinkActive]="['link-active']">Publishers</a>
                             <a class="d-none" [routerLink]="['/servicereport']" [routerLinkActive]="['link-active']">Reports</a>
                             <a class="d-none" [routerLink]="['/users']" [routerLinkActive]="['link-active']">Users</a>
@@ -51,7 +52,6 @@
                     <hr style="width:100%;"/>
                     <a class="my-2" [routerLink]="['/users']" [routerLinkActive]="['link-active']">{{fullname}}</a>
                     <button class="btn btn-default my-2" (click)="logout();">Logout</button>
-                    
                 </div>                        
             </div>            
         </div>

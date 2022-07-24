@@ -2,7 +2,9 @@ import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormControlName, FormGroup, Validators } from '@angular/forms';
 import { PublisherApiService } from 'src/app/core/apiService/publisher-api.service';
 import { CommonService } from 'src/app/core/services/common.service';
-import { Publisher } from 'src/app/shared/models/publisher';
+import { PublisherRecentPartColumns } from 'src/app/shared/models/GridColumns';
+import { GridFilter, GridResultGeneric, PageGrid } from 'src/app/shared/models/GridFilter';
+import { Publisher, RecentPart } from 'src/app/shared/models/publisher';
 
 @Component({
   selector: 'app-add-edit-pubilisher',
@@ -10,12 +12,14 @@ import { Publisher } from 'src/app/shared/models/publisher';
   styleUrls: ['./add-edit-pubilisher.component.scss']
 })
 export class AddEditPubilisherComponent implements OnInit {
+  public publisherRecentPartPageGrid : PageGrid;
   @Input() id: number = 0;
   publisherForm: FormGroup;
   message: string;
   constructor(private formBuilder: FormBuilder,private commonService: CommonService,private publisherApiService: PublisherApiService) { }
 
   async ngOnInit(): Promise<void> {
+    this.publisherRecentPartPageGrid = new PageGrid(PublisherRecentPartColumns,4,'scheduledDate','desc');
     let publisher: Publisher;
     if(this.id) publisher = await this.publisherApiService.Get(this.id);
     
@@ -58,5 +62,10 @@ export class AddEditPubilisherComponent implements OnInit {
         this.message = result.message;
       }
     }
+  }
+
+  loadDataGrid = async (gridFilter: GridFilter) : Promise<GridResultGeneric<RecentPart>> => {
+    var result = await this.publisherApiService.ListPublisherRecentParts(gridFilter,this.id);
+    return result;
   }
 }
