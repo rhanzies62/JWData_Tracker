@@ -39,6 +39,9 @@ import { DropDownsModule } from '@progress/kendo-angular-dropdowns';
 import { MidWeekScheduleApiservice } from './core/apiService/mid-week-schedule-api.service';
 import { DateInputsModule } from '@progress/kendo-angular-dateinputs';
 import { PublisherRecentPartCardComponent } from './shared/publisher-recent-part-card/publisher-recent-part-card.component';
+import { WeekendMeetingScheduleComponent } from './pages/weekend-meeting-schedule/weekend-meeting-schedule.component';
+import { LayoutModule } from '@progress/kendo-angular-layout';
+
 
 
 
@@ -67,7 +70,8 @@ import { PublisherRecentPartCardComponent } from './shared/publisher-recent-part
     PublisherGridCardComponent,
     MidWeekScheduleComponent,
     AddEditMidWeekScheduleComponent,
-    PublisherRecentPartCardComponent
+    PublisherRecentPartCardComponent,
+    WeekendMeetingScheduleComponent
   ],
   imports: [
     BrowserModule,
@@ -81,7 +85,8 @@ import { PublisherRecentPartCardComponent } from './shared/publisher-recent-part
         path: '', component: MainContentComponent,canActivate: [AuthenticationGuardService] , children: [
           { path: 'dashboard', component: DashboardComponent, canActivate: [AuthenticationGuardService] },
           { path: 'publishers', component: PublishersComponent, canActivate: [AuthenticationGuardService] },
-          { path: 'midweekmeeting', component: MidWeekScheduleComponent, canActivate: [AuthenticationGuardService] }
+          { path: 'midweekmeeting', component: MidWeekScheduleComponent, canActivate: [AuthenticationGuardService] },
+          { path: 'weekendmeeting', component: WeekendMeetingScheduleComponent, canActivate: [AuthenticationGuardService] }
         ]
       }
     ], { scrollPositionRestoration: 'enabled' }),
@@ -91,7 +96,8 @@ import { PublisherRecentPartCardComponent } from './shared/publisher-recent-part
     DialogsModule,
     PagerModule,
     DropDownsModule,
-    DateInputsModule
+    DateInputsModule,
+    LayoutModule
   ],
   entryComponents: [AddEditPubilisherComponent,AddEditMidWeekScheduleComponent],
   providers: [{ provide: JWT_OPTIONS, useValue: JWT_OPTIONS },JwtHelperService, AuthenticateApiService,PublisherApiService,MidWeekScheduleApiservice],

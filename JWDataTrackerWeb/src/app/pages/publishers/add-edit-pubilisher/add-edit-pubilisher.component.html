@@ -1,70 +1,92 @@
-<form [formGroup]="publisherForm" *ngIf="publisherForm" (submit)="submit()">
-    <div class="row">
-        <div class="col-12 text-center">
-            <label class="text-red my-2 text-center">{{message}}</label>
-        </div>
-        <div class="col-12 col-md-4">
-            <div class="m-2">
-                <label class="form-label">First Name</label>
-                <input type="text" class="form-control" placeholder="First Name" formControlName="firstName" name="firstName" />
+<div style="height:80vh;">
+    <form [formGroup]="publisherForm" *ngIf="publisherForm" (submit)="submit()">
+        <div class="row">
+            <div class="col-12 text-center">
+                <label class="text-red my-2 text-center">{{message}}</label>
+            </div>
+            <div class="col-12 col-md-4">
+                <div class="m-2">
+                    <label class="form-label">First Name</label>
+                    <input type="text" class="form-control" placeholder="First Name" formControlName="firstName" name="firstName" />
+                </div>
+            </div>
+            <div class="col-12 col-md-4">
+                <div class="m-2">
+                    <label class="form-label">Last Name</label>
+                    <input type="text" class="form-control" placeholder="Last Name" formControlName="lastName" name="lastName" />
+                </div>
+            </div>
+            <div class="col-12 col-md-4">
+                <div class="m-2">
+                    <label class="form-label">Field Service Group</label>
+                    <select class="form-control" formControlName="groupNumber" name="groupNumber">
+                        <option value="">--Select Group--</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-12 col-md-4" *ngIf="!publisherForm.value.isMs && !publisherForm.value.isUnBaptized">
+                <div class="m-2">
+                    <label class="form-label">
+                        <input type="checkbox" formControlName="isElder" name="isElder" />
+                        Is Elder?
+                    </label>
+                </div>
+            </div>
+            <div class="col-12 col-md-4" *ngIf="!publisherForm.value.isElder && !publisherForm.value.isUnBaptized">
+                <div class="m-2">
+                    <label class="form-label">
+                        <input type="checkbox" formControlName="isMs" name="isMs"  />
+                        Is Ministerial Servant?
+                    </label>
+                </div>
+            </div>
+            <div class="col-12 col-md-4" *ngIf="!publisherForm.value.isUnBaptized">
+                <div class="m-2">
+                    <label class="form-label">
+                        <input type="checkbox" formControlName="isRp" name="isRp" />
+                        Is Regular Pioneer?
+                    </label>
+                </div>
+            </div>
+            <div class="col-12 col-md-4" *ngIf="!publisherForm.value.isRp && !publisherForm.value.isElder && !publisherForm.value.isMs">
+                <div class="m-2">
+                    <label class="form-label">
+                        <input type="checkbox" formControlName="isUnBaptized" name="isUnBaptized"/>
+                        Is Unbaptized Publisher?
+                    </label>
+                </div>
+            </div>
+            <div class="col-12">
+                <hr/>
+                <div *ngIf="id" class="btn btn-default bg-red text-white float-end mx-1" (click)="delete()">Delete</div>
+                <button class="btn btn-default bg-green text-white float-end mx-1" >Submit</button>
             </div>
         </div>
-        <div class="col-12 col-md-4">
-            <div class="m-2">
-                <label class="form-label">Last Name</label>
-                <input type="text" class="form-control" placeholder="Last Name" formControlName="lastName" name="lastName" />
-            </div>
-        </div>
-        <div class="col-12 col-md-4">
-            <div class="m-2">
-                <label class="form-label">Field Service Group</label>
-                <select class="form-control" formControlName="groupNumber" name="groupNumber">
-                    <option value="">--Select Group--</option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                    <option value="6">6</option>
-                </select>
-            </div>
-        </div>
-        <div class="col-12 col-md-4" *ngIf="!publisherForm.value.isMs && !publisherForm.value.isUnBaptized">
-            <div class="m-2">
-                <label class="form-label">
-                    <input type="checkbox" formControlName="isElder" name="isElder" />
-                    Is Elder?
-                </label>
-            </div>
-        </div>
-        <div class="col-12 col-md-4" *ngIf="!publisherForm.value.isElder && !publisherForm.value.isUnBaptized">
-            <div class="m-2">
-                <label class="form-label">
-                    <input type="checkbox" formControlName="isMs" name="isMs"  />
-                    Is Ministerial Servant?
-                </label>
-            </div>
-        </div>
-        <div class="col-12 col-md-4" *ngIf="!publisherForm.value.isUnBaptized">
-            <div class="m-2">
-                <label class="form-label">
-                    <input type="checkbox" formControlName="isRp" name="isRp" />
-                    Is Regular Pioneer?
-                </label>
-            </div>
-        </div>
-        <div class="col-12 col-md-4" *ngIf="!publisherForm.value.isRp && !publisherForm.value.isElder && !publisherForm.value.isMs">
-            <div class="m-2">
-                <label class="form-label">
-                    <input type="checkbox" formControlName="isUnBaptized" name="isUnBaptized"/>
-                    Is Unbaptized Publisher?
-                </label>
-            </div>
-        </div>
+    </form>
+    
+    <div class="row mt-2">
         <div class="col-12">
-            <hr/>
-            <div *ngIf="id" class="btn btn-default bg-red text-white float-end mx-1" (click)="delete()">Delete</div>
-            <button class="btn btn-default bg-green text-white float-end mx-1" >Submit</button>
+            <kendo-tabstrip>
+                <kendo-tabstrip-tab title="Mid Week Parts" [selected]="true">
+                    <ng-template kendoTabContent>
+                        <app-grid  [inCardView]="true" [pageGrid]="publisherRecentPartPageGrid" [onLoadGrid]="loadDataGrid" [gridTitle]="'Publisher Recent Parts'" [inCardView]="false"></app-grid>
+                    </ng-template>
+                  </kendo-tabstrip-tab>
+                  <kendo-tabstrip-tab title="Weekend Parts" >
+                    <ng-template kendoTabContent>
+                    </ng-template>
+                  </kendo-tabstrip-tab>
+                  <kendo-tabstrip-tab title="Reports" >
+                    <ng-template kendoTabContent>
+                    </ng-template>
+                  </kendo-tabstrip-tab>
+            </kendo-tabstrip>
         </div>
     </div>
-</form>
+</div>

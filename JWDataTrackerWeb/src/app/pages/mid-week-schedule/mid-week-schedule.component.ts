@@ -24,9 +24,11 @@ export class MidWeekScheduleComponent implements OnInit {
     
   }
 
-  capture(element = null,schedule: MidWeekSchedule = null){
-    html2canvas(element || document.getElementById("scheduleContent")).then((canvas) => {
-      let a = document.createElement("a");
+  async capture(element = null,schedule: MidWeekSchedule = null){
+    this.commonService.toggleLoadingScreen();
+    var canvas = await html2canvas(element || document.getElementById("scheduleContent"));
+    this.commonService.toggleLoadingScreen();
+    let a = document.createElement("a");
       let filename = "MidWeekSchedule.png";
       if(schedule){
           var date = new Date(schedule.scheduleDT);
@@ -35,7 +37,6 @@ export class MidWeekScheduleComponent implements OnInit {
       a.download = filename;
       a.href = canvas.toDataURL("image/png");
       a.click();
-    });
   }
 
   openMidWeekModal = (dataItem: any = null) => {

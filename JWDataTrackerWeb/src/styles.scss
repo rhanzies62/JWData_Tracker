@@ -167,6 +167,63 @@ input, button{
     margin-bottom: 0px !important;
 }
 
+
+.text-blue {
+    color:#3E85FC !important;
+}
+
+.section-header {
+    margin: 1rem 0;
+    font-weight: 700;
+    display:flex;
+    flex-direction: column;
+}
+
+.section-header .bottom-border {
+    height:5px;
+    width: 75%;
+}
+
+.section-header.gray{
+    color:#626262;
+}
+
+.section-header.gray .bottom-border{
+    background-color:#626262;
+}
+
+.section-header.yellow{
+    color:#C48430;
+}
+
+.section-header.yellow .bottom-border{
+    background-color:#C48430;
+}
+
+.section-header.red{
+    color:#942926;
+}
+
+.section-header.red .bottom-border{
+    background-color:#942926;
+}
+
+.section-header.blue{
+    color:#3E85FC;
+}
+
+.section-header.blue .bottom-border{
+    background-color:#3E85FC;
+}
+
+.section-header.green{
+    color:#269429;
+}
+
+.section-header.green .bottom-border{
+    background-color:#269429;
+}
+
 // Small devices (landscape phones, 576px and up)
 @media (min-width: 576px) { }
 
