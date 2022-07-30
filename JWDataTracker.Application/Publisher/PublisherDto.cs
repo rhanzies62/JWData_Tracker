@@ -15,11 +15,11 @@ namespace JWDataTracker.Application.Publisher
         public string LastName { get; set; }
         public DateTime CreatedDate { get; set; }
         public long? CongregationId { get; set; }
-        public bool IsElder { get; set; }
-        public bool IsMs { get; set; }
         public bool IsRp { get; set; }
-        public bool IsUnBaptized { get; set; }
         public long GroupNumber { get; set; }
+        public long? Privilege { get; set; }
+        public long? Status { get; set; }
+        public long? Gender { get; set; }
         public string FullName { get { return $"{FirstName} {LastName}"; } }
     }
 }

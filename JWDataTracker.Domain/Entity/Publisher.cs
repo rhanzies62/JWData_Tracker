@@ -10,12 +10,11 @@ namespace JWDataTracker.Infrastructure
         public string LastName { get; set; }
         public string CreatedDate { get; set; }
         public long? CongregationId { get; set; }
-        public long IsElder { get; set; }
-        public long IsMs { get; set; }
         public long IsRp { get; set; }
-        public long IsUnBaptized { get; set; }
         public long GroupNumber { get; set; }
-        public long IsBaptized { get; set; }
+        public long? Gender { get; set; }
+        public long? Privilege { get; set; }
+        public long? Status { get; set; }
 
         public virtual Congregation Congregation { get; set; }
     }

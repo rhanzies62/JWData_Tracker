@@ -1,13 +1,7 @@
-﻿using JWDataTracker.Application.MidWeekMeetingSchedule;
-using JWDataTracker.Domain.Grid;
+﻿using JWDataTracker.Domain.Grid;
 using JWDataTracker.Helper;
 using JWDataTracker.Infrastructure.Repository;
 using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using entity = JWDataTracker.Infrastructure;
 namespace JWDataTracker.Application.Publisher
 {
@@ -32,11 +26,11 @@ namespace JWDataTracker.Application.Publisher
                         CongregationId = model.CongregationId,
                         FirstName = model.FirstName,
                         GroupNumber = model.GroupNumber,
-                        IsElder = model.IsElder ? 1 : 0,
-                        IsMs = model.IsMs ? 1 : 0,
                         IsRp = model.IsRp ? 1 : 0,
-                        IsUnBaptized = model.IsUnBaptized ? 1 : 0,
-                        LastName = model.LastName
+                        LastName = model.LastName,
+                        Gender = model.Gender,
+                        Privilege = model.Privilege,
+                        Status = model.Status
                     };
                     unitOfWork.PublisherRepository.Insert(publisherEntity);
                     unitOfWork.Save();
@@ -81,10 +75,10 @@ namespace JWDataTracker.Application.Publisher
                     publisherEntity.FirstName = model.FirstName;
                     publisherEntity.LastName = model.LastName;
                     publisherEntity.GroupNumber = model.GroupNumber;
-                    publisherEntity.IsElder = model.IsElder ? 1 : 0;
-                    publisherEntity.IsMs = model.IsMs ? 1 : 0;
+                    publisherEntity.Gender = model.Gender;
                     publisherEntity.IsRp = model.IsRp ? 1 : 0;
-                    publisherEntity.IsUnBaptized = model.IsUnBaptized ? 1 : 0;
+                    publisherEntity.Privilege = model.Privilege;
+                    publisherEntity.Status = model.Status;
                     unitOfWork.Save();
                 }
             }
@@ -103,11 +97,12 @@ namespace JWDataTracker.Application.Publisher
                 CongregationId = p.CongregationId,
                 FirstName = p.FirstName,
                 GroupNumber = p.GroupNumber,
-                IsElder = p.IsElder == 1,
-                IsMs = p.IsMs == 1,
                 IsRp = p.IsRp == 1,
-                IsUnBaptized = p.IsUnBaptized == 1,
-                LastName = p.LastName
+                LastName = p.LastName,
+                Gender = p.Gender,
+                Privilege = p.Privilege,
+                PublisherId = p.PublisherId,
+                Status = p.Status
             }).FirstOrDefault();
 
             return publisher ?? new PublisherDto();
@@ -121,12 +116,12 @@ namespace JWDataTracker.Application.Publisher
                 CongregationId = p.CongregationId,
                 FirstName = p.FirstName,
                 GroupNumber = p.GroupNumber,
-                IsElder = p.IsElder == 1,
-                IsMs = p.IsMs == 1,
                 IsRp = p.IsRp == 1,
-                IsUnBaptized = p.IsUnBaptized == 1,
                 LastName = p.LastName,
-                PublisherId = p.PublisherId
+                PublisherId = p.PublisherId,
+                Gender = p.Gender,
+                Privilege = p.Privilege,
+                Status = p.Status
             });
         }
 
@@ -135,7 +130,7 @@ namespace JWDataTracker.Application.Publisher
             return unitOfWork.DataGridRepository.ListPublishers(filter);
         }
 
-        public GridResultGeneric<PublisherRecentPartGrid> ListPublisherRecentParts(GridFilter filter,int publisherId)
+        public GridResultGeneric<PublisherRecentPartGrid> ListPublisherRecentParts(GridFilter filter, int publisherId)
         {
             return unitOfWork.DataGridRepository.ListPublisherRecentPart(filter, publisherId);
         }
