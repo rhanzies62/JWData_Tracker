@@ -17,9 +17,7 @@ export class AppComponent {
       this.isLoading = value;
     });
 
-    if(window.location.href.indexOf('localhost') > -1){
-      this.responsivehelper = true;
-    }
+    
     
   }
 }

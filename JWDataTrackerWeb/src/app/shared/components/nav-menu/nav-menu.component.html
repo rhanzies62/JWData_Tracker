@@ -1,59 +1,34 @@
-
-
-<div class="nav">
-    <div class="container-xxl">
-        <div class="row p-2">
-            <div class="col-6 col-md-12 col-lg-3 align-items-center my-2 ">
-                <h3 class="m-0 p-0 text-md-center text-lg-start w-100">DataTracker</h3>
-            </div>
-            <div class="d-none d-md-block col-12 col-lg-9">
-                <div class="row">
-                    <div class="col-12 d-flex align-items-center justify-content-end">
-                        <div class="menu-item w-100">
-                            <a [routerLink]="['/dashboard']" [routerLinkActive]="['link-active']">Dashboard</a>
-                            <a [routerLink]="['/midweekmeeting']" [routerLinkActive]="['link-active']">Mid Week Meetings</a>
-                            <a [routerLink]="['/weekendmeeting']" [routerLinkActive]="['link-active']">Week End Meetings</a>
-                            <a [routerLink]="['/publishers']" [routerLinkActive]="['link-active']">Publishers</a>
-                            <a class="d-none" [routerLink]="['/servicereport']" [routerLinkActive]="['link-active']">Reports</a>
-                            <a class="d-none" [routerLink]="['/users']" [routerLinkActive]="['link-active']">Users</a>
-                            <div class="menu-user">
-                                <a [routerLink]="['/users']" [routerLinkActive]="['link-active']">{{fullname}}</a>
-                                <button class="btn btn-default" (click)="logout()">Logout</button>
-                            </div>  
-                        </div>                        
-                    </div>
-                </div>           
-            </div>
-            <div class="col-6 d-block d-md-none">
-                <button class="btn btn-default d-flex align-items-center float-end" (click)="showMenu = true">
-                    <i class='bx bx-menu fs-4'></i>
-                </button>
-            </div>
+<nav>
+    <div class="navbar">
+      <i class='bx bx-menu'></i>
+      <div class="logo"><a >DataTracker</a></div>
+      <div class="nav-links">
+        <div class="sidebar-logo">
+          <span class="logo-name">DataTracker</span>
+          <i class='bx bx-x' ></i>
         </div>
+        <ul class="links">
+          <li [routerLink]="['/dashboard']" [routerLinkActive]="['active']"><a >Dashboard</a></li>
+          <li>
+            <a >Meetings</a>
+            <i class='bx bxs-chevron-down htmlcss-arrow arrow'></i>
+            <ul class="htmlCss-sub-menu sub-menu">
+                <li [routerLink]="['/midweekmeeting']" [routerLinkActive]="['active']"><a >Mid Week Meeting</a></li>
+                <li [routerLink]="['/weekendmeeting']" [routerLinkActive]="['active']"><a >Week End Meeting</a></li>
+              </ul>
+          </li>
+          <li [routerLink]="['/publishers']" [routerLinkActive]="['active']"><a >Publishers</a></li>
+          <li [routerLink]="['/servicereport']" [routerLinkActive]="['active']"><a >Reports</a></li>
+          <li>
+            <a >Admin Tools</a>
+            <i class='bx bxs-chevron-down js-arrow arrow'></i>
+            <ul class="js-sub-menu sub-menu">
+              <li [routerLink]="['/privileges']" [routerLinkActive]="['active']"><a >Privileges</a></li>
+            </ul>
+          </li>
+          <li [routerLink]="['/profile']" [routerLinkActive]="['active']"><a >Profile</a></li>
+          <li (click)="logout()"><a >Logout</a></li>
+        </ul>
+      </div>
     </div>
-</div>
-
-<div class="d-block d-md-none sliding_menu animate__animated animate__faster" [ngClass]="{ 'animate__slideInRight' : showMenu, 'animate__slideOutRight' : !showMenu }">
-    <div class="container">
-        <div class="row">
-            <div class="col-12 p-3">
-                <button class="btn btn-default float-end" (click)="showMenu = false">
-                    <i class='bx bx-arrow-back fs-4'></i>
-                </button>
-            </div>
-
-            <div class="col-12 d-flex align-items-center justify-content-end my-5">
-                <div class="menu-item w-100 flex-column">
-                    <a class="my-2" [routerLink]="['/dashboard']" [routerLinkActive]="['link-active']" (click)="showMenu = false">Dashboard</a>
-                    <a class="my-2" [routerLink]="['/midweekmeeting']" [routerLinkActive]="['link-active']" (click)="showMenu = false">Meetings</a>
-                    <a class="my-2" [routerLink]="['/publishers']" [routerLinkActive]="['link-active']" (click)="showMenu = false">Publishers</a>
-                    <a class="d-none my-2" [routerLink]="['/servicereport']" [routerLinkActive]="['link-active']" (click)="showMenu = false">Reports</a>
-                    <a class="d-none my-2" [routerLink]="['/users']" [routerLinkActive]="['link-active']" (click)="showMenu = false">Users</a>
-                    <hr style="width:100%;"/>
-                    <a class="my-2" [routerLink]="['/users']" [routerLinkActive]="['link-active']">{{fullname}}</a>
-                    <button class="btn btn-default my-2" (click)="logout();">Logout</button>
-                </div>                        
-            </div>            
-        </div>
-    </div>
-</div>
+  </nav>
