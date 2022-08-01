@@ -10,6 +10,7 @@ using JWDataTracker.Application.CongregationUser;
 using JWDataTracker.Application.MidWeekMeetingSchedule;
 using Microsoft.Extensions.Configuration;
 using JWDataTracker.Application.Publisher;
+using JWDataTracker.Application.LookUp;
 
 namespace JWDataTracker.Application
 {
@@ -22,6 +23,7 @@ namespace JWDataTracker.Application
             services.AddScoped<ICongregationUserService, CongregationUserService>();
             services.AddScoped<IMidWeekMeetingScheduleService, MidWeekMeetingScheduleService>();
             services.AddScoped<IPublisherService, PublisherService>();
+            services.AddScoped<ILookUpService, LookUpService>();
             services.AddInternalRepoServices();
             return services;
         }
