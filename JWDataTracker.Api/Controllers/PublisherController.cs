@@ -5,6 +5,8 @@ using JWDataTracker.Helper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Kendo.Mvc.UI;
+using Kendo.Mvc.Extensions;
 
 namespace JWDataTracker.Api.Controllers
 {
@@ -56,6 +58,18 @@ namespace JWDataTracker.Api.Controllers
         public GridResultGeneric<PublisherRecentPartGrid> ListPublisherRecentParts(GridFilter filter, int publisherId)
         {
             return publisherService.ListPublisherRecentParts(filter,publisherId);
+        }
+
+        [HttpGet]
+        public DataSourceResult ListPublisherGrid([DataSourceRequest] DataSourceRequest request)
+        {
+            return publisherService.List().ToDataSourceResult(request);
+        }
+
+        [HttpPost]
+        public DataSourceResult ListPublisherRecentPartGrid([DataSourceRequest] DataSourceRequest request, long publisherId)
+        {
+            return publisherService.ListPublisherRecentPartsGrid(publisherId).ToDataSourceResult(request);
         }
     }
 }

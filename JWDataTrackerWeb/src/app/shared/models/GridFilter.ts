@@ -1,5 +1,5 @@
-import { GridDataResult, PageChangeEvent, PagerSettings } from '@progress/kendo-angular-grid';
-import { CompositeFilterDescriptor, SortDescriptor } from '@progress/kendo-data-query';
+import { DataStateChangeEvent, GridDataResult, PageChangeEvent, PagerSettings } from '@progress/kendo-angular-grid';
+import { CompositeFilterDescriptor, SortDescriptor, State } from '@progress/kendo-data-query';
 import { Columns } from './GridColumns';
 
 export class PageGrid {
@@ -17,6 +17,14 @@ export class PageGrid {
     this.gridFilter.Take = pageSize;
     this.gridFilter.Skip = 0;
     this.gridFilter.Searchs = [];
+
+    this.state = {
+      skip: 0,
+      take: pageSize,
+      filter: { filters: [], logic: 'or' },
+      group: [],
+      sort: []
+    };
 
     this.pagerSettings = {
         buttonCount: 5,
@@ -45,6 +53,11 @@ export class PageGrid {
   sort: SortDescriptor[];
   pagerSettings: PagerSettings;
   filter: CompositeFilterDescriptor;
+  state: State;
+
+  public dataStateChange(state: DataStateChangeEvent): void {
+    this.state = state;
+}
 
   public pageChange(event: PageChangeEvent) {
     this.gridFilter.Skip = event.skip;
@@ -70,7 +83,7 @@ export class PageGrid {
   public loadData(result: GridResultGeneric<any>) {
     this.gridResult = {
         data: result.data,
-        total: result.totalCount
+        total: result.total
       };
   }
 }
@@ -105,7 +118,7 @@ export class GridSearchFilter {
 
 export class GridResultGeneric<T> {
   data: any;
-  totalCount: number;
+  total: number;
   isSuccess: boolean;
   message: string;
 }

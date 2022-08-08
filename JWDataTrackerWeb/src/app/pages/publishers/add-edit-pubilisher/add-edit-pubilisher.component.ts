@@ -1,9 +1,11 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormControlName, FormGroup, Validators } from '@angular/forms';
+import { LookUpApiService } from 'src/app/core/apiService/lookup-api.service';
 import { PublisherApiService } from 'src/app/core/apiService/publisher-api.service';
 import { CommonService } from 'src/app/core/services/common.service';
 import { PublisherRecentPartColumns } from 'src/app/shared/models/GridColumns';
 import { GridFilter, GridResultGeneric, PageGrid } from 'src/app/shared/models/GridFilter';
+import { LookUp } from 'src/app/shared/models/lookup';
 import { Publisher, RecentPart } from 'src/app/shared/models/publisher';
 
 @Component({
@@ -16,11 +18,20 @@ export class AddEditPubilisherComponent implements OnInit {
   @Input() id: number = 0;
   publisherForm: FormGroup;
   message: string;
-  constructor(private formBuilder: FormBuilder,private commonService: CommonService,private publisherApiService: PublisherApiService) { }
+  genders: LookUp[] = [];
+  status: LookUp[] = [];
+  privilege: LookUp[] = [];
+
+  constructor(private formBuilder: FormBuilder,private commonService: CommonService,private publisherApiService: PublisherApiService, private lookUpApiService: LookUpApiService) { }
 
   async ngOnInit(): Promise<void> {
     this.publisherRecentPartPageGrid = new PageGrid(PublisherRecentPartColumns,4,'scheduledDate','desc');
     let publisher: Publisher;
+
+    this.genders = await this.lookUpApiService.loadGenderLookUp();
+    this.status = await this.lookUpApiService.loadStatusLookUp();
+    this.privilege = await this.lookUpApiService.loadPrivilegeLookUp();
+
     if(this.id) publisher = await this.publisherApiService.Get(this.id);
     
     this.publisherForm = this.formBuilder.group({
@@ -33,13 +44,18 @@ export class AddEditPubilisherComponent implements OnInit {
       isMs: new FormControl(this.id ? publisher.isMs : false),
       isRp: new FormControl(this.id ? publisher.isRp : false),
       isUnBaptized: new FormControl(this.id ? publisher.isUnBaptized :false),
+      privilegeLookUp: new FormControl(this.id ? publisher.privilegeLookUp : null),
+      genderLookUp: new FormControl(this.id ? publisher.genderLookUp : null,[Validators.required]),
+      statusLookUp: new FormControl(this.id ? publisher.statusLookUp : null,[Validators.required]),
     });
   }
 
   async submit() {
     if(this.publisherForm.valid){
       this.commonService.toggleLoadingScreen();
-      var result = await this.publisherApiService.addedit(this.publisherForm.value);
+      var publisherForm = this.publisherForm.value;
+      var obj = {...this.publisherForm.value, privilege: publisherForm.privilegeLookUp ? publisherForm.privilegeLookUp.lookUpId : null, gender: publisherForm.genderLookUp.lookUpId, status: publisherForm.statusLookUp.lookUpId};
+      var result = await this.publisherApiService.addedit(obj);
       this.commonService.toggleLoadingScreen();
       if(result.isSuccess){
         this.commonService.dismissDialog();

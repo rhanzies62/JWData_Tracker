@@ -15,16 +15,16 @@
         <kendo-grid 
             [data]="pageGrid.gridResult"
             [loading]="isLoading"
-            [pageSize]="pageGrid.gridFilter.Take"
-            [skip]="pageGrid.gridFilter.Skip"
+            [pageSize]="pageGrid.state.take"
+            [skip]="pageGrid.state.skip"
             [pageable]="pageGrid.pagerSettings"
-            (pageChange)="pageChange($event)"
-            [sortable]="true"
-            [sort]="pageGrid.sort"
-            (sortChange)="sortChange($event)"
-            [filter]="pageGrid.filter"
+            (dataStateChange)="dataStateChange($event)"
+            [sort]="pageGrid.state.sort"
+            [filter]="pageGrid.state.filter"
+            [sortable]="{
+                mode: 'multiple'
+              }"
             [filterable]="true"
-            (filterChange)="filterChange($event)"
             [selectable]="true"
             (selectionChange)="onRowClick($event.selectedRows[0].dataItem)" 
             >

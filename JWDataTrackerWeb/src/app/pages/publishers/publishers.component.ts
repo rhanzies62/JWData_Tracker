@@ -36,8 +36,8 @@ export class PublishersComponent implements OnInit {
   }
 
 
-  loadDataGrid = async (gridFilter: GridFilter) : Promise<GridResultGeneric<PublisherGrid>> => {
-    var result = await this.publisherApiService.ListPublishers(gridFilter);
+  loadDataGrid = async (request: string) : Promise<GridResultGeneric<PublisherGrid>> => {
+    var result = await this.publisherApiService.ListPublisherGrid(request);
     return result;
   }
 

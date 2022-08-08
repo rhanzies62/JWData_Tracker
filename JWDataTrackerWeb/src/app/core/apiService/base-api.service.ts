@@ -13,9 +13,9 @@ export class BaseApiService {
       this.baseUrl = baseUrl;
     }
 
-    async get<T>(uri: string, withSecureHeader: boolean = true) : Promise<T> {
+    async get<T>(uri: string, withSecureHeader: boolean = true,contentType: string = "application/json") : Promise<T> {
         try {
-            var headers = { "Content-Type": "application/json", Authorization: "", "Access-Control-Allow-Origin":"*" };
+            var headers = { "Content-Type": contentType, Authorization: "", "Access-Control-Allow-Origin":"*" };
             if(withSecureHeader){
                 var token = this.authService.getUserToken();
                 headers.Authorization = "bearer " + token.authenticationToken;
@@ -28,9 +28,9 @@ export class BaseApiService {
         }
     }
 
-    async post<TModel, TResponse>(uri:string, model: TModel, withSecureHeader: boolean = true) : Promise<TResponse> {
+    async post<TModel, TResponse>(uri:string, model: TModel, withSecureHeader: boolean = true,contentType: string = "application/json") : Promise<TResponse> {
         try {
-            var headers = { "Content-Type": "application/json", Authorization: "" };
+            var headers = { "Content-Type": contentType, Authorization: "" };
             if(withSecureHeader){
                 var token = this.authService.getUserToken();
                 headers.Authorization = "bearer " + token.authenticationToken;
