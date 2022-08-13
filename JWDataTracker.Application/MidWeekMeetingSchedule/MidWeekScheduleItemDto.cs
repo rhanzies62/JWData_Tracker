@@ -15,7 +15,7 @@ namespace JWDataTracker.Application.MidWeekMeetingSchedule
 
         }
 
-        public MidWeekScheduleItemDto(string category, long publisherid, string publisherName, string hallNumber, string role)
+        public MidWeekScheduleItemDto(long category, long publisherid, string publisherName, string hallNumber, long role)
         {
             this.Category = category;
             this.PublisherId = publisherid;
@@ -24,7 +24,7 @@ namespace JWDataTracker.Application.MidWeekMeetingSchedule
             this.Role = role;
         }
 
-        public MidWeekScheduleItemDto(string category,long publisherid, string publisherName, string hallNumber, string role, long partnerPublisherId, string partnerName)
+        public MidWeekScheduleItemDto(long category,long publisherid, string publisherName, string hallNumber, long role, long partnerPublisherId, string partnerName)
         {
             this.Category = category;
             this.PublisherId = publisherid;
@@ -36,14 +36,14 @@ namespace JWDataTracker.Application.MidWeekMeetingSchedule
             this.Role = role;
         }
         public long MidWeekScheduleItemId { get; set; }
-        public string Role { get; set; }
+        public long Role { get; set; }
         public long? PublisherId { get; set; }
         public string PublisherName { get; set; }
         public long? PartnerPublisherId { get; set; }
         public string PartnerName { get; set; }
         public string HallNumber { get; set; }
         public long MidWeekScheduleId { get; set; }
-        public string Category { get; set; }
+        public long Category { get; set; }
 
         public PublisherDto Publisher { get; set; }
         public PublisherDto PartnerPublisher { get; set; }

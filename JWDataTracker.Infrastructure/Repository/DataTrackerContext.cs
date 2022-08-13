@@ -24,8 +24,11 @@ namespace JWDataTracker.Infrastructure.Repository
 
         public virtual DbSet<Congregation> Congregations { get; set; }
         public virtual DbSet<CongregationUser> CongregationUsers { get; set; }
+        public virtual DbSet<LookUp> LookUps { get; set; }
         public virtual DbSet<MidWeekSchedule> MidWeekSchedules { get; set; }
+        public virtual DbSet<MidWeekScheduleArrangement> MidWeekScheduleArrangements { get; set; }
         public virtual DbSet<MidWeekScheduleItem> MidWeekScheduleItems { get; set; }
+        public virtual DbSet<Privilege> Privileges { get; set; }
         public virtual DbSet<Publisher> Publishers { get; set; }
         public virtual DbSet<ServiceReport> ServiceReports { get; set; }
         public virtual DbSet<WeekendMeetingSchedule> WeekendMeetingSchedules { get; set; }
@@ -34,6 +37,7 @@ namespace JWDataTracker.Infrastructure.Repository
         {
             if (!optionsBuilder.IsConfigured)
             {
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
                 optionsBuilder.UseSqlite(connectionString);
             }
         }
@@ -68,6 +72,15 @@ namespace JWDataTracker.Infrastructure.Repository
                 entity.Property(e => e.Username).IsRequired();
             });
 
+            modelBuilder.Entity<LookUp>(entity =>
+            {
+                entity.ToTable("LookUp");
+
+                entity.Property(e => e.Code).IsRequired();
+
+                entity.Property(e => e.Text).IsRequired();
+            });
+
             modelBuilder.Entity<MidWeekSchedule>(entity =>
             {
                 entity.ToTable("MidWeekSchedule");
@@ -75,15 +88,25 @@ namespace JWDataTracker.Infrastructure.Repository
                 entity.Property(e => e.ScheduledDate).IsRequired();
             });
 
+            modelBuilder.Entity<MidWeekScheduleArrangement>(entity =>
+            {
+                entity.ToTable("MidWeekScheduleArrangement");
+
+                entity.Property(e => e.MidWeekScheduleArrangementId).ValueGeneratedNever();
+            });
+
             modelBuilder.Entity<MidWeekScheduleItem>(entity =>
             {
                 entity.ToTable("MidWeekScheduleItem");
 
-                entity.Property(e => e.Category).IsRequired();
-
                 entity.Property(e => e.HallNumber).IsRequired();
+            });
 
-                entity.Property(e => e.Role).IsRequired();
+            modelBuilder.Entity<Privilege>(entity =>
+            {
+                entity.ToTable("Privilege");
+
+                entity.Property(e => e.PrivilegeId).ValueGeneratedNever();
             });
 
             modelBuilder.Entity<Publisher>(entity =>
@@ -91,10 +114,6 @@ namespace JWDataTracker.Infrastructure.Repository
                 entity.ToTable("Publisher");
 
                 entity.Property(e => e.FirstName).IsRequired();
-
-                entity.Property(e => e.IsBaptized).HasDefaultValueSql("1");
-
-                entity.Property(e => e.IsMs).HasColumnName("IsMS");
 
                 entity.Property(e => e.IsRp).HasColumnName("IsRP");
 

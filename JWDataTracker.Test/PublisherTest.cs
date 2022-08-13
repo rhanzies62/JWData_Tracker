@@ -1,8 +1,6 @@
-﻿using JWDataTracker.Application.CongregationUser;
-using JWDataTracker.Application.Publisher;
+﻿using JWDataTracker.Application.Publisher;
 using JWDataTracker.Infrastructure.Repository;
 using Moq;
-using Newtonsoft.Json;
 using entity = JWDataTracker.Infrastructure;
 
 namespace JWDataTracker.Test
@@ -37,113 +35,19 @@ namespace JWDataTracker.Test
             unitOfWork.Setup(m => m.CongregationRepository).Returns(congregationRepoMoq.Object);
             publisherService = new PublisherService(unitOfWork.Object);
 
-            var publisherDto = new PublisherDto {
+            var publisherDto = new PublisherDto
+            {
                 CongregationId = 1,
                 FirstName = "Francis",
                 LastName = "Cebu",
-                IsElder = false,
-                IsMs = false,
                 IsRp = false,
-                IsUnBaptized = false,
-                GroupNumber = 1
+                GroupNumber = 1,
+                Gender = 1,
+                Privilege = 0,
+                Status = 2
             };
             var result = publisherService.Add(publisherDto);
             Assert.IsTrue(result.IsSuccess);
-        }
-
-        [Test]
-        public void Add_Publisher_CongregationNotExisting()
-        {
-            var _congregationRepoMoq = new Mock<IGenericRepository<entity.Congregation>>();
-            unitOfWork.Setup(m => m.PublisherRepository).Returns(publisherRepoMoq.Object);
-            unitOfWork.Setup(m => m.CongregationRepository).Returns(_congregationRepoMoq.Object);
-            publisherService = new PublisherService(unitOfWork.Object);
-
-            var publisherDto = new PublisherDto
-            {
-                CongregationId = 1,
-                FirstName = "Francis",
-                LastName = "Cebu",
-                IsElder = false,
-                IsMs = false,
-                IsRp = false,
-                IsUnBaptized = false,
-                GroupNumber = 1
-            };
-            var result = publisherService.Add(publisherDto);
-            Assert.IsFalse(result.IsSuccess);
-        }
-
-        [Test]
-        public void Add_Publisher_No_FirstName_LastName()
-        {
-            congregationRepoMoq.Setup(m => m.GetByID(It.IsAny<long>())).Returns(new entity.Congregation { });
-
-            unitOfWork.Setup(m => m.PublisherRepository).Returns(publisherRepoMoq.Object);
-            unitOfWork.Setup(m => m.CongregationRepository).Returns(congregationRepoMoq.Object);
-            publisherService = new PublisherService(unitOfWork.Object);
-
-            var publisherDto = new PublisherDto
-            {
-                CongregationId = 1,
-                FirstName = "",
-                LastName = "",
-                IsElder = false,
-                IsMs = false,
-                IsRp = false,
-                IsUnBaptized = false,
-                GroupNumber = 1
-            };
-            var result = publisherService.Add(publisherDto);
-            Assert.IsFalse(result.IsSuccess);
-        }
-
-        [Test]
-        public void Add_Publisher_Both_Elder_MS()
-        {
-            congregationRepoMoq.Setup(m => m.GetByID(It.IsAny<long>())).Returns(new entity.Congregation { });
-
-            unitOfWork.Setup(m => m.PublisherRepository).Returns(publisherRepoMoq.Object);
-            unitOfWork.Setup(m => m.CongregationRepository).Returns(congregationRepoMoq.Object);
-            publisherService = new PublisherService(unitOfWork.Object);
-
-            var publisherDto = new PublisherDto
-            {
-                CongregationId = 1,
-                FirstName = "Francis",
-                LastName = "Cebu",
-                IsElder = true,
-                IsMs = true,
-                IsRp = false,
-                IsUnBaptized = false,
-                GroupNumber = 1
-            };
-            var result = publisherService.Add(publisherDto);
-            Assert.IsFalse(result.IsSuccess);
-        }
-
-        [Test]
-        public void Add_Publisher_Both_RP_Unbaptize()
-        {
-            congregationRepoMoq.Setup(m => m.GetByID(It.IsAny<long>())).Returns(new entity.Congregation { });
-
-            unitOfWork.Setup(m => m.PublisherRepository).Returns(publisherRepoMoq.Object);
-            unitOfWork.Setup(m => m.CongregationRepository).Returns(congregationRepoMoq.Object);
-            publisherService = new PublisherService(unitOfWork.Object);
-
-            var publisherDto = new PublisherDto
-            {
-                CongregationId = 1,
-                FirstName = "Francis",
-                LastName = "Cebu",
-                IsElder = false,
-                IsMs = false,
-                IsRp = true,
-                IsUnBaptized = true,
-                GroupNumber = 1
-            };
-            var result = publisherService.Add(publisherDto);
-            Assert.IsFalse(result.IsSuccess);
         }
     }
 }

@@ -1,3 +1,4 @@
+import { LookUp } from "./lookup";
 import { MidWeekScheduleItem } from "./midWeekSchedule";
 
 export class Publisher {
@@ -13,6 +14,14 @@ export class Publisher {
     fullName:string;
     mostRecentPart: RecentPart;
     recentParts: RecentPart[];
+
+    privilege: number;
+    status: number;
+    gender: number;
+
+    privilegeLookUp: LookUp;
+    statusLookUp: LookUp;
+    genderLookUp: LookUp;
 }
 
 export class RecentPart{

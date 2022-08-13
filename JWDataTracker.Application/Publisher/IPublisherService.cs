@@ -12,10 +12,12 @@ namespace JWDataTracker.Application.Publisher
     {
         Response Add(PublisherDto model);
         Response Edit(PublisherDto model);
-        IEnumerable<PublisherDto> List();
+        IQueryable<PublisherDto> List();
         Response Delete(long publisherId);
         PublisherDto GetById(int publisherId);
         GridResultGeneric<PublisherGridDto> ListPublishers(GridFilter filter);
         GridResultGeneric<PublisherRecentPartGrid> ListPublisherRecentParts(GridFilter filter, int publisherId);
+        IQueryable<PublisherRecentPartGrid> ListPublisherRecentPartsGrid(long? publisherId);
     }
 }
+;

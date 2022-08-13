@@ -7,46 +7,63 @@
             <div class="col-12 col-md-4">
                 <div class="m-2">
                     <label class="form-label">First Name</label>
-                    <input type="text" class="form-control" placeholder="First Name" formControlName="firstName" name="firstName" />
+                    <kendo-textbox
+                        placeholder="First Name"
+                        [clearButton]="true"
+                        formControlName="firstName" 
+                        name="firstName" 
+                    ></kendo-textbox>
                 </div>
             </div>
             <div class="col-12 col-md-4">
                 <div class="m-2">
                     <label class="form-label">Last Name</label>
-                    <input type="text" class="form-control" placeholder="Last Name" formControlName="lastName" name="lastName" />
+                    <kendo-textbox
+                        placeholder="Last Name"
+                        [clearButton]="true"
+                        formControlName="lastName" 
+                        name="lastName" 
+                    ></kendo-textbox>
                 </div>
             </div>
             <div class="col-12 col-md-4">
                 <div class="m-2">
                     <label class="form-label">Field Service Group</label>
-                    <select class="form-control" formControlName="groupNumber" name="groupNumber">
-                        <option value="">--Select Group--</option>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                        <option value="5">5</option>
-                        <option value="6">6</option>
-                    </select>
+                    <kendo-dropdownlist
+                        [data]="[1,2,3,4,5,6]"
+                        placeholder="Field Service Group"
+                        formControlName="groupNumber" 
+                        name="groupNumber"
+                    ></kendo-dropdownlist>
                 </div>
             </div>
-            <div class="col-12 col-md-4" *ngIf="!publisherForm.value.isMs && !publisherForm.value.isUnBaptized">
+            <div class="col-12 col-md-4">
                 <div class="m-2">
-                    <label class="form-label">
-                        <input type="checkbox" formControlName="isElder" name="isElder" />
-                        Is Elder?
-                    </label>
+                    <label class="form-label">Gender</label>
+                    <kendo-dropdownlist
+                        [data]="genders"
+                        textField="text"
+                        valueField="lookUpId"
+                        placeholder="Gender"
+                        formControlName="genderLookUp" 
+                        name="genderLookUp"
+                    ></kendo-dropdownlist>
                 </div>
             </div>
-            <div class="col-12 col-md-4" *ngIf="!publisherForm.value.isElder && !publisherForm.value.isUnBaptized">
+            <div class="col-12 col-md-4">
                 <div class="m-2">
-                    <label class="form-label">
-                        <input type="checkbox" formControlName="isMs" name="isMs"  />
-                        Is Ministerial Servant?
-                    </label>
+                    <label class="form-label">Status</label>
+                    <kendo-dropdownlist
+                        [data]="status"
+                        textField="text"
+                        valueField="lookUpId"
+                        placeholder="Status"
+                        formControlName="statusLookUp" 
+                        name="statusLookUp"
+                    ></kendo-dropdownlist>
                 </div>
             </div>
-            <div class="col-12 col-md-4" *ngIf="!publisherForm.value.isUnBaptized">
+            <div class="col-12 col-md-4 align-self-center mt-3">
                 <div class="m-2">
                     <label class="form-label">
                         <input type="checkbox" formControlName="isRp" name="isRp" />
@@ -54,12 +71,17 @@
                     </label>
                 </div>
             </div>
-            <div class="col-12 col-md-4" *ngIf="!publisherForm.value.isRp && !publisherForm.value.isElder && !publisherForm.value.isMs">
+            <div class="col-12 col-md-4">
                 <div class="m-2">
-                    <label class="form-label">
-                        <input type="checkbox" formControlName="isUnBaptized" name="isUnBaptized"/>
-                        Is Unbaptized Publisher?
-                    </label>
+                    <label class="form-label">Privilege</label>
+                    <kendo-dropdownlist
+                        [data]="privilege"
+                        textField="text"
+                        valueField="lookUpId"
+                        placeholder="Privilege"
+                        formControlName="privilegeLookUp" 
+                        name="privilegeLookUp"
+                    ></kendo-dropdownlist>
                 </div>
             </div>
             <div class="col-12">

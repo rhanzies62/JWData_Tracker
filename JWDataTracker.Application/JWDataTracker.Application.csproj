@@ -15,4 +15,14 @@
     <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
   </ItemGroup>
+  <ItemGroup>
+    <None Remove="LookUp\" />
+    <None Remove="Privilege\" />
+    <None Remove="MidWeekScheduleArrangement\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="LookUp\" />
+    <Folder Include="Privilege\" />
+    <Folder Include="MidWeekScheduleArrangement\" />
+  </ItemGroup>
 </Project>

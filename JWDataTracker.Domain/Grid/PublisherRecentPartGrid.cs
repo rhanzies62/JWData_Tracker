@@ -19,6 +19,6 @@ namespace JWDataTracker.Domain.Grid
         }
         public string Category { get; set; }
         public string part { get; set; }
-        public long IsPartner { get; set; }
+        public bool IsPartner { get; set; }
     }
 }

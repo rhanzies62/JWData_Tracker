@@ -1,13 +1,7 @@
-﻿using JWDataTracker.Application.MidWeekMeetingSchedule;
-using JWDataTracker.Domain.Grid;
+﻿using JWDataTracker.Domain.Grid;
 using JWDataTracker.Helper;
 using JWDataTracker.Infrastructure.Repository;
 using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using entity = JWDataTracker.Infrastructure;
 namespace JWDataTracker.Application.Publisher
 {
@@ -32,11 +26,11 @@ namespace JWDataTracker.Application.Publisher
                         CongregationId = model.CongregationId,
                         FirstName = model.FirstName,
                         GroupNumber = model.GroupNumber,
-                        IsElder = model.IsElder ? 1 : 0,
-                        IsMs = model.IsMs ? 1 : 0,
                         IsRp = model.IsRp ? 1 : 0,
-                        IsUnBaptized = model.IsUnBaptized ? 1 : 0,
-                        LastName = model.LastName
+                        LastName = model.LastName,
+                        Gender = model.Gender,
+                        Privilege = model.Privilege,
+                        Status = model.Status
                     };
                     unitOfWork.PublisherRepository.Insert(publisherEntity);
                     unitOfWork.Save();
@@ -81,10 +75,10 @@ namespace JWDataTracker.Application.Publisher
                     publisherEntity.FirstName = model.FirstName;
                     publisherEntity.LastName = model.LastName;
                     publisherEntity.GroupNumber = model.GroupNumber;
-                    publisherEntity.IsElder = model.IsElder ? 1 : 0;
-                    publisherEntity.IsMs = model.IsMs ? 1 : 0;
+                    publisherEntity.Gender = model.Gender;
                     publisherEntity.IsRp = model.IsRp ? 1 : 0;
-                    publisherEntity.IsUnBaptized = model.IsUnBaptized ? 1 : 0;
+                    publisherEntity.Privilege = model.Privilege;
+                    publisherEntity.Status = model.Status;
                     unitOfWork.Save();
                 }
             }
@@ -97,37 +91,72 @@ namespace JWDataTracker.Application.Publisher
 
         public PublisherDto GetById(int publisherId)
         {
-            var publisher = unitOfWork.PublisherRepository.Get(p => p.PublisherId == publisherId).Select(p => new PublisherDto
-            {
-                CreatedDate = JsonConvert.DeserializeObject<DateTime>(p.CreatedDate),
-                CongregationId = p.CongregationId,
-                FirstName = p.FirstName,
-                GroupNumber = p.GroupNumber,
-                IsElder = p.IsElder == 1,
-                IsMs = p.IsMs == 1,
-                IsRp = p.IsRp == 1,
-                IsUnBaptized = p.IsUnBaptized == 1,
-                LastName = p.LastName
-            }).FirstOrDefault();
+            var publisher = (from p in unitOfWork.PublisherRepository.Get()
+                             join gender in unitOfWork.LookUpRepository.Get() on p.Gender equals gender.LookUpId
+                             join status in unitOfWork.LookUpRepository.Get() on p.Status equals status.LookUpId
+                             join leftPrivilege in unitOfWork.LookUpRepository.Get() on p.Privilege equals leftPrivilege.LookUpId into _leftprivilege
+                             from lprivilege in _leftprivilege.DefaultIfEmpty()
+                             where p.PublisherId == publisherId
+                             select new PublisherDto
+                             {
+                                 CreatedDate = JsonConvert.DeserializeObject<DateTime>(p.CreatedDate),
+                                 CongregationId = p.CongregationId,
+                                 FirstName = p.FirstName,
+                                 GroupNumber = p.GroupNumber,
+                                 IsRp = p.IsRp == 1,
+                                 LastName = p.LastName,
+                                 Gender = p.Gender,
+                                 Privilege = p.Privilege,
+                                 PublisherId = p.PublisherId,
+                                 Status = p.Status,
+                                 GenderLookUp = new LookUp.LookUpDto { Code = gender.Code, LookUpId = gender.LookUpId, SortOrder = gender.SortOrder, Text = gender.Text },
+                                 StatusLookUp = new LookUp.LookUpDto { Code = status.Code, LookUpId = status.LookUpId, SortOrder = status.SortOrder, Text = status.Text },
+                                 PrivilegeLookUp = lprivilege != null ? new LookUp.LookUpDto { Code = lprivilege.Code, LookUpId = lprivilege.LookUpId, SortOrder = lprivilege.SortOrder, Text = lprivilege.Text } : null,
+                             }).FirstOrDefault();
 
             return publisher ?? new PublisherDto();
         }
 
-        public IEnumerable<PublisherDto> List()
+        public IQueryable<PublisherDto> List()
         {
-            return unitOfWork.PublisherRepository.Get().Select(p => new PublisherDto
-            {
-                CreatedDate = JsonConvert.DeserializeObject<DateTime>(p.CreatedDate),
-                CongregationId = p.CongregationId,
-                FirstName = p.FirstName,
-                GroupNumber = p.GroupNumber,
-                IsElder = p.IsElder == 1,
-                IsMs = p.IsMs == 1,
-                IsRp = p.IsRp == 1,
-                IsUnBaptized = p.IsUnBaptized == 1,
-                LastName = p.LastName,
-                PublisherId = p.PublisherId
-            });
+
+            return (from p in unitOfWork.Database.Publishers
+
+                    join leftprivilege in unitOfWork.Database.LookUps on p.Privilege equals leftprivilege.LookUpId into _leftprivilege
+                    from lprivilege in _leftprivilege.DefaultIfEmpty()
+
+                    join gender in unitOfWork.Database.LookUps on p.Gender equals gender.LookUpId
+                    join status in unitOfWork.Database.LookUps on p.Status equals status.LookUpId
+                    select new PublisherDto
+                    {
+                        UserStatus = status.Text,
+                        FirstName = p.FirstName,
+                        GroupNumber = p.GroupNumber,
+                        IsRp = p.IsRp == 1,
+                        PublisherId = p.PublisherId,
+                        LastName = p.LastName,
+                        UserGender = gender.Text,
+                        UserPrivilege = lprivilege != null ? lprivilege.Text : ""
+                    });
+        }
+
+        public IQueryable<PublisherRecentPartGrid> ListPublisherRecentPartsGrid(long? publisherId)
+        {
+            return (from mwsi in unitOfWork.Database.MidWeekScheduleItems
+                    join mwcategory in unitOfWork.Database.LookUps on mwsi.Category equals mwcategory.LookUpId
+                    join mwrole in unitOfWork.Database.LookUps on mwsi.Role equals mwrole.LookUpId
+                    join mws in unitOfWork.Database.MidWeekSchedules on mwsi.MidWeekScheduleId equals mws.MidWeekScheduleId
+                    where mwsi.PublisherId == publisherId ||
+                          mwsi.PartnerPublisherId == publisherId ||
+                          mwsi.ReplacementPublisherId == publisherId ||
+                          mwsi.ReplacementPartnerPublisherId == publisherId
+                    select new PublisherRecentPartGrid
+                    {
+                        Category = mwcategory.Text,
+                        IsPartner = mwsi.PartnerPublisherId == publisherId,
+                        part = mwrole.Text,
+                        ScheduledDate = mws.ScheduledDate
+                    });
         }
 
         public GridResultGeneric<PublisherGridDto> ListPublishers(GridFilter filter)
@@ -135,7 +164,7 @@ namespace JWDataTracker.Application.Publisher
             return unitOfWork.DataGridRepository.ListPublishers(filter);
         }
 
-        public GridResultGeneric<PublisherRecentPartGrid> ListPublisherRecentParts(GridFilter filter,int publisherId)
+        public GridResultGeneric<PublisherRecentPartGrid> ListPublisherRecentParts(GridFilter filter, int publisherId)
         {
             return unitOfWork.DataGridRepository.ListPublisherRecentPart(filter, publisherId);
         }

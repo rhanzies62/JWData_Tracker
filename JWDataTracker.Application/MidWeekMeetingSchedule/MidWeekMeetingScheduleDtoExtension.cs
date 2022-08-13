@@ -1,9 +1,4 @@
 ﻿using JWDataTracker.Helper;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace JWDataTracker.Application.MidWeekMeetingSchedule
 {
@@ -11,17 +6,15 @@ namespace JWDataTracker.Application.MidWeekMeetingSchedule
     {
         public static Response Validate(this MidWeekMeetingScheduleDto model)
         {
-            var categories = new List<string>() {
-                Constant.TREASUREFROMGODSWORD,
-                Constant.ATTENDANTS,
-                Constant.LIVINGASACHRISTIAN,
-                Constant.APPLYYOURSELFTOTHEFIELDMINISTRY,
-                Constant.OPENING
+            var categories = new List<int>() {
+                0,1,2,3,4
             };
             var response = new Response(true, String.Empty);
-            categories.ForEach(category => {
+            categories.ForEach(category =>
+            {
                 var schedules = model.MidWeekScheduleItems.Where(i => i.Category == category && i.PublisherId != 0).ToList();
-                schedules.ForEach(sched => {
+                schedules.ForEach(sched =>
+                {
                     var count = schedules.Count(s => s.PublisherId == sched.PublisherId);
                     if (count > 1)
                         response = new Response(false, $"{sched.PublisherName} can't appear multiple times in {category}");
@@ -43,8 +36,9 @@ namespace JWDataTracker.Application.MidWeekMeetingSchedule
 
             if (response.IsSuccess)
             {
-                var ayttfm = model.MidWeekScheduleItems.Where(i => i.Category == Constant.APPLYYOURSELFTOTHEFIELDMINISTRY && i.PartnerPublisherId != 0).ToList();
-                ayttfm.ForEach(sched => {
+                var ayttfm = model.MidWeekScheduleItems.Where(i => i.Category == 2 && i.PartnerPublisherId != 0).ToList();
+                ayttfm.ForEach(sched =>
+                {
                     var count = ayttfm.Count(s => s.PartnerPublisherId == sched.PartnerPublisherId);
                     if (count > 1)
                         response = new Response(false, $"{sched.PublisherName} can't appear in multiple times in {Constant.ApplyYourselfToTheFieldMinistry}");
@@ -57,9 +51,10 @@ namespace JWDataTracker.Application.MidWeekMeetingSchedule
         private static Response ValidateExistence(List<MidWeekScheduleItemDto> lst1, List<MidWeekScheduleItemDto> lst2, string errMsg, string part1, string part2)
         {
             var response = new Response(true, string.Empty);
-            lst1.ForEach(t => {
+            lst1.ForEach(t =>
+            {
                 if (lst2.Any(l => t.PublisherId == l.PublisherId))
-                    response = new Response(false, string.Format(errMsg,t.PublisherName,part1,part2));
+                    response = new Response(false, string.Format(errMsg, t.PublisherName, part1, part2));
             });
 
             return response;

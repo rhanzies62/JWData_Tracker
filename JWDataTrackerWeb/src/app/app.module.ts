@@ -41,6 +41,9 @@ import { DateInputsModule } from '@progress/kendo-angular-dateinputs';
 import { PublisherRecentPartCardComponent } from './shared/publisher-recent-part-card/publisher-recent-part-card.component';
 import { WeekendMeetingScheduleComponent } from './pages/weekend-meeting-schedule/weekend-meeting-schedule.component';
 import { LayoutModule } from '@progress/kendo-angular-layout';
+import { InputsModule } from '@progress/kendo-angular-inputs';
+import { PublisherPrivilegeComponent } from './pages/publisher-privilege/publisher-privilege.component';
+
 
 
 
@@ -71,7 +74,8 @@ import { LayoutModule } from '@progress/kendo-angular-layout';
     MidWeekScheduleComponent,
     AddEditMidWeekScheduleComponent,
     PublisherRecentPartCardComponent,
-    WeekendMeetingScheduleComponent
+    WeekendMeetingScheduleComponent,
+    PublisherPrivilegeComponent
   ],
   imports: [
     BrowserModule,
@@ -86,7 +90,8 @@ import { LayoutModule } from '@progress/kendo-angular-layout';
           { path: 'dashboard', component: DashboardComponent, canActivate: [AuthenticationGuardService] },
           { path: 'publishers', component: PublishersComponent, canActivate: [AuthenticationGuardService] },
           { path: 'midweekmeeting', component: MidWeekScheduleComponent, canActivate: [AuthenticationGuardService] },
-          { path: 'weekendmeeting', component: WeekendMeetingScheduleComponent, canActivate: [AuthenticationGuardService] }
+          { path: 'weekendmeeting', component: WeekendMeetingScheduleComponent, canActivate: [AuthenticationGuardService] },
+          { path: 'privileges', component: PublisherPrivilegeComponent, canActivate: [AuthenticationGuardService] }
         ]
       }
     ], { scrollPositionRestoration: 'enabled' }),
@@ -97,7 +102,8 @@ import { LayoutModule } from '@progress/kendo-angular-layout';
     PagerModule,
     DropDownsModule,
     DateInputsModule,
-    LayoutModule
+    LayoutModule,
+    InputsModule
   ],
   entryComponents: [AddEditPubilisherComponent,AddEditMidWeekScheduleComponent],
   providers: [{ provide: JWT_OPTIONS, useValue: JWT_OPTIONS },JwtHelperService, AuthenticateApiService,PublisherApiService,MidWeekScheduleApiservice],

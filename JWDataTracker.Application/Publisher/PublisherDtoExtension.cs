@@ -21,12 +21,6 @@ namespace JWDataTracker.Application.Publisher
                 if(string.IsNullOrEmpty(model.FirstName) || string.IsNullOrEmpty(model.LastName))
                    return new Response(false, "First name and Last name is required");
 
-                if(model.IsMs && model.IsElder)
-                    return new Response(false, "Elder can't be Ministerial Servant at the same time and vice versa");
-
-                if(model.IsRp && model.IsUnBaptized)
-                    return new Response(false, "Regular pioneer can't be unbaptized publisher");
-
                 if(model.PublisherId > 0)
                 {
                     if(unitOfWork.PublisherRepository.Get(i => i.PublisherId != model.PublisherId && 

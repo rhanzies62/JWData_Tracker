@@ -1,4 +1,4 @@
-import { Injectable } from "@angular/core";
+import { Inject, Injectable } from "@angular/core";
 import { AuthService } from "../services/auth.service";
 import { BaseApiService } from "./base-api.service";
 import { Authentication } from "../../shared/models/authentication"
@@ -7,13 +7,12 @@ import { CongregationUser } from "src/app/shared/models/congregationuser";
 import { Publisher } from "src/app/shared/models/publisher";
 import { GridFilter, GridResultGeneric } from "src/app/shared/models/GridFilter";
 import { PublisherGrid } from "src/app/shared/models/PublisherGrid";
+import { HttpClient } from "@angular/common/http";
 @Injectable({
     providedIn: 'root'
   })
 export class PublisherApiService {
-
     constructor(private baseApiService : BaseApiService, private authService: AuthService) {
-        
     }
 
     async addedit(model: Publisher): Promise<ApiResponse<CongregationUser>> {
@@ -43,6 +42,11 @@ export class PublisherApiService {
 
     async ListPublisherRecentParts(filter: GridFilter,publisherId): Promise<GridResultGeneric<PublisherGrid>> {
       var result = await this.baseApiService.post<GridFilter,GridResultGeneric<PublisherGrid>>(`publisher/ListPublisherRecentParts?publisherId=${publisherId}`,filter);
+      return result;
+    }
+
+    async ListPublisherGrid(request: string): Promise<any> {
+      var result = await this.baseApiService.get<any>(`publisher/ListPublisherGrid?${request}`,true,'application/x-www-form-urlencoded');
       return result;
     }
 

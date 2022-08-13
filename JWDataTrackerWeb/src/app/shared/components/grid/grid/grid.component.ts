@@ -1,6 +1,6 @@
 import { Component, Input, OnInit, Output,EventEmitter } from '@angular/core';
-import { PageChangeEvent } from '@progress/kendo-angular-grid';
-import { SortDescriptor } from '@progress/kendo-data-query';
+import { DataStateChangeEvent, PageChangeEvent } from '@progress/kendo-angular-grid';
+import { SortDescriptor, toDataSourceRequestString } from '@progress/kendo-data-query';
 import { PageGrid } from 'src/app/shared/models/GridFilter';
 
 @Component({
@@ -52,7 +52,13 @@ export class GridComponent implements OnInit {
   }
 
   public async loadDataGrid() : Promise<void> {
-    var result = await this.onLoadGrid(this.pageGrid.gridFilter);
+    var request = `${toDataSourceRequestString(this.pageGrid.state)}`;
+    var result = await this.onLoadGrid(request);
     this.pageGrid.loadData(result);
   }
+
+  public dataStateChange(state: DataStateChangeEvent): void {
+    this.pageGrid.dataStateChange(state);
+    this.loadDataGrid();
+}
 }

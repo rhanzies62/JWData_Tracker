@@ -14,6 +14,9 @@ namespace JWDataTracker.Infrastructure.Repository
         IGenericRepository<MidWeekScheduleItem> MidWeekScheduleItemRepository { get; }
         IGenericRepository<Publisher> PublisherRepository { get; }
         IGenericRepository<ServiceReport> ServiceReportRepository { get; }
+        IGenericRepository<LookUp> LookUpRepository { get; }
+        IGenericRepository<Privilege> PrivilegeRepository { get; }
+        IGenericRepository<MidWeekScheduleArrangement> MidWeekScheduleArrangementRepository { get; }
         IDataGridRepository DataGridRepository { get; }
         void Save();
         DataTrackerContext Database { get; }
@@ -27,6 +30,9 @@ namespace JWDataTracker.Infrastructure.Repository
         private IGenericRepository<MidWeekScheduleItem> midWeekScheduleItemRepository;
         private IGenericRepository<Publisher> publisherRepository;
         private IGenericRepository<ServiceReport> serviceReportRepository;
+        private IGenericRepository<LookUp> lookUpRepository;
+        private IGenericRepository<Privilege> privilegeRepository;
+        private IGenericRepository<MidWeekScheduleArrangement> midWeekScheduleArrangementRepository;
         private IDataGridRepository dataGridRepository;
 
         public IGenericRepository<Congregation> CongregationRepository
@@ -99,6 +105,42 @@ namespace JWDataTracker.Infrastructure.Repository
                     this.serviceReportRepository = new GenericRepository<ServiceReport>(context);
                 }
                 return serviceReportRepository;
+            }
+        }
+        public IGenericRepository<LookUp> LookUpRepository
+        {
+            get
+            {
+
+                if (this.lookUpRepository == null)
+                {
+                    this.lookUpRepository = new GenericRepository<LookUp>(context);
+                }
+                return lookUpRepository;
+            }
+        }
+        public IGenericRepository<Privilege> PrivilegeRepository
+        {
+            get
+            {
+
+                if (this.privilegeRepository == null)
+                {
+                    this.privilegeRepository = new GenericRepository<Privilege>(context);
+                }
+                return privilegeRepository;
+            }
+        }
+        public IGenericRepository<MidWeekScheduleArrangement> MidWeekScheduleArrangementRepository
+        {
+            get
+            {
+
+                if (this.midWeekScheduleArrangementRepository == null)
+                {
+                    this.midWeekScheduleArrangementRepository = new GenericRepository<MidWeekScheduleArrangement>(context);
+                }
+                return midWeekScheduleArrangementRepository;
             }
         }
         public IDataGridRepository DataGridRepository
