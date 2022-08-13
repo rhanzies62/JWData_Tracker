@@ -7,11 +7,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Kendo.for.AspNet.Core" Version="2019.1.115" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.6" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.2.5" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
-    <PackageReference Include="Telerik.UI.for.AspNet.Core" Version="2021.1.330" />
   </ItemGroup>
 
   <ItemGroup>
@@ -23,5 +21,12 @@
 
   <ItemGroup>
     <None Remove="Telerik.UI.for.AspNet.Core" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Kendo.Mvc">
+      <HintPath>Kendo.Mvc.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
   </ItemGroup>
 </Project>
